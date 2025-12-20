@@ -4,7 +4,19 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Bariátrica Natural — Sistema Metabólico (Unici-Té + Balance) para Monterrey. Acompañamiento por WhatsApp. Contenido educativo." />
+  <meta property="og:title" content="Bariátrica Natural 🫡 | Sistema Metabólico — Monterrey" />
+  <meta property="og:description" content="Sistema Metabólico (Unici-Té + Balance) con acompañamiento real por WhatsApp. Educación y estructura sin promesas mágicas." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/system_banner.png" />
+  <meta property="og:locale" content="es_MX" />
+  <meta property="og:url" content="https://bariatrica-natural.mx/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Bariátrica Natural 🫡 | Sistema Metabólico — Monterrey" />
+  <meta name="twitter:description" content="Sistema Metabólico (Unici-Té + Balance) con acompañamiento real por WhatsApp. Educación y estructura sin promesas mágicas." />
+  <meta name="twitter:image" content="assets/system_banner.png" />
+  <link rel="canonical" href="https://bariatrica-natural.mx/" />
   <title>Bariátrica Natural 🫡 | Sistema Metabólico — Monterrey</title>
+  <link rel="preload" as="image" href="assets/rafael_vertical_poster.jpg" fetchpriority="high" />
 
   <style>
     :root{
@@ -34,14 +46,23 @@
         radial-gradient(900px 520px at 80% 0%, rgba(242,140,40,.20), transparent 55%),
         linear-gradient(180deg, #051015 0%, #07161b 55%, #061217 100%);
       overflow-x:hidden;
+      line-height:1.6;
+      font-size:16px;
     }
     a{color:inherit}
+    a:focus-visible, button:focus-visible, input:focus-visible, .playBtn:focus-visible{outline:2px solid var(--cta);outline-offset:2px}
     .wrap{max-width:1160px;margin:0 auto;padding:0 18px}
+    .skipLink{
+      position:absolute;left:-999px;top:10px;
+      background:#fff;color:#000;padding:10px 12px;border-radius:12px;font-weight:800;z-index:200;
+    }
+    .skipLink:focus{left:12px}
     .nav{
       position:sticky;top:0;z-index:50;
       backdrop-filter: blur(10px);
       background: rgba(5,16,21,.75);
       border-bottom: 1px solid var(--line);
+      box-shadow: 0 10px 32px rgba(0,0,0,.25);
     }
     .navInner{
       display:flex;align-items:center;justify-content:space-between;
@@ -88,17 +109,17 @@
       box-shadow: 0 10px 28px rgba(11,107,58,.25);
     }
 
-    .hero{padding:34px 0 10px}
+    .hero{padding:28px 0 10px}
     .heroGrid{
       display:grid;
-      grid-template-columns: 1.05fr .95fr;
+      grid-template-columns: 1fr;
       gap:18px;
       align-items:stretch;
     }
-    @media (max-width: 980px){
-      .heroGrid{grid-template-columns:1fr;gap:14px}
-      .navLinks{justify-content:flex-start}
+    @media (min-width: 980px){
+      .heroGrid{grid-template-columns: 1.05fr .95fr;gap:18px}
     }
+    @media (max-width: 980px){.navLinks{justify-content:flex-start}}
     .panel{
       border:1px solid var(--line);
       background: rgba(255,255,255,.05);
@@ -135,10 +156,10 @@
     .bullets{
       margin:14px 0 18px;
       display:grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
       gap:10px;
     }
-    @media (max-width: 640px){.bullets{grid-template-columns:1fr}}
+    @media (min-width: 720px){.bullets{grid-template-columns: 1fr 1fr}}
     .bullet{
       padding:12px 12px;
       border-radius: 14px;
@@ -160,7 +181,7 @@
     .videoShell{
       position:relative;
       height: 100%;
-      min-height: 430px;
+      min-height: 360px;
       background:
         radial-gradient(520px 320px at 28% 10%, rgba(11,107,58,.35), transparent 60%),
         radial-gradient(520px 320px at 75% 0%, rgba(242,140,40,.25), transparent 60%),
@@ -238,6 +259,11 @@
       position:absolute;inset:0;
       display:flex;align-items:center;justify-content:center;
       cursor:pointer;
+      background:none;
+      border:0;
+      width:100%;
+      height:100%;
+      padding:0;
     }
     .playCircle{
       width:86px;height:86px;border-radius:999px;
@@ -274,26 +300,30 @@
     /* Section */
     section{padding:18px 0}
     .sectionTitle{
-      display:flex;align-items:flex-end;justify-content:space-between;gap:14px;
+      display:flex;align-items:flex-start;justify-content:space-between;gap:14px;
       margin:0 0 10px;
+      flex-direction:column;
     }
     .sectionTitle h2{
       margin:0;
-      font-size: clamp(18px, 2.2vw, 28px);
+      font-size: clamp(18px, 3vw, 28px);
       letter-spacing:-.2px;
     }
     .sectionTitle p{
       margin:0;
       color: rgba(207,224,229,.8);
-      font-size: 13px;
+      font-size: 14px;
       max-width: 62ch;
       line-height:1.5;
     }
-    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-    @media (max-width: 980px){.grid3{grid-template-columns:1fr 1fr}}
-    @media (max-width: 720px){.grid3{grid-template-columns:1fr}}
-    @media (max-width: 980px){.grid2{grid-template-columns:1fr}}
+    @media (min-width: 780px){
+      .sectionTitle{flex-direction:row;align-items:flex-end}
+    }
+    .grid2{display:grid;grid-template-columns:1fr;gap:14px}
+    .grid3{display:grid;grid-template-columns:1fr;gap:14px}
+    @media (min-width: 980px){.grid3{grid-template-columns:repeat(3,1fr)}}
+    @media (min-width: 720px) and (max-width: 979px){.grid3{grid-template-columns:1fr 1fr}}
+    @media (min-width: 980px){.grid2{grid-template-columns:1fr 1fr}}
     .card{
       border:1px solid var(--line);
       background: rgba(255,255,255,.05);
@@ -312,6 +342,7 @@
       display:block;
       height:auto;
       background:#0b1f26;
+      border-radius:14px;
     }
     /* Product media: mantiene proporción (sin distorsión) */
     .productMedia{
@@ -447,11 +478,11 @@
     /* Capture form */
     .formGrid{
       display:grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns:1fr;
       gap:10px;
       margin-top:12px;
     }
-    @media (max-width: 560px){.formGrid{grid-template-columns:1fr}}
+    @media (min-width: 560px){.formGrid{grid-template-columns: 1fr 1fr}}
     label{font-size:12px;color: rgba(207,224,229,.86); display:block; margin:0 0 6px}
     input{
       width:100%;
@@ -469,13 +500,13 @@
     /* Test */
     .testGrid{
       display:grid;
-      grid-template-columns: 1.1fr .9fr;
+      grid-template-columns:1fr;
       gap:14px;
       align-items:stretch;
     }
-    @media (max-width: 980px){.testGrid{grid-template-columns:1fr}}
-    .checkList{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    @media (max-width: 640px){.checkList{grid-template-columns:1fr}}
+    @media (min-width: 980px){.testGrid{grid-template-columns: 1.1fr .9fr}}
+    .checkList{display:grid;grid-template-columns:1fr;gap:10px}
+    @media (min-width: 640px){.checkList{grid-template-columns:1fr 1fr}}
     .check{
       display:flex;gap:10px;align-items:flex-start;
       padding:12px 12px;
@@ -553,8 +584,8 @@
     @media (max-width: 980px){.hideDesktop{display:block}}
   
     /* Trust / Respaldo (rediseño premium) */
-    .trustGrid{display:grid;grid-template-columns: 1fr 1.15fr;gap:14px;align-items:stretch}
-    @media (max-width: 980px){.trustGrid{grid-template-columns:1fr}}
+    .trustGrid{display:grid;grid-template-columns:1fr;gap:14px;align-items:stretch}
+    @media (min-width: 980px){.trustGrid{grid-template-columns: 1fr 1.15fr}}
     .trustBrief{position:relative;overflow:hidden}
     .trustBrief::before{
       content:"";
@@ -604,8 +635,8 @@
       font-size:12px;color:rgba(207,224,229,.85);
     }
 
-    .trustGallery{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    @media (max-width: 520px){.trustGallery{grid-template-columns:1fr}}
+    .trustGallery{display:grid;grid-template-columns:1fr;gap:14px}
+    @media (min-width: 520px){.trustGallery{grid-template-columns:1fr 1fr}}
     .trustTile{position:relative;display:block;text-decoration:none;transition:transform .15s ease, box-shadow .15s ease}
     .trustTile:hover{transform:translateY(-1px)}
     .trustTile.span2{grid-column:1 / -1}
@@ -703,10 +734,16 @@
     .trustCap strong{display:block;font-size:14px}
     .trustCap span{display:block;margin-top:4px;color:rgba(207,224,229,.78);font-size:12.5px;line-height:1.35}
 
+    @media (prefers-reduced-motion: reduce){
+      *{animation-duration:0.01ms !important;animation-iteration-count:1 !important;scroll-behavior:auto !important;transition:none !important}
+      .pulse{animation:none}
+    }
+
   </style>
 </head>
 
 <body>
+  <a class="skipLink" href="#main">Saltar al contenido principal</a>
   <div class="nav">
     <div class="wrap navInner">
       <div class="brand">
@@ -766,19 +803,19 @@
                 <div class="formGrid" style="margin-top:14px">
                   <div>
                     <label for="name">Nombre</label>
-                    <input id="name" name="name" placeholder="Tu nombre" required />
+                    <input id="name" name="name" autocomplete="name" placeholder="Tu nombre" required />
                   </div>
                   <div>
                     <label for="city">Ciudad</label>
-                    <input id="city" name="city" placeholder="Monterrey / San Nicolás / Guadalupe…" required />
+                    <input id="city" name="city" autocomplete="address-level2" placeholder="Monterrey / San Nicolás / Guadalupe…" required />
                   </div>
                   <div>
                     <label for="email">Email</label>
-                    <input id="email" name="email" type="email" placeholder="tucorreo@email.com" required />
+                    <input id="email" name="email" type="email" autocomplete="email" placeholder="tucorreo@email.com" required />
                   </div>
                   <div>
                     <label for="phone">Teléfono (WhatsApp)</label>
-                    <input id="phone" name="phone" inputmode="tel" placeholder="+52 81… / +1 787…" required />
+                    <input id="phone" name="phone" inputmode="tel" autocomplete="tel" placeholder="+52 81… / +1 787…" required />
                   </div>
                 </div>
 
@@ -810,14 +847,14 @@
           </div>
         </div>
 
-        <div class="videoFrame" id="videoFrame">
+          <div class="videoFrame" id="videoFrame">
           <div class="videoPoster"></div>
           <video id="heroVideo" class="heroVideo" playsinline controls preload="metadata"></video>
-          <div class="playBtn" id="openVideo">
-            <div class="playCircle" aria-label="Reproducir video">
+          <button class="playBtn" id="openVideo" type="button" aria-label="Abrir herramientas para subir tu video">
+            <div class="playCircle" aria-hidden="true">
               <div class="tri"></div>
             </div>
-          </div>
+          </button>
           <div class="videoOverlay">
             <div class="videoCaption">
               <strong>“Monterrey… esto se levanta con estructura.”</strong>
@@ -838,7 +875,7 @@
     </div>
   </header>
 
-  <main>
+  <main id="main">
     <section>
       <div class="wrap">
         <div class="sectionTitle">
@@ -851,7 +888,7 @@
 
                 <div class="grid2">
           <div class="card">
-            <div class="productMedia"><img src="assets/unici_front.png" alt="Unici-Té" /></div>
+            <div class="productMedia"><img src="assets/unici_front.png" alt="Unici-Té" loading="lazy" decoding="async" /></div>
             <div class="cardPad">
               <div class="pillRow">
                 <span class="pill">Unici-Té</span>
@@ -882,7 +919,7 @@
           </div>
 
           <div class="card">
-            <div class="productMedia"><img src="assets/balance_front.png" alt="Balance" /></div>
+            <div class="productMedia"><img src="assets/balance_front.png" alt="Balance" loading="lazy" decoding="async" /></div>
             <div class="cardPad">
               <div class="pillRow">
                 <span class="pill">Balance</span>
@@ -950,7 +987,7 @@
                 <b id="scoreNum">0</b>
               </div>
 
-              <div class="resultText" id="resultText">
+              <div class="resultText" id="resultText" aria-live="polite">
                 Marca tus señales y dale a “Ver mi resultado”.
                 Te diré qué significa a nivel educativo y el siguiente paso recomendado.
               </div>
@@ -980,7 +1017,7 @@
 
         <div class="grid3">
           <div class="card" style="grid-column: 1 / -1;">
-            <div class="systemBanner"><img src="assets/system_banner.png" alt="Sistema Feel Great" /></div>
+            <div class="systemBanner"><img src="assets/system_banner.png" alt="Sistema Feel Great" loading="lazy" decoding="async" /></div>
             <div class="cardPad">
               <h3 style="margin:0 0 8px;font-size:18px">Sistema Feel Great 🫡</h3>
               <ul class="list" style="font-size:15px">
@@ -1023,7 +1060,7 @@
             <div class="trustGallery" style="margin-top:14px">
               <a class="card trustTile span2" href="assets/harvard.png" target="_blank" rel="noopener">
               <div class="trustMedia">
-                <img src="assets/harvard.png" alt="Harvard Medical School Executive Education (certificación)" />
+                <img src="assets/harvard.png" alt="Harvard Medical School Executive Education (certificación)" loading="lazy" decoding="async" />
               </div>
               <div class="trustCap">
                 <strong>Certificación Harvard</strong>
@@ -1170,7 +1207,7 @@
 
         <div class="grid2">
           <div class="card">
-            <div class="systemMedia"><img src="assets/product_stack.png" alt="Sistema Feel Great (2 Unici-Té + 1 Balance)" /></div>
+            <div class="systemMedia"><img src="assets/product_stack.png" alt="Sistema Feel Great (2 Unici-Té + 1 Balance)" loading="lazy" decoding="async" /></div>
             <div class="cardPad">
               <h3 style="margin:0 0 8px;font-size:18px">Opción 1: Comprar el Sistema</h3>
               <p style="margin:0;color:rgba(207,224,229,.85);font-size:14px;line-height:1.55">
@@ -1226,13 +1263,13 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
     </div>
   </div>
 
-  <div class="toast" id="toast">Listo ✅</div>
+  <div class="toast" id="toast" role="status" aria-live="polite">Listo ✅</div>
 
   <!-- Modal (simple) -->
-  <div id="modal" style="position:fixed;inset:0;background:rgba(0,0,0,.62);display:none;align-items:center;justify-content:center;z-index:80;padding:18px;">
+  <div id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" style="position:fixed;inset:0;background:rgba(0,0,0,.62);display:none;align-items:center;justify-content:center;z-index:80;padding:18px;">
     <div style="max-width:760px;width:100%;border-radius:18px;border:1px solid rgba(255,255,255,.14);background:rgba(5,16,21,.92);box-shadow:0 18px 60px rgba(0,0,0,.45);overflow:hidden">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.10)">
-        <strong>Video de Rafael</strong>
+        <strong id="modalTitle">Video de Rafael</strong>
         <button class="btn btnGhost" style="padding:10px 12px" onclick="closeModal()">Cerrar</button>
       </div>
       <div style="padding:16px">
@@ -1460,6 +1497,8 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
         window.open(url, "_blank", "noopener");
         return;
       }
+      openWhatsApp("QUIERO COMPRAR EL SISTEMA — " + CONFIG.DEFAULT_MESSAGE);
+    }
 
     function openFounder(){
       const url = (CONFIG.FOUNDER_URL || "").trim();
@@ -1468,9 +1507,6 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
         return;
       }
       openWhatsAppDefault();
-    }
-
-      openWhatsApp("QUIERO COMPRAR EL SISTEMA — " + CONFIG.DEFAULT_MESSAGE);
     }
 
     function openModal(){

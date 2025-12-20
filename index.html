@@ -763,6 +763,10 @@
               </div>
 
               <form id="leadForm" autocomplete="on">
+                <div style="position:absolute;left:-9999px;opacity:0;pointer-events:none" aria-hidden="true">
+                  <label for="website">Sitio web</label>
+                  <input id="website" name="website" tabindex="-1" autocomplete="off" />
+                </div>
                 <div class="formGrid" style="margin-top:14px">
                   <div>
                     <label for="name">Nombre</label>
@@ -789,7 +793,10 @@
                 <div class="consent">
                   Al enviar, aceptas que te contactemos por WhatsApp para darte orientación educativa y seguimiento.
                   <strong>No es diagnóstico médico.</strong>
+                  <br/>Al enviar aceptas que te contactemos por email/WhatsApp. Puedes solicitar baja.
                 </div>
+
+                <div class="consent" id="leadStatus" role="status" aria-live="polite" style="display:none"></div>
               </form>
             </div>
           </div>
@@ -1345,32 +1352,87 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       return lines.join("\n");
     }
 
+    function sanitizeLeadField(value, limit){
+      const v = (value || "").toString().trim();
+      if(!limit) return v;
+      return v.slice(0, limit);
+    }
+
+    function setLeadStatus(msg, isError){
+      const el = document.getElementById("leadStatus");
+      if(!el) return;
+      el.style.display = msg ? "block" : "none";
+      el.style.color = isError ? "rgba(255,129,140,.95)" : "rgba(207,224,229,.9)";
+      el.textContent = msg || "";
+    }
+
     async function postLead(data){
-      if(!CONFIG.LEAD_WEBHOOK_URL) return;
-      try{
-        await fetch(CONFIG.LEAD_WEBHOOK_URL, {
-          method: "POST",
-          headers: {"Content-Type":"application/json"},
-          body: JSON.stringify({source:"landing_bariatrica_natural", ...data, ts: new Date().toISOString()})
-        });
-      }catch(e){
-        // Silencioso: no rompemos conversión
-      }
+      const body = { ...data, hp: document.getElementById("website")?.value || "" };
+      const resp = await fetch("api/lead.php", {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify(body)
+      });
+      const json = await resp.json().catch(()=>({ok:false, message:"Error inesperado"}));
+      return json;
     }
 
     document.getElementById("leadForm").addEventListener("submit", async (e)=>{
       e.preventDefault();
+      setLeadStatus("", false);
+
       const data = {
-        name: document.getElementById("name").value.trim(),
-        city: document.getElementById("city").value.trim(),
-        email: document.getElementById("email").value.trim(),
-        phone: document.getElementById("phone").value.trim()
+        name: sanitizeLeadField(document.getElementById("name").value, 120),
+        city: sanitizeLeadField(document.getElementById("city").value, 120),
+        email: sanitizeLeadField(document.getElementById("email").value, 160),
+        phone: sanitizeLeadField(document.getElementById("phone").value, 40)
       };
+
       if(!data.name || !data.city || !data.email || !data.phone){
+        setLeadStatus("Completa los campos", true);
         toast("Completa los campos ✅");
         return;
       }
-      await postLead(data);
+
+      const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+      if(!emailRegex.test(data.email)){
+        setLeadStatus("Email inválido", true);
+        return;
+      }
+
+      const phoneDigits = (data.phone || "").replace(/\\D+/g, "");
+      if(phoneDigits.length < 7 || phoneDigits.length > 20){
+        setLeadStatus("Teléfono inválido", true);
+        return;
+      }
+
+      setLeadStatus("Guardando…", false);
+
+      let result;
+      try{
+        result = await postLead(data);
+      }catch(_){
+        result = {ok:false, message:"No se pudo guardar"};
+      }
+
+      if(!result || !result.ok){
+        setLeadStatus(result && result.message ? result.message : "No se pudo guardar", true);
+        return;
+      }
+
+      setLeadStatus("Gracias, recibido", false);
+      toast("Gracias, recibido");
+
+      if(CONFIG.LEAD_WEBHOOK_URL){
+        try{
+          await fetch(CONFIG.LEAD_WEBHOOK_URL, {
+            method: "POST",
+            headers: {"Content-Type":"application/json"},
+            body: JSON.stringify({source:"landing_bariatrica_natural", ...data, ts: new Date().toISOString()})
+          });
+        }catch(_){ /* silencioso */ }
+      }
+
       openWhatsApp(buildLeadMessage(data));
     });
 
@@ -1460,6 +1522,8 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
         window.open(url, "_blank", "noopener");
         return;
       }
+      openWhatsApp("QUIERO COMPRAR EL SISTEMA — " + CONFIG.DEFAULT_MESSAGE);
+    }
 
     function openFounder(){
       const url = (CONFIG.FOUNDER_URL || "").trim();
@@ -1468,9 +1532,6 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
         return;
       }
       openWhatsAppDefault();
-    }
-
-      openWhatsApp("QUIERO COMPRAR EL SISTEMA — " + CONFIG.DEFAULT_MESSAGE);
     }
 
     function openModal(){

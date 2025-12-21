@@ -764,6 +764,40 @@
       .guaranteePad{align-items:flex-start}
       .guaranteeTitle{font-size:17px}
     }
+    /* Garantía modal */
+    .gOverlay{
+      position:fixed;inset:0;z-index:120;display:none;align-items:center;justify-content:center;padding:18px;
+      background:rgba(0,0,0,.65);backdrop-filter: blur(10px);
+    }
+    .gOverlay.on{display:flex}
+    .gModal{
+      width:100%;max-width:640px;
+      background: linear-gradient(135deg, rgba(11,43,52,.92), rgba(5,16,21,.96));
+      border:1px solid rgba(242,140,40,.32);
+      border-radius:24px;
+      box-shadow:0 28px 60px rgba(0,0,0,.55);
+      padding:22px 22px 18px;
+      position:relative;
+    }
+    .gClose{
+      position:absolute;top:12px;right:12px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:50%;
+      width:34px;height:34px;
+      display:inline-flex;align-items:center;justify-content:center;
+      cursor:pointer;
+      color:var(--muted2);
+      transition: background var(--anim-fast) ease, transform var(--anim-fast) ease;
+    }
+    .gClose:hover{background:rgba(255,255,255,.12);transform:scale(1.03)}
+    .gTitle{margin:0 0 6px;font-size:20px;letter-spacing:-.2px}
+    .gSub{margin:0 0 10px;color:rgba(207,224,229,.92);line-height:1.55;font-weight:600}
+    .gText{margin:0 0 12px;color:rgba(207,224,229,.85);line-height:1.6;font-size:14px}
+    .gList{margin:0 0 12px;padding-left:18px;color:rgba(207,224,229,.88);line-height:1.55;font-size:14px}
+    .gFooter{margin:0;color:rgba(207,224,229,.78);font-size:13px;line-height:1.5}
+    .gActions{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    .gActions .btn{border-radius:14px;padding:10px 14px}
 
   </style>
 </head>
@@ -1270,7 +1304,7 @@
                     <p class="guaranteeSub">Prueba el sistema por 90 días con guía y consistencia.</p>
                     <p class="fine" style="margin-top:6px">Aplican términos y condiciones de Unicity.</p>
                   </div>
-                  <button class="btn btnGhost" type="button" aria-label="Ver política de garantía">Ver política</button>
+                  <button class="btn btnGhost" type="button" aria-label="Ver política de garantía" id="openGuarantee">Ver política</button>
                 </div>
               </div>
             </div>
@@ -1307,6 +1341,25 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       </div>
     </section>
   </main>
+
+  <div class="gOverlay" id="guaranteeModal" role="dialog" aria-modal="true" aria-labelledby="gTitle" aria-describedby="gDesc">
+    <div class="gModal">
+      <button class="gClose" type="button" id="closeGuarantee" aria-label="Cerrar">×</button>
+      <h3 class="gTitle" id="gTitle">Garantía Feel Great</h3>
+      <p class="gSub">Pruébalo. Regístralo. Ámalo… o te devolvemos tu dinero.</p>
+      <p class="gText" id="gDesc">Estamos seguros de que te encantarán los resultados. Por eso ofrecemos una garantía de reembolso del 100% en Feel Great para Clientes y Miembros.</p>
+      <h4 class="gTitle" style="font-size:16px;margin-top:0;margin-bottom:8px">Para calificar:</h4>
+      <ul class="gList">
+        <li>Registra el uso del producto diariamente en la aplicación Feel Great Fasting</li>
+        <li>Mantén al menos un 50% de cumplimiento en el seguimiento durante 90 días</li>
+        <li>Comunícate con el servicio al cliente dentro de esos 90 días para iniciar la devolución del producto</li>
+      </ul>
+      <p class="gFooter">Consulta los detalles completos de la garantía y la política de devoluciones.</p>
+      <div class="gActions">
+        <button class="btn btnGhost" type="button" id="closeGuarantee2">Cerrar</button>
+      </div>
+    </div>
+  </div>
 
   <div class="sticky">
     <div class="stickyInner">
@@ -1737,9 +1790,34 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       if(e.target && e.target.id === "modal"){ closeModal(); }
     });
 
+    function initGuaranteeModal(){
+      const modal = document.getElementById("guaranteeModal");
+      const openBtn = document.getElementById("openGuarantee");
+      const closeBtns = [document.getElementById("closeGuarantee"), document.getElementById("closeGuarantee2")];
+      if(!modal || !openBtn) return;
+
+      const focusable = ()=> Array.from(modal.querySelectorAll("button"));
+      let lastFocus = null;
+
+      function open(){
+        lastFocus = document.activeElement;
+        modal.classList.add("on");
+        (focusable()[0] || modal).focus();
+      }
+      function close(){
+        modal.classList.remove("on");
+        if(lastFocus && typeof lastFocus.focus === "function"){ lastFocus.focus(); }
+      }
+      openBtn.addEventListener("click", open);
+      closeBtns.forEach(btn=> btn && btn.addEventListener("click", close));
+      modal.addEventListener("click", (e)=>{ if(e.target === modal){ close(); }});
+      document.addEventListener("keydown", (e)=>{ if(e.key === "Escape" && modal.classList.contains("on")){ close(); }});
+    }
+
     initHeroVideo();
 
     initAnimations();
+    initGuaranteeModal();
     renderTest();
   </script>
 </body>

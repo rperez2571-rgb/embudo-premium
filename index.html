@@ -52,10 +52,11 @@
       margin:0;
       font-family: var(--font-base);
       color: var(--text);
+      background-color: var(--bg);
       background:
         radial-gradient(1200px 620px at 18% 12%, rgba(249,115,22,.14), transparent 55%),
         radial-gradient(900px 520px at 70% 0%, rgba(96,165,250,.12), transparent 55%),
-        linear-gradient(180deg, #07131A 0%, #0B1A24 55%, #07131A 100%);
+        linear-gradient(180deg, var(--bg) 0%, #0B1A24 55%, var(--bg) 100%);
       overflow-x:hidden;
     }
     a{color:var(--link)}
@@ -115,8 +116,7 @@
       color: var(--text);
       background: var(--surface-contrast);
     }
-    .btn:hover{filter:brightness(1.02)}
-    .btn:active{transform:scale(.985)}
+    .btn:active{transform: translateY(0);}
     .btn:focus-visible{
       outline:none;
       box-shadow:0 0 0 4px rgba(37,99,235,.18);
@@ -387,9 +387,9 @@
       border-radius: var(--radius);
       overflow:hidden;
       box-shadow: var(--shadow-soft);
-      transition: transform var(--anim-medium) ease, box-shadow var(--anim-medium) ease, border-color var(--anim-medium) ease, opacity var(--anim-medium) ease;
+      transition: transform var(--anim-fast) ease, box-shadow var(--anim-fast) ease, border-color var(--anim-fast) ease, background var(--anim-fast) ease, color var(--anim-fast) ease, opacity var(--anim-fast) ease;
     }
-    .card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(15,23,42,.10)}
+    .card:hover{transform:translateY(-4px);box-shadow: var(--shadow);}
     .cardPad{padding:18px}
     /* Metabolismo (primer bloque): alinear el Permiso Cofepris al mismo nivel en ambas tarjetas */
     main > section:first-of-type .card{display:flex;flex-direction:column}
@@ -470,6 +470,7 @@
       font-weight:800;
       font-size: 12px;
       color: var(--muted);
+      transition: transform var(--anim-fast) ease, box-shadow var(--anim-fast) ease, background var(--anim-fast) ease, border-color var(--anim-fast) ease, color var(--anim-fast) ease;
     }
     .list{
       margin:10px 0 0;
@@ -665,6 +666,15 @@
     @media (prefers-reduced-motion: reduce){
       .sticky .btnPrimary.pulse-once{animation:none;}
     }
+
+    @media (hover:hover){
+      .btn:hover{transform:translateY(-1px);box-shadow: var(--shadow-soft);}
+      .trustChip:hover{transform:translateY(-1px);}
+      .card:hover,.panel:hover{box-shadow: var(--shadow);}
+    }
+    @media (prefers-reduced-motion: reduce){
+      .btn,.trustChip,.card,.panel{transition:none !important;transform:none !important;}
+    }
   
     /* Trust / Respaldo (rediseño premium) */
     .trustGrid{display:grid;grid-template-columns: 1fr 1.15fr;gap:14px;align-items:stretch}
@@ -718,11 +728,12 @@
       border:1px solid var(--border);
       background:var(--surface);
       font-size:12px;color:var(--muted);
+      transition: transform var(--anim-fast) ease, box-shadow var(--anim-fast) ease, background var(--anim-fast) ease, border-color var(--anim-fast) ease, color var(--anim-fast) ease;
     }
 
     .trustGallery{display:grid;grid-template-columns:1fr 1fr;gap:12px}
     @media (max-width: 520px){.trustGallery{grid-template-columns:1fr}}
-    .trustTile{position:relative;display:block;text-decoration:none;transition:transform .15s ease, box-shadow .15s ease}
+    .trustTile{position:relative;display:block;text-decoration:none;transition:transform var(--anim-fast) ease, box-shadow var(--anim-fast) ease, background var(--anim-fast) ease, border-color var(--anim-fast) ease;}
     .trustTile:hover{transform:translateY(-1px)}
     .trustTile.span2{grid-column:1 / -1}
     .trustMedia{
@@ -784,6 +795,7 @@
     #confianza .trustCard::before,
     #confianza .trustItem::before{
       opacity: .04 !important;
+      background: none !important;
     }
     #confianza .trustTile h3,
     #confianza .trustTile h4,
@@ -791,7 +803,7 @@
     #confianza .trustCard h4,
     #confianza .trustItem h3,
     #confianza .trustItem h4{
-      color: #0B1220 !important;
+      color: var(--text) !important;
       opacity: 1 !important;
       font-size: 18px !important;
       line-height:1.45 !important;
@@ -814,20 +826,20 @@
     #confianza .trustTile .sub,
     #confianza .trustCard .sub,
     #confianza .trustItem .sub{
-      color: #475569 !important;
+      color: var(--muted) !important;
       font-size: 16px !important;
       line-height:1.55 !important;
     }
     #confianza .trustTile .hint,
     #confianza .trustCard .hint,
     #confianza .trustItem .hint{
-      color: #64748B !important;
+      color: var(--muted2) !important;
       opacity:1 !important;
       font-size: 16px !important;
       line-height:1.55 !important;
     }
-    #confianza .trustCap strong{font-size:17px !important;line-height:1.45 !important;font-weight:800 !important;color:#0B1220 !important;}
-    #confianza .trustCap span{font-size:16px !important;line-height:1.55 !important;color:#475569 !important;}
+    #confianza .trustCap strong{font-size:17px !important;line-height:1.45 !important;font-weight:800 !important;color:var(--text) !important;}
+    #confianza .trustCap span{font-size:16px !important;line-height:1.55 !important;color:var(--muted) !important;}
     #confianza .trustText,
     #confianza .trustPoints li,
     #confianza .trustFine,
@@ -835,11 +847,11 @@
     #confianza .trustKicker{
       font-size:16px !important;
       line-height:1.55 !important;
-      color:#475569 !important;
+      color:var(--muted) !important;
     }
-    #confianza .trustFine{color:#475569 !important;}
-    #confianza .trustChip{font-weight:700 !important;color:#0B1220 !important;}
-    #confianza .trustKicker{color:#0B1220 !important;}
+    #confianza .trustFine{color:var(--muted) !important;}
+    #confianza .trustChip{font-weight:700 !important;color:var(--text) !important;}
+    #confianza .trustKicker{color:var(--text) !important;}
     #confianza .trustActions .btn{
       font-size:16px !important;
       padding:12px 16px !important;

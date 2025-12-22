@@ -5,15 +5,15 @@ header('Content-Type: application/json; charset=utf-8');
 $CONFIG = [
   'webhook_url' => '', // opcional: ej. n8n/zapier
   'crm' => [
-    'provider' => '', // 'hubspot' | 'brevo' | ''
+    'provider' => '', // 'brevo' recomendado; 'hubspot' opción enterprise
     'hubspot' => [
       'api_key' => '',
       'list_id' => '',
       'endpoint' => 'https://api.hubapi.com/contacts/v1/contact/'
     ],
     'brevo' => [
-      'api_key' => '',
-      'list_id' => '',
+      'api_key' => '', // BREVO_API_KEY
+      'list_id' => '', // LIST_ID
       'endpoint' => 'https://api.brevo.com/v3/contacts'
     ]
   ]

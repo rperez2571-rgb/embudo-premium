@@ -45,13 +45,22 @@ El archivo `bariatrica.zip` contendrá todo lo necesario para subir a `/public_h
    - `scroll_depth` (25/50/75/100)
 
 ## CRM / Email (placeholders)
+- Recomendación: usar **Brevo** por costo/beneficio. **HubSpot** solo si necesitas suite enterprise.
 - Configura en `api/lead.php`:
   - `webhook_url` (ej. n8n/zapier)
-  - `crm.provider`: `hubspot` o `brevo` (si vacío, no se envía)
+  - `crm.provider`: `brevo` (recomendado) o `hubspot` (enterprise). Si queda vacío, no envía.
   - Credenciales: `api_key`, `list_id`, `endpoint` según proveedor.
 - Segmento: se toma de `segment`/`lead_type` en el payload; por defecto `consumo`.
 - Envío de email de bienvenida: función placeholder (añade tu SMTP/API antes de usar).
 - Logging de errores de integración: `data/logs/lead_errors.log` (se crea on-demand).
+
+### Brevo Quick Start
+1) En `api/lead.php`, coloca:
+   - `brevo.api_key` = `BREVO_API_KEY`
+   - `brevo.list_id` = `LIST_ID`
+   - `brevo.endpoint` = `https://api.brevo.com/v3/contacts` (por defecto ya está)
+2) Define `crm.provider = "brevo"`.
+3) Establece el `FROM_EMAIL` en tu cuenta Brevo (no se configura en código hasta que tengas SMTP/API listo).
 
 ### Plantillas de bienvenida (ejemplos, sin claims médicos)
 1) **Consumo — Inicio claro**

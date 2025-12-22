@@ -1670,14 +1670,14 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
         return;
       }
 
-      const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if(!emailRegex.test(data.email)){
         setLeadStatus("Email inválido", true);
         markInvalid([{el: document.getElementById("email"), invalid:true}]);
         return;
       }
 
-      const phoneDigits = (data.phone || "").replace(/\\D+/g, "");
+      const phoneDigits = (data.phone || "").replace(/\D+/g, "");
       if(phoneDigits.length < 7 || phoneDigits.length > 20){
         setLeadStatus("Teléfono inválido", true);
         markInvalid([{el: document.getElementById("phone"), invalid:true}]);

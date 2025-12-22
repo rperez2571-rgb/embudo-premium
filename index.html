@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Bariátrica Natural — Sistema Metabólico (Unici-Té + Balance) para Monterrey. Acompañamiento por WhatsApp. Contenido educativo." />
   <title>Bariátrica Natural | Sistema Metabólico — Monterrey</title>
+  <script>
+    // GTM placeholder
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-XXXXXXX');
+  </script>
 
   <style>
     :root{
@@ -803,6 +811,7 @@
 </head>
 
 <body>
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="nav">
     <div class="wrap navInner">
       <div class="brand">
@@ -1399,6 +1408,7 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       VIDEO_POSTER: "assets/rafael_vertical_poster.jpg",
       LEAD_WEBHOOK_URL: "" // opcional: pega aquí tu n8n/servidor si quieres guardar leads
     };
+    window.dataLayer = window.dataLayer || [];
 
     function initHeroVideo(){
       const frame = document.getElementById("videoFrame");
@@ -1413,6 +1423,10 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       }
 
       vid.src = src;
+
+      vid.addEventListener("play", ()=> {
+        try{ window.dataLayer.push({event:"video_play", location:"hero_video"}); }catch(_){}
+      }, { once:true });
 
       vid.addEventListener("loadeddata", ()=> {
         frame.classList.add("hasVideo");
@@ -1458,6 +1472,7 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       const num = cleanDigits(CONFIG.WHATSAPP_NUMBER);
       const text = encodeURIComponent(message);
       const url = `https://wa.me/${num}?text=${text}`;
+      try{ window.dataLayer.push({event:"click_whatsapp", location:"generic", text: message}); }catch(_){}
       window.open(url, "_blank", "noopener");
     }
 
@@ -1539,6 +1554,7 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       e.preventDefault();
       setLeadStatus("", false);
       setSubmitState("idle");
+      try{ window.dataLayer.push({event:"lead_submit_attempt"}); }catch(_){}
 
       const data = {
         name: sanitizeLeadField(document.getElementById("name").value, 120),
@@ -1587,12 +1603,14 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       if(!result || !result.ok){
         setLeadStatus(result && result.message ? result.message : "No se pudo guardar", true);
         setSubmitState("idle");
+        try{ window.dataLayer.push({event:"lead_submit_error", message: result && result.message ? result.message : "unknown"}); }catch(_){}
         return;
       }
 
       setLeadStatus("Gracias, recibido", false);
       setSubmitState("success");
       toast("Gracias, recibido");
+      try{ window.dataLayer.push({event:"lead_submit_success"}); }catch(_){}
 
       if(CONFIG.LEAD_WEBHOOK_URL){
         try{
@@ -1708,9 +1726,28 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       });
     }
 
+    function initScrollDepth(){
+      const marks = [25,50,75,100];
+      const fired = new Set();
+      const handler = ()=> {
+        const doc = document.documentElement;
+        const scrolled = (doc.scrollTop + doc.clientHeight) / doc.scrollHeight * 100;
+        marks.forEach(m=>{
+          if(scrolled >= m && !fired.has(m)){
+            fired.add(m);
+            try{ window.dataLayer.push({event:"scroll_depth", depth:m}); }catch(_){}
+          }
+        });
+        if(fired.size === marks.length){ window.removeEventListener("scroll", handler); }
+      };
+      window.addEventListener("scroll", handler, {passive:true});
+      handler();
+    }
+
     function openPurchase(){
       const url = (CONFIG.PURCHASE_URL || "").trim();
       if(url && !url.includes("TU-ENLACE-DE-COMPRA-AQUI")){
+        try{ window.dataLayer.push({event:"click_whatsapp", location:"purchase_redirect"}); }catch(_){}
         window.open(url, "_blank", "noopener");
         return;
       }
@@ -1807,6 +1844,7 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
 
     initAnimations();
     initGuaranteeModal();
+    initScrollDepth();
     renderTest();
   </script>
 </body>

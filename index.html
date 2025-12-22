@@ -51,6 +51,7 @@
     .nav{
       position:sticky;top:0;z-index:50;
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(14px);
       background: rgba(5,16,21,.75);
       border-bottom: 1px solid var(--line);
     }
@@ -606,7 +607,7 @@
       background: rgba(5,16,21,.82);
       border-top: 1px solid rgba(255,255,255,.12);
       backdrop-filter: blur(10px);
-      padding:10px 12px;
+      padding:10px 12px calc(10px + env(safe-area-inset-bottom));
       display:none;
     }
     .stickyInner{max-width:1160px;margin:0 auto;display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap}
@@ -618,6 +619,9 @@
     @media (max-width: 720px){
       .sticky{display:block}
       .footer{padding-bottom:190px;}
+    }
+    @media (max-width: 560px){
+      .navInner{flex-wrap:wrap;}
     }
   
     /* Trust / Respaldo (rediseño premium) */

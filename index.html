@@ -663,6 +663,7 @@
     }
     .trustDot svg{width:14px;height:14px;fill:none;stroke:rgba(242,140,40,.95);stroke-width:2}
     .trustActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;position:relative;z-index:1;justify-content:center}
+    .trustActionsRow{grid-column:1 / -1; justify-content:center; margin-top:10px;}
     .trustFine{margin-top:10px;color:rgba(207,224,229,.65);font-size:12px;line-height:1.4;position:relative;z-index:1}
     .trustChipRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;position:relative;z-index:1}
     .trustChip{
@@ -690,7 +691,8 @@
       background:#07161b;
       border-radius:12px;
     }
-    .trustTile.span2 .trustMedia img{height:260px}
+    .trustTile.span2 .trustMedia{padding:10px 12px 6px}
+    .trustTile.span2 .trustMedia img{height:300px}
     .trustTile.noCap .trustMedia{border-bottom:none}
 
     /* Trust tiles — diseño interno (sin imágenes “captura”) */
@@ -1144,12 +1146,6 @@
               Puedes abrir cada evidencia en grande cuando lo necesites.
             </p>
 
-            <div class="trustActions">
-              <a class="btn btnAccent" href="https://www.unicityscience.org/clinical-validation-studies/?lang=es" target="_blank" rel="noopener noreferrer">Ciencia de Unicity</a>
-              <a class="btn btnAccent" href="https://www.unicity.com/mex/es/learn/history" target="_blank" rel="noopener noreferrer">Historia de Unicity</a>
-              <a class="btn btnAccent" href="https://www.unicity.com/usa/es/opportunity" target="_blank" rel="noopener noreferrer">Oportunidad de negocio</a>
-            </div>
-
             <div class="trustGallery" style="margin-top:14px">
               <a class="card trustTile span2" href="assets/harvard.png" target="_blank" rel="noopener">
               <div class="trustMedia">
@@ -1160,6 +1156,12 @@
                 <span>Executive Education · Nutrición sostenible y hábitos.</span>
               </div>
             </a>
+
+            <div class="trustActions trustActionsRow">
+              <a class="btn btnAccent" href="https://www.unicityscience.org/clinical-validation-studies/?lang=es" target="_blank" rel="noopener noreferrer">Ciencia de Unicity</a>
+              <a class="btn btnAccent" href="https://www.unicity.com/mex/es/learn/history" target="_blank" rel="noopener noreferrer">Historia de Unicity</a>
+              <a class="btn btnAccent" href="https://www.unicity.com/usa/es/opportunity" target="_blank" rel="noopener noreferrer">Oportunidad de negocio</a>
+            </div>
 
               <a class="card trustTile" href="https://www.pdr.net/full-prescribing-information/hl/?druglabelid=24170" target="_blank" rel="noopener" aria-label="Abrir evidencia PDR">
               <div class="trustMedia">

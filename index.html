@@ -769,6 +769,52 @@
       color:rgba(71,85,105,.68);
     }
 
+    /* FIX CONTRASTE — Sección Confianza (PDR + Certificaciones) */
+    #confianza .trustTile,
+    #confianza .trustCard,
+    #confianza .trustItem{
+      background: rgba(255,255,255,.92) !important;
+      border: 1px solid rgba(15,23,42,.12) !important;
+    }
+    #confianza .trustTile::before,
+    #confianza .trustCard::before,
+    #confianza .trustItem::before{
+      opacity: .08 !important;
+    }
+    #confianza .trustTile h3,
+    #confianza .trustTile h4,
+    #confianza .trustCard h3,
+    #confianza .trustCard h4,
+    #confianza .trustItem h3,
+    #confianza .trustItem h4{
+      color: var(--text) !important;
+      opacity: 1 !important;
+    }
+    #confianza .trustTile p,
+    #confianza .trustCard p,
+    #confianza .trustItem p,
+    #confianza .trustTile .sub,
+    #confianza .trustCard .sub,
+    #confianza .trustItem .sub,
+    #confianza .trustTile .hint,
+    #confianza .trustCard .hint,
+    #confianza .trustItem .hint{
+      opacity: 1 !important;
+    }
+    #confianza .trustTile p,
+    #confianza .trustCard p,
+    #confianza .trustItem p,
+    #confianza .trustTile .sub,
+    #confianza .trustCard .sub,
+    #confianza .trustItem .sub{
+      color: var(--muted) !important;
+    }
+    #confianza .trustTile .hint,
+    #confianza .trustCard .hint,
+    #confianza .trustItem .hint{
+      color: var(--muted2) !important;
+    }
+
     /* PDR */
     .pdrBoard{justify-content:center; gap:10px;}
     .pdrRow{display:flex;align-items:center;gap:10px}

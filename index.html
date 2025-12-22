@@ -105,6 +105,18 @@
       border: 1px solid var(--line);
       color: var(--white);
     }
+    .btnAccent{
+      background: linear-gradient(135deg, var(--cta), #ffb14a);
+      color:#0b0b0b;
+      border:1px solid rgba(242,140,40,.65);
+      box-shadow: 0 12px 28px rgba(242,140,40,.28);
+    }
+    .btnAccent:hover{filter:brightness(1.07);box-shadow:0 16px 36px rgba(242,140,40,.35);}
+    .btnAccent:focus-visible{
+      outline:2px solid rgba(242,140,40,.85);
+      outline-offset:2px;
+      box-shadow:0 0 0 4px rgba(242,140,40,.18);
+    }
     .btnCta{
       background: linear-gradient(135deg, var(--cta), #ffb14a);
       color:#101010;
@@ -1133,8 +1145,8 @@
             </p>
 
             <div class="trustActions">
-              <a class="btn btnGhost" href="https://www.unicityscience.org/clinical-validation-studies/?lang=es" target="_blank" rel="noopener noreferrer">Ciencia de Unicity</a>
-              <a class="btn btnGhost" href="https://www.unicity.com/mex/es/learn/history" target="_blank" rel="noopener noreferrer">Historia de Unicity</a>
+              <a class="btn btnAccent" href="https://www.unicityscience.org/clinical-validation-studies/?lang=es" target="_blank" rel="noopener noreferrer">Ciencia de Unicity</a>
+              <a class="btn btnAccent" href="https://www.unicity.com/mex/es/learn/history" target="_blank" rel="noopener noreferrer">Historia de Unicity</a>
             </div>
 
             <div class="trustGallery" style="margin-top:14px">

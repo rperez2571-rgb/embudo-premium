@@ -255,7 +255,9 @@
     .videoTop{
       display:flex;align-items:center;justify-content:space-between;gap:10px;
       padding:16px 16px 0;
-      color: var(--text);
+      color: #F8FAFC;
+      background: linear-gradient(90deg, rgba(11,18,32,.9), rgba(11,18,32,.82));
+      border-radius: 14px 14px 0 0;
     }
     .videoActions{display:flex;align-items:center;gap:10px}
     .btnSm{padding:10px 12px;border-radius:12px;font-size:13px}
@@ -267,7 +269,7 @@
     .videoTitle{
       font-weight:900;letter-spacing:.2px;
       display:flex;align-items:center;gap:10px;
-      color: var(--text);
+      color: #F8FAFC;
     }
     .pulse{
       width:10px;height:10px;border-radius:999px;
@@ -359,14 +361,23 @@
       line-height:1.5;
     }
     .videoShell .videoActions .badge{
-      background: var(--surface);
-      color: var(--text);
+      background: rgba(255,255,255,.16);
+      color: #F8FAFC;
+      border:1px solid rgba(255,255,255,.28);
+    }
+    .videoShell .hint{
+      background: rgba(255,255,255,.92);
       border:1px solid var(--border);
+      border-radius:14px;
+      padding:14px 16px;
+      color: var(--muted);
+      font-size:16px;
+      line-height:1.55;
     }
     .videoShell .hint strong{
       color: var(--text);
-      font-size:16px;
-      line-height:1.5;
+      font-size:17px;
+      line-height:1.55;
     }
     .videoShell .hint p{
       color: var(--muted) !important;

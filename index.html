@@ -254,13 +254,13 @@
     }
     .videoTop{
       display:flex;align-items:center;justify-content:space-between;gap:10px;
-      padding:16px 16px 0;
+      padding:12px 14px 8px;
       color: #F8FAFC;
-      background: linear-gradient(120deg, rgba(11,18,32,.92), rgba(11,18,32,.88));
-      border-radius: 16px 16px 0 0;
-      border:1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, rgba(11,18,32,.65), rgba(11,18,32,.15));
+      border-radius: 14px 14px 0 0;
       margin:0 16px 0;
-      box-shadow: 0 10px 28px rgba(0,0,0,.28);
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow: 0 8px 18px rgba(0,0,0,.18);
     }
     .videoActions{display:flex;align-items:center;gap:10px}
     .btnSm{padding:10px 12px;border-radius:12px;font-size:13px}
@@ -273,6 +273,7 @@
       font-weight:900;letter-spacing:.2px;
       display:flex;align-items:center;gap:10px;
       color: #F8FAFC;
+      font-weight:800;
     }
     .pulse{
       width:10px;height:10px;border-radius:999px;
@@ -364,13 +365,18 @@
       line-height:1.5;
     }
     .videoShell .videoActions .badge{
-      background: rgba(255,255,255,.16);
+      background: rgba(255,255,255,.10);
       color: #F8FAFC;
-      border:1px solid rgba(255,255,255,.28);
+      border:1px solid rgba(255,255,255,.18);
+    }
+    .videoShell .videoActions .btnGhost{
+      background: rgba(255,255,255,.10);
+      color: #F8FAFC;
+      border:1px solid rgba(255,255,255,.18);
     }
     .videoShell .hint{
-      background: rgba(255,255,255,.94);
-      border:1px solid var(--border);
+      background: rgba(255,255,255,.97);
+      border:1px solid rgba(15,23,42,.12);
       border-radius:16px;
       padding:16px 18px;
       color: var(--muted);
@@ -380,15 +386,20 @@
       margin: 0 16px 16px;
     }
     .videoShell .hint strong{
-      color: var(--text);
+      color: #0B1220;
       font-size:18px;
       line-height:1.55;
+      font-weight:800;
     }
     .videoShell .hint p{
-      color: var(--muted) !important;
+      color: #334155 !important;
       opacity:1 !important;
       font-size:16px !important;
       line-height:1.55 !important;
+    }
+    .videoShell .hint p:nth-of-type(2){
+      color: #0B1220 !important;
+      font-weight:700 !important;
     }
 
     /* Section */

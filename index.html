@@ -2,46 +2,73 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="description" content="Bariátrica Natural — Sistema Metabólico (Unici-Té + Balance) para Monterrey. Acompañamiento por WhatsApp. Contenido educativo." />
-  <title>Bariátrica Natural 🫡 | Sistema Metabólico — Monterrey</title>
+  <title>Bariátrica Natural | Sistema Metabólico — Monterrey</title>
+  <script>
+    // GTM placeholder
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-XXXXXXX');
+  </script>
 
   <style>
     :root{
-      --ink:#081318;
-      --bg:#07161b;
-      --card:#0b1f26;
-      --card2:#0b2b34;
-      --muted:#a9c0c8;
-      --muted2:#cfe0e5;
-      --white:#ffffff;
-      --blue:#0B2B34;
-      --green:#0B6B3A;
-      --cta:#F28C28;
+      /* Design Tokens */
+      --font-base: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      --bg:#07131A;
+      --surface:#0E1F2A;
+      --surface-strong:#122A38;
+      --surface-contrast:#0B1A24;
+      --text:#F8FAFC;
+      --muted:#B6C2CF;
+      --muted2:#93A4B8;
+      --border: rgba(255,255,255,.12);
       --line: rgba(255,255,255,.10);
-      --shadow: 0 18px 60px rgba(0,0,0,.35);
-      --radius: 18px;
-      --radius2: 26px;
+      --cta:#F97316;
+      --cta-hover:#EA580C;
+      --link:#60A5FA;
+      --error:#EF4444;
+      --success:#22C55E;
+      --shadow: 0 20px 60px rgba(0,0,0,.35);
+      --shadow-soft: 0 12px 36px rgba(0,0,0,.28);
+      --radius: 16px;
+      --radius2: 22px;
+      --anim-fast: .24s;
+      --anim-medium: .42s;
+      --anim-slow: .55s;
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
     }
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color: var(--white);
+      font-family: var(--font-base);
+      color: var(--text);
+      background-color: var(--bg);
       background:
-        radial-gradient(1200px 600px at 18% 10%, rgba(11,107,58,.25), transparent 55%),
-        radial-gradient(900px 520px at 80% 0%, rgba(242,140,40,.20), transparent 55%),
-        linear-gradient(180deg, #051015 0%, #07161b 55%, #061217 100%);
+        radial-gradient(1200px 620px at 18% 12%, rgba(249,115,22,.14), transparent 55%),
+        radial-gradient(900px 520px at 70% 0%, rgba(96,165,250,.12), transparent 55%),
+        linear-gradient(180deg, var(--bg) 0%, #0B1A24 55%, var(--bg) 100%);
       overflow-x:hidden;
     }
-    a{color:inherit}
+    a{color:var(--link)}
+    .nav a{color:var(--text);text-decoration:none;}
     .wrap{max-width:1160px;margin:0 auto;padding:0 18px}
     .nav{
       position:sticky;top:0;z-index:50;
-      backdrop-filter: blur(10px);
-      background: rgba(5,16,21,.75);
-      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: rgba(7,19,26,.9);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
     }
     .navInner{
       display:flex;align-items:center;justify-content:space-between;
@@ -55,38 +82,82 @@
     .badge{
       display:inline-flex;align-items:center;gap:8px;
       padding:8px 12px;border-radius:999px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.06);
-      color: var(--muted2);
+      border:1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
       font-size:12px;
       white-space:nowrap;
     }
     .navLinks{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+    .stickyCta{
+      position:fixed;left:50%;bottom:14px;transform:translateX(-50%);
+      width:calc(100% - 32px);max-width:420px;z-index:90;
+      box-shadow: var(--shadow-soft);
+      display:none;
+      background: rgba(11,31,42,.92);
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      backdrop-filter: blur(12px);
+    }
+    @media (max-width:720px){
+      .stickyCta{display:flex}
+    }
+    @media (min-width:721px){
+      .stickyCta{display:none !important}
+    }
     .btn{
-      border:0;cursor:pointer;
+      border:1px solid transparent;cursor:pointer;
       padding:12px 14px;border-radius:12px;
       font-weight:700;
-      transition: transform .12s ease, filter .12s ease, background .12s ease;
+      transition: transform var(--anim-fast) ease, filter var(--anim-fast) ease, background var(--anim-fast) ease, box-shadow var(--anim-fast) ease, border-color var(--anim-fast) ease, color var(--anim-fast) ease;
       text-decoration:none;
       display:inline-flex;align-items:center;justify-content:center;gap:10px;
       white-space:nowrap;
+      color: var(--text);
+      background: var(--surface-contrast);
     }
-    .btn:active{transform:scale(.98)}
+    .btn:active{transform: translateY(0);}
+    .btn:focus-visible{
+      outline:none;
+      box-shadow:0 0 0 4px rgba(37,99,235,.18);
+    }
+    .btn:disabled,
+    .btn[aria-busy="true"]{
+      opacity:.75;cursor:not-allowed;filter:grayscale(.1);
+    }
+    .btnPrimary{
+      background: var(--cta);
+      color:#fff;
+      border-color: var(--cta);
+      box-shadow: 0 14px 32px rgba(249,115,22,.18);
+    }
+    .btnPrimary:hover{background: var(--cta-hover);border-color: var(--cta-hover);}
+    .btnPrimary:focus-visible{box-shadow:0 0 0 4px rgba(249,115,22,.22);}
+
+    .btnSecondary{
+      background: #25D366;
+      color: #fff;
+      border-color: #25D366;
+      box-shadow: 0 10px 24px rgba(37,211,102,.16);
+    }
+    .btnSecondary:hover{background: #1EBE5D;border-color:#1EBE5D;}
+    .btnSecondary:focus-visible{box-shadow:0 0 0 4px rgba(37,211,102,.22);}
+
     .btnGhost{
-      background: rgba(255,255,255,.06);
-      border: 1px solid var(--line);
-      color: var(--white);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      box-shadow: none;
     }
-    .btnCta{
-      background: linear-gradient(135deg, var(--cta), #ffb14a);
-      color:#101010;
-      box-shadow: 0 10px 28px rgba(242,140,40,.26);
+    .btnGhost:hover{background: var(--surface-strong);}
+
+    .btn.is-loading span:after{
+      content:"";display:inline-block;width:14px;height:14px;margin-left:8px;
+      border:2px solid rgba(0,0,0,.25);border-top-color:rgba(0,0,0,.7);
+      border-radius:50%;animation: spin .7s linear infinite;
     }
-    .btnGreen{
-      background: linear-gradient(135deg, var(--green), #19a45a);
-      color:#07120d;
-      box-shadow: 0 10px 28px rgba(11,107,58,.25);
-    }
+
+    @keyframes spin{to{transform:rotate(360deg)}}
 
     .hero{padding:34px 0 10px}
     .heroGrid{
@@ -100,22 +171,30 @@
       .navLinks{justify-content:flex-start}
     }
     .panel{
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.05);
+      border:1px solid var(--border);
+      background: var(--surface-contrast);
       border-radius: var(--radius2);
       box-shadow: var(--shadow);
       overflow:hidden;
+      transition: transform var(--anim-medium) ease, box-shadow var(--anim-medium) ease, border-color var(--anim-medium) ease, opacity var(--anim-medium) ease;
     }
     .panelInner{padding:22px}
+    .anim-soft{opacity:0;transform:translateY(14px);transition: opacity .21s ease, transform .21s ease;transition-delay: var(--reveal-delay, 0s);}
+    .anim-soft.in{opacity:1;transform:translateY(0);}
+    @media (prefers-reduced-motion: reduce){
+      .anim-soft{opacity:1 !important;transform:none !important;}
+      *{scroll-behavior:auto !important;transition:none !important;animation:none !important;}
+    }
     h1{
       margin:0 0 10px;
       font-size: clamp(28px, 3.6vw, 44px);
       line-height:1.08;
       letter-spacing:-.5px;
+      font-weight:800;
     }
     .sub{
       margin:0 0 16px;
-      color: var(--muted2);
+      color: var(--muted);
       font-size: 16px;
       line-height:1.55;
       max-width: 62ch;
@@ -126,10 +205,10 @@
     }
     .kicker .tag{
       padding:8px 12px;border-radius:999px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.06);
+      border:1px solid var(--border);
+      background: var(--surface);
       font-size:12px;
-      color: var(--muted2);
+      color: var(--muted);
       display:inline-flex;gap:8px;align-items:center;
     }
     .bullets{
@@ -142,18 +221,25 @@
     .bullet{
       padding:12px 12px;
       border-radius: 14px;
-      border:1px solid var(--line);
-      background: rgba(5,16,21,.45);
-      color: var(--muted2);
+      border:1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
       font-size: 13px;
       line-height:1.35;
     }
     .ctaRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
     .fine{
       margin-top:12px;
-      color: rgba(207,224,229,.78);
+      color: var(--muted2);
       font-size: 12px;
       line-height:1.45;
+    }
+    @media (max-width: 640px){
+      body{font-size:15px;line-height:1.6;}
+      .sub{line-height:1.65;font-size:15.5px;}
+      .sectionTitle p{line-height:1.6;font-size:14px;}
+      .bullet{line-height:1.45;font-size:13.5px;}
+      .fine{line-height:1.55;font-size:12.5px;}
     }
 
     /* Video card */
@@ -162,13 +248,19 @@
       height: 100%;
       min-height: 430px;
       background:
-        radial-gradient(520px 320px at 28% 10%, rgba(11,107,58,.35), transparent 60%),
-        radial-gradient(520px 320px at 75% 0%, rgba(242,140,40,.25), transparent 60%),
-        linear-gradient(180deg, rgba(11,43,52,.70) 0%, rgba(11,31,38,.88) 100%);
+        radial-gradient(520px 320px at 28% 10%, rgba(22,163,74,.12), transparent 60%),
+        radial-gradient(520px 320px at 75% 0%, rgba(37,99,235,.08), transparent 60%),
+        linear-gradient(180deg, #f7f9fb 0%, #eef2f6 100%);
     }
     .videoTop{
       display:flex;align-items:center;justify-content:space-between;gap:10px;
-      padding:16px 16px 0;
+      padding:12px 14px 8px;
+      color: #F8FAFC;
+      background: linear-gradient(180deg, rgba(11,18,32,.65), rgba(11,18,32,.15));
+      border-radius: 14px 14px 0 0;
+      margin:0 16px 0;
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow: 0 8px 18px rgba(0,0,0,.18);
     }
     .videoActions{display:flex;align-items:center;gap:10px}
     .btnSm{padding:10px 12px;border-radius:12px;font-size:13px}
@@ -180,26 +272,28 @@
     .videoTitle{
       font-weight:900;letter-spacing:.2px;
       display:flex;align-items:center;gap:10px;
+      color: #F8FAFC;
+      font-weight:800;
     }
     .pulse{
       width:10px;height:10px;border-radius:999px;
       background: var(--cta);
-      box-shadow: 0 0 0 0 rgba(242,140,40,.45);
+      box-shadow: 0 0 0 0 rgba(22,163,74,.35);
       animation:pulse 1.6s infinite;
     }
     @keyframes pulse{
-      0%{box-shadow:0 0 0 0 rgba(242,140,40,.45)}
-      70%{box-shadow:0 0 0 14px rgba(242,140,40,0)}
-      100%{box-shadow:0 0 0 0 rgba(242,140,40,0)}
+      0%{box-shadow:0 0 0 0 rgba(22,163,74,.35)}
+      70%{box-shadow:0 0 0 14px rgba(22,163,74,0)}
+      100%{box-shadow:0 0 0 0 rgba(22,163,74,0)}
     }
     .videoFrame{
       position:relative;
       margin:14px 16px 16px;
       border-radius: 18px;
       overflow:hidden;
-      border:1px solid rgba(255,255,255,.16);
-      background:#02080b;
-      box-shadow: 0 18px 48px rgba(0,0,0,.35);
+      border:1px solid var(--border);
+      background: var(--surface-contrast);
+      box-shadow: var(--shadow-soft);
       height: min(72vh, 560px);
       aspect-ratio: 9 / 16;
       max-width: 360px;
@@ -229,8 +323,8 @@
     .videoOverlay{
       position:absolute;inset:0;
       background:
-        radial-gradient(520px 300px at 30% 0%, rgba(255,255,255,.08), transparent 60%),
-        linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,.62));
+        radial-gradient(520px 300px at 30% 0%, rgba(22,163,74,.12), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.55), rgba(247,248,250,.9));
       display:flex;align-items:flex-end;
       padding:16px;
     }
@@ -241,18 +335,18 @@
     }
     .playCircle{
       width:86px;height:86px;border-radius:999px;
-      background: rgba(242,140,40,.95);
-      color:#111;
+      background: var(--cta);
+      color:#fff;
       display:flex;align-items:center;justify-content:center;
-      box-shadow: 0 16px 36px rgba(242,140,40,.28);
-      border: 1px solid rgba(255,255,255,.35);
+      box-shadow: 0 16px 36px rgba(22,163,74,.22);
+      border: 1px solid rgba(255,255,255,.8);
       transform: translateY(-8px);
       transition: transform .16s ease, filter .16s ease;
     }
     .playBtn:hover .playCircle{transform: translateY(-10px) scale(1.02); filter:saturate(1.08)}
     .tri{
       width:0;height:0;
-      border-left: 18px solid #111;
+      border-left: 18px solid #fff;
       border-top: 12px solid transparent;
       border-bottom: 12px solid transparent;
       margin-left:4px;
@@ -262,13 +356,48 @@
       display:flex;flex-direction:column;gap:6px;
       max-width: 54ch;
     }
-    .videoCaption strong{font-size:14px}
-    .videoCaption span{color: rgba(207,224,229,.85); font-size:12px; line-height:1.35}
+    .videoCaption strong{font-size:16px;color: var(--text);}
+    .videoCaption span{color: var(--muted); font-size:14px; line-height:1.5}
     .hint{
       margin:0 16px 16px;
-      color: rgba(207,224,229,.78);
-      font-size:12px;
-      line-height:1.45;
+      color: var(--muted);
+      font-size:16px;
+      line-height:1.5;
+    }
+    .videoShell .videoActions .badge{
+      display:none;
+    }
+    .videoShell .videoActions .btnGhost{
+      background: rgba(255,255,255,.10);
+      color: #F8FAFC;
+      border:1px solid rgba(255,255,255,.18);
+    }
+    .videoShell .hint{
+      background: rgba(255,255,255,.97);
+      border:1px solid rgba(15,23,42,.12);
+      border-radius:16px;
+      padding:16px 18px;
+      color: var(--muted);
+      font-size:16px;
+      line-height:1.55;
+      box-shadow: 0 12px 32px rgba(15,23,42,.10);
+      margin: 0 16px 16px;
+    }
+    .videoShell .hint strong{
+      color: #0B1220;
+      font-size:18px;
+      line-height:1.55;
+      font-weight:800;
+    }
+    .videoShell .hint p{
+      color: #334155 !important;
+      opacity:1 !important;
+      font-size:16px !important;
+      line-height:1.55 !important;
+    }
+    .videoShell .hint p:nth-of-type(2){
+      color: #0B1220 !important;
+      font-weight:700 !important;
     }
 
     /* Section */
@@ -281,10 +410,11 @@
       margin:0;
       font-size: clamp(18px, 2.2vw, 28px);
       letter-spacing:-.2px;
+      font-weight:800;
     }
     .sectionTitle p{
       margin:0;
-      color: rgba(207,224,229,.8);
+      color: rgba(71,85,105,.8);
       font-size: 13px;
       max-width: 62ch;
       line-height:1.5;
@@ -295,12 +425,14 @@
     @media (max-width: 720px){.grid3{grid-template-columns:1fr}}
     @media (max-width: 980px){.grid2{grid-template-columns:1fr}}
     .card{
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.05);
+      border:1px solid var(--border);
+      background: var(--surface-contrast);
       border-radius: var(--radius);
       overflow:hidden;
-      box-shadow: 0 10px 32px rgba(0,0,0,.22);
+      box-shadow: var(--shadow-soft);
+      transition: transform var(--anim-fast) ease, box-shadow var(--anim-fast) ease, border-color var(--anim-fast) ease, background var(--anim-fast) ease, color var(--anim-fast) ease, opacity var(--anim-fast) ease;
     }
+    .card:hover{transform:translateY(-4px);box-shadow: var(--shadow);}
     .cardPad{padding:18px}
     /* Metabolismo (primer bloque): alinear el Permiso Cofepris al mismo nivel en ambas tarjetas */
     main > section:first-of-type .card{display:flex;flex-direction:column}
@@ -311,12 +443,12 @@
       width:100%;
       display:block;
       height:auto;
-      background:#0b1f26;
+      background: var(--surface);
     }
     /* Product media: mantiene proporción (sin distorsión) */
     .productMedia{
       width:100%;
-      background:#0b1f26;
+      background: var(--surface);
       display:flex;
       align-items:center;
       justify-content:center;
@@ -328,10 +460,13 @@
       height:auto;
       max-height:260px;
       object-fit:contain;
+      background: transparent;
+      aspect-ratio: 95 / 63;
     }
+    .productMedia img[alt="Balance"]{aspect-ratio: 95 / 60;}
     .systemMedia{
       width:100%;
-      background:#0b1f26;
+      background: var(--surface);
       display:flex;
       align-items:center;
       justify-content:center;
@@ -343,6 +478,7 @@
       height:auto;
       max-height:360px;
       object-fit:contain;
+      aspect-ratio: 1670 / 1206;
     }
 
     /* Full-width banner for Sistema Feel Great (no padding, no cropping) */
@@ -356,6 +492,7 @@
       display:block;
       width:100%;
       height:auto;
+      aspect-ratio: 1670 / 1206;
     }
 
     /* Bigger CTAs (only where applied) */
@@ -371,11 +508,12 @@
     .pillRow{display:flex;gap:10px;flex-wrap:wrap}
     .pill{
       padding:10px 12px;border-radius:999px;
-      border:1px solid var(--line);
-      background: rgba(5,16,21,.35);
+      border:1px solid var(--border);
+      background: var(--surface);
       font-weight:800;
       font-size: 12px;
-      color: var(--muted2);
+      color: var(--muted);
+      transition: transform var(--anim-fast) ease, box-shadow var(--anim-fast) ease, background var(--anim-fast) ease, border-color var(--anim-fast) ease, color var(--anim-fast) ease;
     }
     .list{
       margin:10px 0 0;
@@ -388,9 +526,9 @@
       margin-top:14px;
       padding:14px 14px;
       border-radius: 16px;
-      border:1px solid rgba(242,140,40,.35);
-      background: rgba(242,140,40,.08);
-      color: rgba(255,255,255,.92);
+      border:1px solid rgba(22,163,74,.20);
+      background: rgba(22,163,74,.08);
+      color: var(--text);
       font-size: 13px;
       line-height:1.45;
     }
@@ -399,18 +537,18 @@
     .subcopy{
       margin-top:14px;
       padding-top:14px;
-      border-top: 1px solid rgba(255,255,255,.08);
+      border-top: 1px solid var(--border);
     }
     .subcopyLead{
       margin:0;
-      color: rgba(207,224,229,.86);
+      color: var(--muted);
       font-size: 13px;
       line-height:1.55;
     }
     .subcopyNote{
       margin:10px 0 0;
       font-weight:900;
-      color: rgba(207,224,229,.92);
+      color: var(--text);
       font-size:13px;
     }
     .checkBullets{
@@ -428,7 +566,7 @@
       margin:10px 0;
     }
     .checkBullets li::before{
-      content:"✓";
+      content:"•";
       width:22px;
       height:22px;
       flex:0 0 22px;
@@ -436,9 +574,9 @@
       align-items:center;
       justify-content:center;
       border-radius:999px;
-      border:1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.06);
-      color: rgba(255,255,255,.92);
+      border:1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
       font-weight:900;
       font-size:12px;
       margin-top:1px;
@@ -452,19 +590,19 @@
       margin-top:12px;
     }
     @media (max-width: 560px){.formGrid{grid-template-columns:1fr}}
-    label{font-size:12px;color: rgba(207,224,229,.86); display:block; margin:0 0 6px}
+    label{font-size:12px;color: var(--muted); display:block; margin:0 0 6px}
     input{
       width:100%;
       padding:12px 12px;
       border-radius: 12px;
-      border: 1px solid rgba(255,255,255,.16);
-      background: rgba(0,0,0,.18);
-      color: var(--white);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
       outline:none;
     }
-    input:focus{border-color: rgba(242,140,40,.55); box-shadow: 0 0 0 4px rgba(242,140,40,.12)}
+    input:focus{border-color: var(--cta); box-shadow: 0 0 0 4px rgba(22,163,74,.14)}
     .formActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-    .consent{font-size:12px;color: rgba(207,224,229,.78);line-height:1.4;margin-top:10px}
+    .consent{font-size:12px;color: var(--muted2);line-height:1.4;margin-top:10px}
 
     /* Test */
     .testGrid{
@@ -480,14 +618,14 @@
       display:flex;gap:10px;align-items:flex-start;
       padding:12px 12px;
       border-radius: 14px;
-      border:1px solid var(--line);
-      background: rgba(5,16,21,.35);
+      border:1px solid var(--border);
+      background: var(--surface);
       cursor:pointer;
       user-select:none;
     }
     .check input{width:18px;height:18px;margin-top:2px}
     .check strong{display:block;font-size:13px}
-    .check span{display:block;color: rgba(207,224,229,.78); font-size:12px; line-height:1.35; margin-top:2px}
+    .check span{display:block;color: var(--muted2); font-size:12px; line-height:1.35; margin-top:2px}
     .resultBox{
       height:100%;
       display:flex;flex-direction:column;gap:10px;
@@ -495,25 +633,25 @@
     .score{
       display:flex;align-items:center;justify-content:space-between;gap:10px;
       padding:14px 14px;border-radius:16px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.18);
+      border:1px solid var(--border);
+      background: var(--surface);
     }
     .score strong{font-size:14px}
     .score b{font-size:22px}
     .resultText{
       padding:14px 14px;border-radius:16px;
-      border:1px solid rgba(11,107,58,.25);
-      background: rgba(11,107,58,.08);
-      color: rgba(255,255,255,.92);
+      border:1px solid rgba(22,163,74,.22);
+      background: rgba(22,163,74,.08);
+      color: var(--text);
       font-size:13px;line-height:1.45;
       flex:1;
     }
     .miniBtns{display:flex;gap:10px;flex-wrap:wrap}
     .toast{
       position:fixed;left:50%;bottom:92px;transform:translateX(-50%);
-      background: rgba(0,0,0,.75);
-      border: 1px solid rgba(255,255,255,.16);
-      color:#fff;
+      background: rgba(15,23,42,.9);
+      border: 1px solid rgba(226,232,240,.75);
+      color:#f8fafc;
       padding:10px 12px;
       border-radius: 12px;
       font-size:13px;
@@ -525,45 +663,74 @@
     /* Bottom */
     .footer{
       padding:24px 0 96px;
-      color: rgba(207,224,229,.78);
+      color: var(--muted2);
       font-size:12px;
       line-height:1.5;
-      border-top: 1px solid var(--line);
+      border-top: 1px solid var(--border);
       margin-top: 14px;
     }
 
     .footerInner{max-width:820px;margin:0 auto;text-align:center;padding:0 14px}
     .footerInner p{margin:0}
     .footerInner p + p{margin-top:10px}
-    .footerInner strong{color:rgba(255,255,255,.92)}
+    .footerInner strong{color:var(--text)}
 
     /* Sticky whatsapp */
     .sticky{
       position:fixed;left:0;right:0;bottom:0;z-index:60;
-      background: rgba(5,16,21,.82);
-      border-top: 1px solid rgba(255,255,255,.12);
-      backdrop-filter: blur(10px);
-      padding:10px 12px;
+      background: rgba(255,255,255,.95);
+      border-top: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+      display:none;
     }
     .stickyInner{max-width:1160px;margin:0 auto;display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap}
     .stickyInner > div{text-align:center}
-    .stickyInner small{color: rgba(207,224,229,.78); display:block; line-height:1.25}
+    .stickyInner small{color: var(--muted2); display:block; line-height:1.25}
     .stickyInner b{display:block}
     .hideDesktop{display:none}
     @media (max-width: 980px){.hideDesktop{display:block}}
+    @media (max-width: 720px){
+      .sticky{display:block}
+      .footer{padding-bottom:190px;}
+    }
+    @media (max-width: 560px){
+      .navInner{flex-wrap:wrap;}
+      .navLinks{width:100%;justify-content:flex-start;}
+    }
+    @keyframes ctaPulseOnce{
+      0%{transform:scale(1); box-shadow:0 10px 28px rgba(22,163,74,.26);}
+      50%{transform:scale(1.01); box-shadow:0 16px 40px rgba(22,163,74,.30);}
+      100%{transform:scale(1); box-shadow:0 10px 28px rgba(22,163,74,.26);}
+    }
+    .sticky .btnPrimary.pulse-once{
+      animation: ctaPulseOnce 1.2s ease-out 0s 1;
+    }
+    @media (prefers-reduced-motion: reduce){
+      .sticky .btnPrimary.pulse-once{animation:none;}
+    }
+
+    @media (hover:hover){
+      .btn:hover{transform:translateY(-1px);box-shadow: var(--shadow-soft);}
+      .trustChip:hover{transform:translateY(-1px);}
+      .card:hover,.panel:hover{box-shadow: var(--shadow);}
+    }
+    @media (prefers-reduced-motion: reduce){
+      .btn,.trustChip,.card,.panel{transition:none !important;transform:none !important;}
+    }
   
     /* Trust / Respaldo (rediseño premium) */
     .trustGrid{display:grid;grid-template-columns: 1fr 1.15fr;gap:14px;align-items:stretch}
     @media (max-width: 980px){.trustGrid{grid-template-columns:1fr}}
-    .trustBrief{position:relative;overflow:hidden}
+    .trustBrief{position:relative;overflow:hidden;background: var(--surface-contrast);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow-soft);}
     .trustBrief::before{
       content:"";
       position:absolute;
       inset:-60px -60px auto auto;
       width:260px;height:260px;
       background:
-        radial-gradient(circle at 30% 30%, rgba(242,140,40,.22), transparent 60%),
-        radial-gradient(circle at 60% 70%, rgba(11,107,58,.20), transparent 62%);
+        radial-gradient(circle at 30% 30%, rgba(22,163,74,.22), transparent 60%),
+        radial-gradient(circle at 60% 70%, rgba(22,163,74,.16), transparent 62%);
       pointer-events:none;
       opacity:.95;
     }
@@ -573,45 +740,48 @@
       gap:8px;
       padding:6px 10px;
       border-radius:999px;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(255,255,255,.06);
-      color:rgba(207,224,229,.9);
+      border:1px solid var(--border);
+      background:var(--surface);
+      color:var(--muted);
       font-size:12px;
       position:relative;
       z-index:1;
     }
     .trustTitle{margin:10px 0 8px;font-size:18px;letter-spacing:-.2px;position:relative;z-index:1}
-    .trustText{margin:0;color:rgba(207,224,229,.85);font-size:14px;line-height:1.55;position:relative;z-index:1}
+    .trustText{margin:0;color:rgba(71,85,105,.85);font-size:14px;line-height:1.55;position:relative;z-index:1}
     .trustPoints{margin:14px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;position:relative;z-index:1}
-    .trustPoints li{display:flex;gap:10px;align-items:flex-start;color:rgba(207,224,229,.88);font-size:13px;line-height:1.45}
+    .trustPoints li{display:flex;gap:10px;align-items:flex-start;color:rgba(71,85,105,.88);font-size:13px;line-height:1.45}
     .trustDot{
       width:22px;height:22px;border-radius:8px;
-      background: rgba(242,140,40,.14);
-      border:1px solid rgba(242,140,40,.35);
+      background: rgba(22,163,74,.14);
+      border:1px solid rgba(22,163,74,.35);
       display:flex;align-items:center;justify-content:center;
       flex:0 0 auto;
       margin-top:1px;
-      box-shadow: 0 10px 18px rgba(0,0,0,.22);
+      box-shadow: 0 10px 18px rgba(15,23,42,.08);
     }
-    .trustDot svg{width:14px;height:14px;fill:none;stroke:rgba(242,140,40,.95);stroke-width:2}
-    .trustActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;position:relative;z-index:1}
-    .trustFine{margin-top:10px;color:rgba(207,224,229,.65);font-size:12px;line-height:1.4;position:relative;z-index:1}
+    .trustDot svg{width:14px;height:14px;fill:none;stroke:rgba(22,163,74,.95);stroke-width:2}
+    .trustActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;position:relative;z-index:1;justify-content:center}
+    .trustActionsRow{grid-column:1 / -1; justify-content:center; margin-top:6px;}
+    .trustActionsRow .btn{min-width:200px; text-align:center; padding:12px 16px;}
+    .trustFine{margin-top:10px;color:rgba(71,85,105,.65);font-size:12px;line-height:1.4;position:relative;z-index:1}
     .trustChipRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;position:relative;z-index:1}
     .trustChip{
       padding:6px 10px;border-radius:999px;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(255,255,255,.04);
-      font-size:12px;color:rgba(207,224,229,.85);
+      border:1px solid var(--border);
+      background:var(--surface);
+      font-size:12px;color:var(--muted);
+      transition: transform var(--anim-fast) ease, box-shadow var(--anim-fast) ease, background var(--anim-fast) ease, border-color var(--anim-fast) ease, color var(--anim-fast) ease;
     }
 
-    .trustGallery{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .trustGallery{display:grid;grid-template-columns:1fr 1fr;gap:12px}
     @media (max-width: 520px){.trustGallery{grid-template-columns:1fr}}
-    .trustTile{position:relative;display:block;text-decoration:none;transition:transform .15s ease, box-shadow .15s ease}
+    .trustTile{position:relative;display:block;text-decoration:none;transition:transform var(--anim-fast) ease, box-shadow var(--anim-fast) ease, background var(--anim-fast) ease, border-color var(--anim-fast) ease;}
     .trustTile:hover{transform:translateY(-1px)}
     .trustTile.span2{grid-column:1 / -1}
     .trustMedia{
-      background:#07161b;
-      border-bottom:1px solid rgba(255,255,255,.10);
+      background:var(--surface);
+      border-bottom:1px solid var(--border);
       padding:12px;
     }
     .trustMedia img{
@@ -619,10 +789,11 @@
       height:220px;
       object-fit:contain;
       display:block;
-      background:#07161b;
+      background:var(--surface);
       border-radius:12px;
     }
-    .trustTile.span2 .trustMedia img{height:260px}
+    .trustTile.span2 .trustMedia{padding:10px 12px 6px}
+    .trustTile.span2 .trustMedia img{height:300px}
     .trustTile.noCap .trustMedia{border-bottom:none}
 
     /* Trust tiles — diseño interno (sin imágenes “captura”) */
@@ -630,11 +801,11 @@
       width:100%;
       height:220px;
       border-radius:12px;
-      border:1px solid rgba(255,255,255,.12);
+      border:1px solid var(--border);
       background:
-        radial-gradient(circle at 20% 18%, rgba(242,140,40,.18), transparent 62%),
-        radial-gradient(circle at 80% 85%, rgba(11,107,58,.16), transparent 62%),
-        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+        radial-gradient(circle at 20% 18%, rgba(22,163,74,.12), transparent 62%),
+        radial-gradient(circle at 80% 85%, rgba(37,99,235,.10), transparent 62%),
+        linear-gradient(180deg, #ffffff, var(--surface));
       padding:14px;
       box-sizing:border-box;
       overflow:hidden;
@@ -647,9 +818,177 @@
     .trustBoard .hintLine{
       margin-top:10px;
       padding-top:10px;
-      border-top:1px dashed rgba(255,255,255,.14);
+      border-top:1px dashed var(--border);
       font-size:10.5px;
-      color:rgba(207,224,229,.68);
+      color:rgba(71,85,105,.68);
+    }
+
+    /* FIX CONTRASTE — Sección Confianza (PDR + Certificaciones) */
+    #confianza{
+      font-size:18px !important;
+      line-height:1.55 !important;
+    }
+    #confianza .trustTile,
+    #confianza .trustCard,
+    #confianza .trustItem{
+      background: rgba(255,255,255,.96) !important;
+      border: 1px solid rgba(15,23,42,.14) !important;
+      box-shadow: var(--shadow-soft);
+    }
+    #confianza .trustTile::before,
+    #confianza .trustCard::before,
+    #confianza .trustItem::before{
+      opacity: .02 !important;
+      background: none !important;
+    }
+    #confianza .trustTile::after,
+    #confianza .trustCard::after,
+    #confianza .trustItem::after{
+      opacity: .02 !important;
+      background: none !important;
+    }
+    #confianza .trustTile h3,
+    #confianza .trustTile h4,
+    #confianza .trustCard h3,
+    #confianza .trustCard h4,
+    #confianza .trustItem h3,
+    #confianza .trustItem h4{
+      color: #0B1220 !important;
+      opacity: 1 !important;
+      font-size: 18px !important;
+      line-height:1.45 !important;
+      font-weight:800 !important;
+    }
+    #confianza .trustTile p,
+    #confianza .trustCard p,
+    #confianza .trustItem p,
+    #confianza .trustTile .sub,
+    #confianza .trustCard .sub,
+    #confianza .trustItem .sub,
+    #confianza .trustTile .hint,
+    #confianza .trustCard .hint,
+    #confianza .trustItem .hint{
+      opacity: 1 !important;
+    }
+    #confianza .trustTile p,
+    #confianza .trustCard p,
+    #confianza .trustItem p,
+    #confianza .trustTile .sub,
+    #confianza .trustCard .sub,
+    #confianza .trustItem .sub{
+      color: #334155 !important;
+      opacity:1 !important;
+      font-size: 16px !important;
+      line-height:1.55 !important;
+    }
+    #confianza .trustTile .hint,
+    #confianza .trustCard .hint,
+    #confianza .trustItem .hint{
+      color: #475569 !important;
+      opacity:1 !important;
+      font-size: 15px !important;
+      line-height:1.5 !important;
+    }
+    /* PDR tile focus */
+    #confianza .trustTile h3,
+    #confianza .trustTile h4{
+      color: #0B1220 !important;
+      font-weight:800 !important;
+      opacity:1 !important;
+    }
+    #confianza .trustTile p{
+      color: #334155 !important;
+      opacity:1 !important;
+    }
+    #confianza .trustCap{
+      background: linear-gradient(180deg, rgba(11,18,32,.88), rgba(11,18,32,.70)) !important;
+      color:#F8FAFC !important;
+      border-radius:0 0 12px 12px !important;
+      padding:16px 18px !important;
+      border-top:none !important;
+    }
+    #confianza .trustCap strong{font-size:18px !important;line-height:1.45 !important;font-weight:800 !important;color:#F8FAFC !important;}
+    #confianza .trustCap span{font-size:16px !important;line-height:1.55 !important;color:#E2E8F0 !important;opacity:1 !important;}
+    #confianza .trustText,
+    #confianza .trustPoints li,
+    #confianza .trustFine,
+    #confianza .trustChip,
+    #confianza .trustKicker{
+      font-size:16px !important;
+      line-height:1.55 !important;
+      color:#0B1220 !important;
+    }
+    #confianza .trustFine{color:#334155 !important;opacity:1 !important;}
+    #confianza .trustChip{font-weight:700 !important;color:#0B1220 !important;}
+    #confianza .trustKicker{color:#0B1220 !important;}
+    #confianza .trustActions .btn{
+      font-size:16px !important;
+      padding:12px 16px !important;
+      font-weight:700 !important;
+    }
+    #confianza .trustActions .btn:nth-child(1){
+      border-color:#2563EB !important;
+      color:#0B1220 !important;
+      box-shadow:0 0 0 1px rgba(37,99,235,.28) !important;
+      background: rgba(37,99,235,.06);
+    }
+    #confianza .trustActions .btn:nth-child(1):hover{background:rgba(37,99,235,.1);transform:translateY(-1px);}
+    #confianza .trustActions .btn:nth-child(2){
+      border-color:#0EA5A8 !important;
+      color:#0B1220 !important;
+      box-shadow:0 0 0 1px rgba(14,165,168,.26) !important;
+      background: rgba(14,165,168,.06);
+    }
+    #confianza .trustActions .btn:nth-child(2):hover{background:rgba(14,165,168,.1);transform:translateY(-1px);}
+    #confianza .trustActions .btn:nth-child(3){
+      border-color:#F97316 !important;
+      color:#0B1220 !important;
+      box-shadow:0 0 0 1px rgba(249,115,22,.28) !important;
+      background: rgba(249,115,22,.06);
+    }
+    #confianza .trustActions .btn:nth-child(3):hover{background:rgba(249,115,22,.1);transform:translateY(-1px);}
+    #confianza .trustChip{
+      background: rgba(11,18,32,.12) !important;
+      border-color: rgba(11,18,32,.24) !important;
+      color:#0B1220 !important;
+    }
+    #confianza .trustChip:hover{transform:translateY(-1px);box-shadow: var(--shadow-soft);}
+    #confianza .trustChip:nth-child(1){border-color:#2563EB !important;box-shadow:0 0 0 1px rgba(37,99,235,.24) !important;}
+    #confianza .trustChip:nth-child(2){border-color:#0EA5A8 !important;box-shadow:0 0 0 1px rgba(14,165,168,.22) !important;}
+    #confianza .trustChip:nth-child(3){border-color:#F97316 !important;box-shadow:0 0 0 1px rgba(249,115,22,.22) !important;}
+    #confianza .trustChip:nth-child(4){border-color:#334155 !important;box-shadow:0 0 0 1px rgba(51,65,85,.2) !important;}
+
+    #confianza .certTxt strong{
+      color:#FFFFFF !important;
+      font-size:17px !important;
+      font-weight:800 !important;
+      opacity:1 !important;
+    }
+    #confianza .certTxt span{
+      color:rgba(248,250,252,.85) !important;
+      font-size:15px !important;
+      line-height:1.5 !important;
+      opacity:1 !important;
+    }
+    #confianza .certTop .t{
+      color:#F8FAFC !important;
+    }
+    #confianza .certTop .s{
+      color:rgba(248,250,252,.75) !important;
+      opacity:1 !important;
+    }
+    #confianza .hintLine{
+      color:rgba(248,250,252,.75) !important;
+      font-size:15px !important;
+      opacity:1 !important;
+    }
+    #confianza .trustTile .hint,
+    #confianza .trustCard .hint,
+    #confianza .trustItem .hint{
+      color: #475569 !important;
+      font-size:15px !important;
+      line-height:1.5 !important;
+      opacity:1 !important;
     }
 
     /* PDR */
@@ -657,27 +996,45 @@
     .pdrRow{display:flex;align-items:center;gap:10px}
     .pdrIcon{
       width:58px;height:58px;border-radius:16px;
-      background: rgba(242,140,40,.14);
-      border:1px solid rgba(242,140,40,.35);
+      background: rgba(22,163,74,.14);
+      border:1px solid rgba(22,163,74,.35);
       display:flex;align-items:center;justify-content:center;
-      box-shadow: 0 14px 26px rgba(0,0,0,.28);
+      box-shadow: 0 14px 26px rgba(15,23,42,.12);
       flex:0 0 auto;
     }
-    .pdrIcon svg{width:30px;height:30px;fill:none;stroke:rgba(242,140,40,.95);stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-    .pdrTxt b{display:block;font-size:18px;letter-spacing:-.2px}
-    .pdrTxt span{display:block;margin-top:3px;color:rgba(207,224,229,.86);font-size:12px;line-height:1.25}
-    .pdrTxt em{display:block;margin-top:6px;color:rgba(207,224,229,.72);font-size:11px;font-style:normal;line-height:1.25}
+    .pdrIcon svg{width:30px;height:30px;fill:none;stroke:rgba(22,163,74,.95);stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+    #confianza .pdrBoard{
+      background: linear-gradient(180deg, rgba(11,18,32,.88), rgba(11,18,32,.70)) !important;
+      border:1px solid rgba(255,255,255,.08) !important;
+    }
+    #confianza .pdrTxt b{
+      display:block;
+      font-size:19px !important;
+      letter-spacing:-.2px;
+      color:#F8FAFC !important;
+      font-weight:800 !important;
+      opacity:1 !important;
+    }
+    #confianza .pdrTxt span{
+      display:block;
+      margin-top:3px;
+      color:rgba(248,250,252,.9) !important;
+      font-size:15px !important;
+      line-height:1.45 !important;
+      opacity:1 !important;
+    }
+    .pdrTxt em{display:block;margin-top:6px;color:rgba(71,85,105,.72);font-size:11px;font-style:normal;line-height:1.25}
 
     /* Certificaciones */
     .certBoard{gap:10px}
     .certTop{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
     .certTop .t{font-weight:1000;font-size:13px;line-height:1.1}
-    .certTop .s{margin-top:4px;color:rgba(207,224,229,.72);font-size:11px;line-height:1.25}
+    .certTop .s{margin-top:4px;color:rgba(71,85,105,.72);font-size:11px;line-height:1.25}
     .certPill{
       padding:6px 10px;border-radius:999px;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(255,255,255,.06);
-      color:rgba(207,224,229,.88);
+      border:1px solid var(--border);
+      background:var(--surface);
+      color:rgba(71,85,105,.88);
       font-size:11px;font-weight:900;
       white-space:nowrap;
     }
@@ -685,43 +1042,92 @@
     .certBadge{
       display:flex;gap:10px;align-items:center;
       padding:9px 10px;border-radius:14px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(0,0,0,.16);
+      border:1px solid var(--border);
+      background:var(--surface);
     }
     .certIcon{
       width:32px;height:32px;border-radius:12px;
-      background: rgba(11,107,58,.14);
-      border:1px solid rgba(11,107,58,.32);
+      background: rgba(22,163,74,.12);
+      border:1px solid rgba(22,163,74,.32);
       display:flex;align-items:center;justify-content:center;
       flex:0 0 auto;
     }
-    .certIcon svg{width:18px;height:18px;fill:none;stroke:rgba(11,107,58,.95);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-    .certTxt strong{display:block;font-size:11.5px;line-height:1.05;color:rgba(255,255,255,.92)}
-    .certTxt span{display:block;margin-top:2px;font-size:10.5px;line-height:1.15;color:rgba(207,224,229,.72)}
+    .certIcon svg{width:18px;height:18px;fill:none;stroke:rgba(22,163,74,.95);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+    .certTxt strong{display:block;font-size:11.5px;line-height:1.05;color:var(--text)}
+    .certTxt span{display:block;margin-top:2px;font-size:10.5px;line-height:1.15;color:rgba(71,85,105,.72)}
 
     .trustCap{padding:14px 16px}
     .trustCap strong{display:block;font-size:14px}
-    .trustCap span{display:block;margin-top:4px;color:rgba(207,224,229,.78);font-size:12.5px;line-height:1.35}
+    .trustCap span{display:block;margin-top:4px;color:rgba(71,85,105,.78);font-size:12.5px;line-height:1.35}
+
+    /* Garantía */
+    .guaranteeCard{
+      margin-top:14px;
+      background: linear-gradient(135deg, rgba(22,163,74,.10), rgba(37,99,235,.06));
+      border:1px solid rgba(22,163,74,.22);
+    }
+    .guaranteePad{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+    .guaranteeTitle{font-size:18px;margin:0 0 4px}
+    .guaranteeSub{margin:0;color:rgba(71,85,105,.9);line-height:1.5}
+    @media (max-width:640px){
+      .guaranteePad{align-items:flex-start}
+      .guaranteeTitle{font-size:17px}
+    }
+    /* Garantía modal */
+    .gOverlay{
+      position:fixed;inset:0;z-index:120;display:none;align-items:center;justify-content:center;padding:18px;
+      background:rgba(15,23,42,.28);backdrop-filter: blur(10px);
+    }
+    .gOverlay.on{display:flex}
+    .gModal{
+      width:100%;max-width:640px;
+      background: linear-gradient(135deg, #ffffff, #f7f8fa);
+      border:1px solid var(--border);
+      border-radius:24px;
+      box-shadow:0 28px 60px rgba(15,23,42,.14);
+      padding:22px 22px 18px;
+      position:relative;
+    }
+    .gClose{
+      position:absolute;top:12px;right:12px;
+      background: var(--surface);
+      border:1px solid var(--border);
+      border-radius:50%;
+      width:34px;height:34px;
+      display:inline-flex;align-items:center;justify-content:center;
+      cursor:pointer;
+      color:var(--muted2);
+      transition: background var(--anim-fast) ease, transform var(--anim-fast) ease;
+    }
+    .gClose:hover{background:var(--surface-strong);transform:scale(1.03)}
+    .gTitle{margin:0 0 6px;font-size:20px;letter-spacing:-.2px}
+    .gSub{margin:0 0 10px;color:rgba(71,85,105,.92);line-height:1.55;font-weight:600}
+    .gText{margin:0 0 12px;color:rgba(71,85,105,.85);line-height:1.6;font-size:14px}
+    .gList{margin:0 0 12px;padding-left:18px;color:rgba(71,85,105,.88);line-height:1.55;font-size:14px}
+    .gFooter{margin:0;color:rgba(71,85,105,.78);font-size:13px;line-height:1.5}
+    .gActions{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    .gActions .btn{border-radius:14px;padding:10px 14px}
 
   </style>
 </head>
 
 <body>
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="nav">
     <div class="wrap navInner">
       <div class="brand">
         <div style="display:flex;flex-direction:column;line-height:1.05">
-          <span style="font-size:14px;opacity:.9">Bariátrica Natural 🫡</span>
-          <span style="font-size:12px;color:rgba(207,224,229,.78);font-weight:700">Sistema Metabólico — Monterrey</span>
+          <span style="font-size:14px;opacity:.9">Bariátrica Natural</span>
+          <span style="font-size:12px;color:rgba(71,85,105,.78);font-weight:700">Sistema Metabólico — Monterrey</span>
         </div>
-        <span class="badge">📲 WhatsApp · Paso a paso</span>
+        <span class="badge">WhatsApp · Paso a paso</span>
       </div>
 
       <div class="navLinks">
         <a class="btn btnGhost" href="#test">Test</a>
         <a class="btn btnGhost" href="#incluye">Sistema</a>
         <a class="btn btnGhost" href="#confianza">Respaldo</a>
-        <a class="btn btnCta" href="#comprar">Empezar</a>
+        <a class="btn btnPrimary" href="#comprar">Empezar</a>
       </div>
     </div>
   </div>
@@ -731,38 +1137,43 @@
       <div class="panel">
         <div class="panelInner">
           <div class="kicker">
-            <span class="tag">📍 Monterrey</span>
-            <span class="tag">🧠 Estructura + método</span>
-            <span class="tag">⚡ Aquí no vendemos magia</span>
+            <span class="tag">Monterrey</span>
+            <span class="tag">Estructura + método</span>
+            <span class="tag">Aquí no vendemos magia</span>
           </div>
 
           <h1>Sistema Metabólico Bariátrica Natural</h1>
           <p class="sub">
             Somos el <strong>Equipo Fundador</strong> de <strong>Bariátrica Natural</strong> en <strong>Monterrey</strong>. 
-            Estamos levantando una comunidad con <strong>estructura, bulla y método</strong> — sin promesas mágicas. 
+            Estamos levantando una comunidad con <strong>estructura, impulso y método</strong> — sin promesas mágicas. 
             <strong>Te guiamos paso a paso</strong> por WhatsApp para que empieces con claridad.
           </p>
 
           <div class="bullets">
-            <div class="bullet">✅ Sistema Feel Great (Bariátrica Natural 🫡): <strong>Unici-Té</strong> + <strong>Balance</strong> (con guía paso a paso).</div>
-            <div class="bullet">✅ Acompañamiento real por WhatsApp (no “tips sueltos”).</div>
-            <div class="bullet">✅ Enfoque en hábitos y consistencia (no “soluciones mágicas”).</div>
-            <div class="bullet">✅ Contenido educativo para que entiendas tu metabolismo.</div>
+            <div class="bullet">Sistema Feel Great (Bariátrica Natural): <strong>Unici-Té</strong> + <strong>Balance</strong> (con guía paso a paso).</div>
+            <div class="bullet">Acompañamiento real por WhatsApp (no “tips sueltos”).</div>
+            <div class="bullet">Enfoque en hábitos y consistencia (no “soluciones mágicas”).</div>
+            <div class="bullet">Contenido educativo para que entiendas tu metabolismo.</div>
           </div>
 
-          <div class="card" style="margin-top:12px">
-            <div class="cardPad">
-              <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap">
-                <div>
-                  <div style="font-weight:900;font-size:14px;letter-spacing:.2px">Entra por WhatsApp (rápido)</div>
-                  <div style="color:rgba(207,224,229,.82);font-size:12px;margin-top:6px;line-height:1.35">
+              <div class="card" style="margin-top:12px">
+                <div class="cardPad">
+                  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap">
+                    <div>
+                      <div style="font-weight:900;font-size:14px;letter-spacing:.2px">Entra por WhatsApp (rápido)</div>
+                  <div style="color:rgba(71,85,105,.82);font-size:12px;margin-top:6px;line-height:1.35">
                     Completa esto y te abre WhatsApp con el mensaje listo: <strong>METABOLISMO</strong>.
                   </div>
-                </div>
-                <span class="badge">🔒 Datos mínimos · Sin estrés</span>
+                    </div>
+                <span class="badge">Datos mínimos · Sin estrés</span>
               </div>
+                  <div class="badge" style="margin-top:8px">Testimonio en video más abajo</div>
 
               <form id="leadForm" autocomplete="on">
+                <div style="position:absolute;left:-9999px;opacity:0;pointer-events:none" aria-hidden="true">
+                  <label for="website">Sitio web</label>
+                  <input id="website" name="website" tabindex="-1" autocomplete="off" />
+                </div>
                 <div class="formGrid" style="margin-top:14px">
                   <div>
                     <label for="name">Nombre</label>
@@ -783,13 +1194,16 @@
                 </div>
 
                 <div class="formActions">
-                  <button class="btn btnGreen" type="submit">📲 Abrir WhatsApp y enviar “METABOLISMO”</button>
+                  <button class="btn btnSecondary" type="submit"><span>Abrir WhatsApp y enviar “METABOLISMO”</span></button>
                 </div>
 
                 <div class="consent">
                   Al enviar, aceptas que te contactemos por WhatsApp para darte orientación educativa y seguimiento.
                   <strong>No es diagnóstico médico.</strong>
+                  <br/>Al enviar aceptas que te contactemos por email/WhatsApp. Puedes solicitar baja.
                 </div>
+
+                <div class="consent" id="leadStatus" role="status" aria-live="polite" style="display:none"></div>
               </form>
             </div>
           </div>
@@ -805,8 +1219,8 @@
         <div class="videoTop">
           <div class="videoTitle"><span class="pulse"></span> Video de Rafael (abre con intención)</div>
           <div class="videoActions">
-            <span class="badge">🎬 Cinemático · premium</span>
-            <button class="btn btnGhost btnSm" type="button" id="openVideoTools">📹 Subir mi video</button>
+            <span class="badge">Cinemático · premium</span>
+            <button class="btn btnGhost btnSm" type="button" id="openVideoTools">Subir mi video</button>
           </div>
         </div>
 
@@ -830,9 +1244,13 @@
         </div>
 
         <div class="hint">
-          <strong>Script corto (30–45s) para tu video:</strong><br/>
-          “Soy Rafael. Estamos levantando Monterrey con Bariátrica Natural 🫡: estructura, método y acompañamiento real.
-          Aquí no vendemos magia. Si quieres entender tu metabolismo y empezar con Unici-Té + Balance, escribe <b>METABOLISMO</b> y te guiamos paso a paso.”
+          <strong style="display:block;margin-bottom:6px;font-size:14px">Testimonio real: de estancado a recuperar estructura</strong>
+          <p style="margin:0;color:rgba(71,85,105,.88);line-height:1.55;font-size:13.5px">
+            Este es un testimonio real de alguien que pasó de sentirse estancado a recuperar estructura, energía y motivación con el sistema Feel Great (Unici-Té + Balance).
+            Si te identificas con falta de impulso, antojos o bajones, este video te puede hacer sentido.
+          </p>
+          <p style="margin:8px 0 0;color:rgba(71,85,105,.9);font-weight:700;font-size:13.5px">Siguiente paso: escribe METABOLISMO y te guiamos.</p>
+          <p style="margin:6px 0 0;color:rgba(71,85,105,.65);font-size:12px;line-height:1.45">Testimonio individual. Resultados varían. Contenido educativo.</p>
         </div>
       </div>
     </div>
@@ -851,7 +1269,7 @@
 
                 <div class="grid2">
           <div class="card">
-            <div class="productMedia"><img src="assets/unici_front.png" alt="Unici-Té" /></div>
+            <div class="productMedia"><img src="assets/unici_front.png" alt="Unici-Té" width="950" height="630" /></div>
             <div class="cardPad">
               <div class="pillRow">
                 <span class="pill">Unici-Té</span>
@@ -875,14 +1293,22 @@
                 </ul>
                 <p class="subcopyNote">Además, ¡es sin azúcar!</p>
               </div>
+              <div class="subcopy">
+                <p class="subcopyLead" style="margin-top:12px">Beneficios clave (Unimate):</p>
+                <ul class="checkBullets">
+                  <li>Energía sostenida y enfoque mental para el día</li>
+                  <li>Apoyo en hábitos que reducen antojos y picoteo</li>
+                  <li>Complemento para mantener constancia y claridad</li>
+                </ul>
+              </div>
               <div class="callout">
-                📌 <strong>Permiso Cofepris:</strong> 163300201A1848
+                <strong>Permiso Cofepris:</strong> 163300201A1848
               </div>
             </div>
           </div>
 
           <div class="card">
-            <div class="productMedia"><img src="assets/balance_front.png" alt="Balance" /></div>
+            <div class="productMedia"><img src="assets/balance_front.png" alt="Balance" width="950" height="600" /></div>
             <div class="cardPad">
               <div class="pillRow">
                 <span class="pill">Balance</span>
@@ -904,12 +1330,20 @@
                 </ul>
               </div>
               <div class="callout">
-                🛡️ <strong>Libre de gluten • Vegano</strong>
+                <strong>Libre de gluten • Vegano</strong>
                 <div class="fine">Nota: certificaciones pueden variar por producto/mercado.</div>
               </div>
 
               <div class="callout">
-                📌 <strong>Permiso Cofepris:</strong> 163300201A1848
+                <strong>Permiso Cofepris:</strong> 163300201A1848
+              </div>
+              <div class="subcopy">
+                <p class="subcopyLead" style="margin-top:12px">Beneficios Balance:</p>
+                <ul class="checkBullets">
+                  <li>Sensación de saciedad más estable</li>
+                  <li>Fibra y nutrientes que apoyan digestión equilibrada</li>
+                  <li>Complemento para regular porciones y constancia diaria</li>
+                </ul>
               </div>
             </div>
           </div>
@@ -932,7 +1366,7 @@
               </div>
 
               <div class="formActions" style="margin-top:14px">
-                <button class="btn btnGreen" type="button" onclick="computeTest()">Ver mi resultado</button>
+                <button class="btn btnPrimary" type="button" onclick="computeTest()">Ver mi resultado</button>
                 <button class="btn btnGhost" type="button" onclick="resetTest()">Limpiar</button>
               </div>
 
@@ -949,6 +1383,9 @@
                 <strong>Tu puntuación</strong>
                 <b id="scoreNum">0</b>
               </div>
+              <div style="width:100%;background:var(--surface);border-radius:999px;height:8px;overflow:hidden;margin-top:6px;border:1px solid var(--border)">
+                <div id="scoreBar" style="height:100%;width:0%;background:var(--cta);transition:width .18s ease"></div>
+              </div>
 
               <div class="resultText" id="resultText">
                 Marca tus señales y dale a “Ver mi resultado”.
@@ -956,7 +1393,7 @@
               </div>
 
               <div class="miniBtns">
-                <button class="btn btnCta" type="button" onclick="sendResultToWhatsApp()">Enviar resultado por WhatsApp</button>
+                <button class="btn btnSecondary" type="button" onclick="sendResultToWhatsApp()">Enviar resultado por WhatsApp</button>
                 <button class="btn btnGhost" type="button" onclick="shareResult()">Compartir</button>
               </div>
 
@@ -980,9 +1417,9 @@
 
         <div class="grid3">
           <div class="card" style="grid-column: 1 / -1;">
-            <div class="systemBanner"><img src="assets/system_banner.png" alt="Sistema Feel Great" /></div>
+            <div class="systemBanner"><img src="assets/product_stack.png" alt="Sistema Feel Great" width="1670" height="1206" /></div>
             <div class="cardPad">
-              <h3 style="margin:0 0 8px;font-size:18px">Sistema Feel Great 🫡</h3>
+              <h3 style="margin:0 0 8px;font-size:18px">Sistema Feel Great</h3>
               <ul class="list" style="font-size:15px">
                 <li><strong>Incluye:</strong> 2 Unici-Té (ICT 36067) + 1 Balance (ICT 34575).</li>
                 <li><strong>Contenido:</strong> 2 cajas de Unici-Té (30 sobres de 5.1 g c/u) + 1 caja de Balance (30 sobres).</li>
@@ -990,7 +1427,14 @@
               </ul>
 
               <div class="callout">
-                📌 <strong>Permiso Cofepris:</strong> 163300201A1848
+                <strong>Permiso Cofepris:</strong> 163300201A1848
+              </div>
+              <ul class="list" style="font-size:14px;margin-top:10px">
+                <li>Libre de gluten, vegano, halal, kosher.</li>
+                <li>Certificaciones evaluadas por terceros (según SKU/mercado).</li>
+              </ul>
+              <div class="formActions" style="margin-top:14px">
+                <a class="btn btnPrimary btnXL" href="https://ufeelgreat.com/c/LaSaludesRiqueza" target="_blank" rel="noopener noreferrer" onclick="trackPurchase()">Comprar el sistema</a>
               </div>
 </div>
           </div>
@@ -1008,17 +1452,12 @@
         <!-- Bloque unificado (sin repeticiones) -->
         <div class="card trustBrief trustUnified">
           <div class="cardPad">
-            <div class="trustKicker">🔎 Evidencia visible · enfoque educativo</div>
+            <div class="trustKicker">Evidencia visible · enfoque educativo</div>
             <h3 class="trustTitle">Certificación, calidad y confianza</h3>
             <p class="trustText">
               Aquí tienes los avales y certificaciones para tomar tu decisión con claridad.
               Puedes abrir cada evidencia en grande cuando lo necesites.
             </p>
-
-            <div class="trustActions">
-              <a class="btn btnGhost" href="https://www.unicityscience.org/clinical-validation-studies/?lang=es" target="_blank" rel="noopener">🔬 Ciencia de Unicity</a>
-              
-            </div>
 
             <div class="trustGallery" style="margin-top:14px">
               <a class="card trustTile span2" href="assets/harvard.png" target="_blank" rel="noopener">
@@ -1030,6 +1469,12 @@
                 <span>Executive Education · Nutrición sostenible y hábitos.</span>
               </div>
             </a>
+
+            <div class="trustActions trustActionsRow">
+              <a class="btn btnGhost" href="https://www.unicityscience.org/clinical-validation-studies/?lang=es" target="_blank" rel="noopener noreferrer">Ciencia de Unicity</a>
+              <a class="btn btnGhost" href="https://www.unicity.com/mex/es/learn/history" target="_blank" rel="noopener noreferrer">Historia de Unicity</a>
+              <a class="btn btnGhost" href="https://www.unicity.com/usa/es/opportunity" target="_blank" rel="noopener noreferrer">Oportunidad de negocio</a>
+            </div>
 
               <a class="card trustTile" href="https://www.pdr.net/full-prescribing-information/hl/?druglabelid=24170" target="_blank" rel="noopener" aria-label="Abrir evidencia PDR">
               <div class="trustMedia">
@@ -1170,16 +1615,27 @@
 
         <div class="grid2">
           <div class="card">
-            <div class="systemMedia"><img src="assets/product_stack.png" alt="Sistema Feel Great (2 Unici-Té + 1 Balance)" /></div>
+            <div class="systemMedia"><img src="assets/product_stack.png" alt="Sistema Feel Great (2 Unici-Té + 1 Balance)" width="1670" height="1206" /></div>
             <div class="cardPad">
               <h3 style="margin:0 0 8px;font-size:18px">Opción 1: Comprar el Sistema</h3>
-              <p style="margin:0;color:rgba(207,224,229,.85);font-size:14px;line-height:1.55">
+              <p style="margin:0;color:rgba(71,85,105,.85);font-size:14px;line-height:1.55">
                 Compra y de inmediato te acompañamos por WhatsApp para arrancar con claridad.
               </p>
               <p class="fine" style="margin-top:12px">Si prefieres, escríbenos por WhatsApp y te guiamos para escoger la opción correcta.</p>
               <div class="formActions" style="margin-top:14px">
-                <button class="btn btnCta btnXL" type="button" onclick="openPurchase()">🛒 Comprar ahora</button>
-                <button class="btn btnGhost" type="button" onclick="openWhatsAppDefault()">Prefiero WhatsApp</button>
+                <button class="btn btnPrimary btnXL" type="button" onclick="openPurchase()">Comprar ahora</button>
+                <button class="btn btnSecondary" type="button" onclick="openWhatsAppDefault()">Prefiero WhatsApp</button>
+              </div>
+
+              <div class="card guaranteeCard" style="margin-top:14px">
+                <div class="cardPad guaranteePad">
+                  <div>
+                    <div class="guaranteeTitle">Garantía de satisfacción 90 días</div>
+                    <p class="guaranteeSub">Prueba el sistema por 90 días con guía y consistencia.</p>
+                    <p class="fine" style="margin-top:6px">Aplican términos y condiciones de Unicity.</p>
+                  </div>
+                  <button class="btn btnGhost" type="button" aria-label="Ver política de garantía" id="openGuarantee">Ver política</button>
+                </div>
               </div>
             </div>
           </div>
@@ -1189,14 +1645,14 @@
                     <div class="card">
             <div class="cardPad">
               <h3 style="margin:0 0 8px;font-size:18px">Opción 2: Quiero emprender (Equipo Fundador)</h3>
-              <p style="margin:0;color:rgba(207,224,229,.85);font-size:14px;line-height:1.55">
+              <p style="margin:0;color:rgba(71,85,105,.85);font-size:14px;line-height:1.55">
 Si quieres emprender con una <strong>compañía global</strong> y construir una <strong>fuente de ingreso adicional</strong> con un sistema duplicable — con o sin experiencia — puedes aplicar para ser parte del <strong>Equipo Fundador</strong> en Monterrey.
                 Te damos <strong>entrenamiento, acompañamiento y comunidad</strong>: estructura, impulso y método para arrancar con claridad.
                 Escríbenos por <strong>WhatsApp</strong> y te enviamos el plan de inicio y requisitos.
               </p>
               <div class="formActions" style="margin-top:14px">
-                <a class="btn btnGreen" href="https://enrollment.unicity.com/c/LaSaludesRiqueza" target="_blank" rel="noopener">🚀 Quiero ser parte</a>
-                <button class="btn btnGhost" type="button" onclick="openWhatsAppDefault()">📲 Info por WhatsApp</button>
+                <a class="btn btnGhost" href="https://enrollment.unicity.com/c/LaSaludesRiqueza" target="_blank" rel="noopener" onclick="trackFounder(event)">Aplicar al Equipo Fundador</a>
+                <button class="btn btnSecondary" type="button" onclick="openWhatsAppDefault()">Info por WhatsApp</button>
               </div>
               <p class="fine" style="margin-top:12px">
                 Nota: esto es una oportunidad de negocio independiente; no se garantizan ingresos. Resultados dependen de esfuerzo, consistencia y mercado.
@@ -1216,39 +1672,61 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
     </section>
   </main>
 
+  <div class="gOverlay" id="guaranteeModal" role="dialog" aria-modal="true" aria-labelledby="gTitle" aria-describedby="gDesc">
+    <div class="gModal">
+      <button class="gClose" type="button" id="closeGuarantee" aria-label="Cerrar">×</button>
+      <h3 class="gTitle" id="gTitle">Garantía Feel Great</h3>
+      <p class="gSub">Pruébalo. Regístralo. Ámalo… o te devolvemos tu dinero.</p>
+      <p class="gText" id="gDesc">Estamos seguros de que te encantarán los resultados. Por eso ofrecemos una garantía de reembolso del 100% en Feel Great para Clientes y Miembros.</p>
+      <h4 class="gTitle" style="font-size:16px;margin-top:0;margin-bottom:8px">Para calificar:</h4>
+      <ul class="gList">
+        <li>Registra el uso del producto diariamente en la aplicación Feel Great Fasting</li>
+        <li>Mantén al menos un 50% de cumplimiento en el seguimiento durante 90 días</li>
+        <li>Comunícate con el servicio al cliente dentro de esos 90 días para iniciar la devolución del producto</li>
+      </ul>
+      <p class="gFooter">Consulta los detalles completos de la garantía y la política de devoluciones.</p>
+      <div class="gActions">
+        <button class="btn btnGhost" type="button" id="closeGuarantee2">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
   <div class="sticky">
     <div class="stickyInner">
       <div>
         <b>¿Listo? Escribe METABOLISMO</b>
         <small>Te guiamos paso a paso por WhatsApp.</small>
       </div>
-      <button class="btn btnCta" type="button" onclick="openWhatsAppDefault()">📲 WhatsApp</button>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+        <button class="btn btnPrimary pulse-target" type="button" onclick="openPurchase()">Comprar</button>
+        <button class="btn btnSecondary" type="button" onclick="openWhatsAppDefault()">WhatsApp</button>
+      </div>
     </div>
   </div>
 
-  <div class="toast" id="toast">Listo ✅</div>
+  <div class="toast" id="toast">Listo</div>
 
   <!-- Modal (simple) -->
-  <div id="modal" style="position:fixed;inset:0;background:rgba(0,0,0,.62);display:none;align-items:center;justify-content:center;z-index:80;padding:18px;">
-    <div style="max-width:760px;width:100%;border-radius:18px;border:1px solid rgba(255,255,255,.14);background:rgba(5,16,21,.92);box-shadow:0 18px 60px rgba(0,0,0,.45);overflow:hidden">
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.10)">
+  <div id="modal" style="position:fixed;inset:0;background:rgba(15,23,42,.22);display:none;align-items:center;justify-content:center;z-index:80;padding:18px;backdrop-filter:blur(10px);">
+    <div style="max-width:760px;width:100%;border-radius:18px;border:1px solid var(--border);background:rgba(255,255,255,.98);box-shadow:0 18px 60px rgba(15,23,42,.14);overflow:hidden">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;border-bottom:1px solid var(--border)">
         <strong>Video de Rafael</strong>
         <button class="btn btnGhost" style="padding:10px 12px" onclick="closeModal()">Cerrar</button>
       </div>
       <div style="padding:16px">
-        <p style="margin:0;color:rgba(207,224,229,.85);line-height:1.55;font-size:14px">
+        <p style="margin:0;color:rgba(71,85,105,.85);line-height:1.55;font-size:14px">
           Sube aquí tu video <b>vertical (9:16)</b> y se reemplaza al instante en esta página (para que lo veas antes de publicarlo).
           <br/><br/>
           <b>Tip:</b> exporta en <b>1080×1920</b>, formato <b>MP4 (H.264)</b>, 30fps.
         </p>
 
         <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px">
-          <label class="btn btnCta btnXL" style="padding:12px 14px;border-radius:12px;font-size:14px" for="videoUploadInput">⬆️ Subir video (MP4)</label>
+          <label class="btn btnPrimary btnXL" style="padding:12px 14px;border-radius:12px;font-size:14px" for="videoUploadInput">⬆️ Subir video (MP4)</label>
           <input id="videoUploadInput" type="file" accept="video/*" style="display:none" />
           <button class="btn btnGhost" style="padding:12px 14px;border-radius:12px" type="button" id="resetDemoVideo">↩︎ Volver al demo</button>
         </div>
 
-        <div style="margin-top:12px;padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);font-family:ui-mono, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace;font-size:12.5px;color:rgba(240,248,250,.92)">
+        <div style="margin-top:12px;padding:12px;border-radius:14px;border:1px solid var(--border);background:var(--surface);font-family:ui-mono, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace;font-size:12.5px;color:var(--text)">
           Reemplazo fácil (permanente): si vas a subir el embudo a hosting, sustituye el archivo <b>assets/rafael_vertical.mp4</b> por tu video (mismo nombre).
         </div>
 </div>
@@ -1265,6 +1743,28 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       VIDEO_POSTER: "assets/rafael_vertical_poster.jpg",
       LEAD_WEBHOOK_URL: "" // opcional: pega aquí tu n8n/servidor si quieres guardar leads
     };
+    window.dataLayer = window.dataLayer || [];
+    let UTM_QUERY = "";
+
+    function captureUTMs(){
+      const params = new URLSearchParams(window.location.search);
+      const keys = ["utm_source","utm_medium","utm_campaign","utm_content","utm_term"];
+      const collected = [];
+      keys.forEach(k=>{
+        if(params.get(k)){
+          collected.push(`${k}=${encodeURIComponent(params.get(k) || "")}`);
+        }
+      });
+      if(collected.length){
+        UTM_QUERY = collected.join("&");
+        try{ localStorage.setItem("bn_utm_params", UTM_QUERY); }catch(_){}
+      }else{
+        try{
+          const stored = localStorage.getItem("bn_utm_params");
+          if(stored){ UTM_QUERY = stored; }
+        }catch(_){}
+      }
+    }
 
     function initHeroVideo(){
       const frame = document.getElementById("videoFrame");
@@ -1279,6 +1779,10 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       }
 
       vid.src = src;
+
+      vid.addEventListener("play", ()=> {
+        try{ window.dataLayer.push({event:"video_play", location:"hero_video"}); }catch(_){}
+      }, { once:true });
 
       vid.addEventListener("loadeddata", ()=> {
         frame.classList.add("hasVideo");
@@ -1322,8 +1826,10 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
 
     function openWhatsApp(message){
       const num = cleanDigits(CONFIG.WHATSAPP_NUMBER);
-      const text = encodeURIComponent(message);
+      const msg = UTM_QUERY ? (message + "\nUTM: " + UTM_QUERY) : message;
+      const text = encodeURIComponent(msg);
       const url = `https://wa.me/${num}?text=${text}`;
+      try{ window.dataLayer.push({event:"click_whatsapp", location:"generic", text: message}); }catch(_){}
       window.open(url, "_blank", "noopener");
     }
 
@@ -1342,36 +1848,145 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
         "",
         "Quiero orientación del Sistema Metabólico Bariátrica Natural."
       ];
+      if(UTM_QUERY){
+        lines.push("", `UTM: ${UTM_QUERY}`);
+      }
       return lines.join("\n");
     }
 
-    async function postLead(data){
-      if(!CONFIG.LEAD_WEBHOOK_URL) return;
-      try{
-        await fetch(CONFIG.LEAD_WEBHOOK_URL, {
-          method: "POST",
-          headers: {"Content-Type":"application/json"},
-          body: JSON.stringify({source:"landing_bariatrica_natural", ...data, ts: new Date().toISOString()})
-        });
-      }catch(e){
-        // Silencioso: no rompemos conversión
+    function sanitizeLeadField(value, limit){
+      const v = (value || "").toString().trim();
+      if(!limit) return v;
+      return v.slice(0, limit);
+    }
+
+    const formEl = document.getElementById("leadForm");
+    const submitBtn = formEl ? formEl.querySelector('button[type="submit"]') : null;
+    const submitLabel = submitBtn ? submitBtn.querySelector("span") : null;
+    const submitLabelDefault = submitLabel ? submitLabel.textContent : "";
+
+    function setSubmitState(state){
+      if(!submitBtn) return;
+      const isLoading = state === "loading";
+      submitBtn.classList.toggle("is-loading", isLoading);
+      submitBtn.setAttribute("aria-busy", isLoading ? "true" : "false");
+      submitBtn.disabled = isLoading;
+      if(submitLabel){
+        if(state === "loading"){ submitLabel.textContent = "Enviando…"; }
+        else if(state === "success"){ submitLabel.textContent = "Gracias"; }
+        else { submitLabel.textContent = submitLabelDefault; }
       }
+    }
+
+    function markInvalid(fields){
+      let firstInvalid = null;
+      fields.forEach(({el, invalid})=>{
+        if(!el) return;
+        el.setAttribute("aria-invalid", invalid ? "true" : "false");
+        if(invalid && !firstInvalid){ firstInvalid = el; }
+      });
+      if(firstInvalid){
+        firstInvalid.focus({preventScroll:true});
+        formEl?.scrollIntoView({behavior:"smooth", block:"start"});
+      }
+    }
+
+    function setLeadStatus(msg, isError){
+      const el = document.getElementById("leadStatus");
+      if(!el) return;
+      el.style.display = msg ? "block" : "none";
+      el.style.color = isError ? "rgba(239,68,68,.95)" : "rgba(71,85,105,.9)";
+      el.textContent = msg || "";
+    }
+
+    async function postLead(data){
+      const body = { ...data, hp: document.getElementById("website")?.value || "" };
+      if(UTM_QUERY){ body.utm = UTM_QUERY; }
+      const resp = await fetch("api/lead.php", {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify(body)
+      });
+      const json = await resp.json().catch(()=>({ok:false, message:"Error inesperado"}));
+      return json;
     }
 
     document.getElementById("leadForm").addEventListener("submit", async (e)=>{
       e.preventDefault();
+      setLeadStatus("", false);
+      setSubmitState("idle");
+      try{ window.dataLayer.push({event:"lead_submit_attempt"}); }catch(_){}
+      try{ window.dataLayer.push({event:"submit_lead"}); }catch(_){}
+
       const data = {
-        name: document.getElementById("name").value.trim(),
-        city: document.getElementById("city").value.trim(),
-        email: document.getElementById("email").value.trim(),
-        phone: document.getElementById("phone").value.trim()
+        name: sanitizeLeadField(document.getElementById("name").value, 120),
+        city: sanitizeLeadField(document.getElementById("city").value, 120),
+        email: sanitizeLeadField(document.getElementById("email").value, 160),
+        phone: sanitizeLeadField(document.getElementById("phone").value, 40)
       };
+
+      markInvalid([
+        {el: document.getElementById("name"), invalid: !data.name},
+        {el: document.getElementById("city"), invalid: !data.city},
+        {el: document.getElementById("email"), invalid: !data.email},
+        {el: document.getElementById("phone"), invalid: !data.phone}
+      ]);
+
       if(!data.name || !data.city || !data.email || !data.phone){
-        toast("Completa los campos ✅");
+        setLeadStatus("Completa los campos", true);
+        toast("Completa los campos");
         return;
       }
-      await postLead(data);
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if(!emailRegex.test(data.email)){
+        setLeadStatus("Email inválido", true);
+        markInvalid([{el: document.getElementById("email"), invalid:true}]);
+        return;
+      }
+
+      const phoneDigits = (data.phone || "").replace(/\D+/g, "");
+      if(phoneDigits.length < 7 || phoneDigits.length > 20){
+        setLeadStatus("Teléfono inválido", true);
+        markInvalid([{el: document.getElementById("phone"), invalid:true}]);
+        return;
+      }
+
+      setLeadStatus("Guardando…", false);
+      setSubmitState("loading");
+
+      let result;
+      try{
+        result = await postLead(data);
+      }catch(_){
+        result = {ok:false, message:"No se pudo guardar"};
+      }
+
+      if(!result || !result.ok){
+        setLeadStatus(result && result.message ? result.message : "No se pudo guardar", true);
+        setSubmitState("idle");
+        try{ window.dataLayer.push({event:"lead_submit_error", message: result && result.message ? result.message : "unknown"}); }catch(_){}
+        return;
+      }
+
+      setLeadStatus("Gracias, recibido", false);
+      setSubmitState("success");
+      toast("Gracias, recibido");
+      try{ window.dataLayer.push({event:"lead_submit_success"}); }catch(_){}
+      try{ window.dataLayer.push({event:"submit_lead"}); }catch(_){}
+
+      if(CONFIG.LEAD_WEBHOOK_URL){
+        try{
+          await fetch(CONFIG.LEAD_WEBHOOK_URL, {
+            method: "POST",
+            headers: {"Content-Type":"application/json"},
+            body: JSON.stringify({source:"landing_bariatrica_natural", ...data, ts: new Date().toISOString(), utm: UTM_QUERY || null})
+          });
+        }catch(_){ /* silencioso */ }
+      }
+
       openWhatsApp(buildLeadMessage(data));
+      setTimeout(()=> setSubmitState("idle"), 2400);
     });
 
     function renderTest(){
@@ -1398,6 +2013,10 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       const score = checks.filter(c=>c.checked).length;
       lastScore = score;
       document.getElementById("scoreNum").textContent = score;
+      const total = TEST_ITEMS.length;
+      const pct = Math.round((score/total)*100);
+      const bar = document.getElementById("scoreBar");
+      if(bar){ bar.style.width = `${pct}%`; }
 
       let level = "";
       let msg = "";
@@ -1418,7 +2037,8 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       lastResultText = `Resultado: ${level}. Puntuación: ${score}.\n${msg}`;
 
       document.getElementById("resultText").textContent = msg.replace(/\n\n/g, "\n");
-      toast("Resultado listo ✅");
+      toast("Resultado listo");
+      try{ window.dataLayer.push({event:"complete_test", score: score}); }catch(_){}
     }
 
     function resetTest(){
@@ -1426,7 +2046,7 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       lastScore = 0; lastResultText = "";
       document.getElementById("scoreNum").textContent = "0";
       document.getElementById("resultText").textContent = "Marca tus señales y dale a “Ver mi resultado”. Te diré qué significa a nivel educativo y el siguiente paso recomendado.";
-      toast("Listo ✅");
+      toast("Listo");
     }
 
     function sendResultToWhatsApp(){
@@ -1444,33 +2064,90 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
           await navigator.share(shareData);
         }else{
           await navigator.clipboard.writeText(text + "\n" + window.location.href);
-          toast("Copiado ✅");
+          toast("Copiado");
         }
       }catch(e){
         try{
           await navigator.clipboard.writeText(text + "\n" + window.location.href);
-          toast("Copiado ✅");
+          toast("Copiado");
         }catch(_){}
       }
+    }
+
+    function initAnimations(){
+      const nodes = Array.from(document.querySelectorAll(".panel, .card, .btnPrimary, .hero .kicker, .hero h1, .hero .sub, .badge"));
+      if(!("IntersectionObserver" in window)){
+        nodes.forEach(el => el.classList.add("in"));
+        return;
+      }
+      const maxDelay = 0.42;
+      const obs = new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){
+            entry.target.classList.add("in");
+            obs.unobserve(entry.target);
+          }
+        });
+      }, {threshold:0.2});
+      nodes.forEach((el, idx)=>{
+        el.classList.add("anim-soft");
+        const delay = Math.min(idx * 0.06, maxDelay);
+        el.style.setProperty("--reveal-delay", `${delay}s`);
+        obs.observe(el);
+      });
+    }
+
+    function initScrollDepth(){
+      const marks = [25,50,75,100];
+      const fired = new Set();
+      const handler = ()=> {
+        const doc = document.documentElement;
+        const scrolled = (doc.scrollTop + doc.clientHeight) / doc.scrollHeight * 100;
+        marks.forEach(m=>{
+          if(scrolled >= m && !fired.has(m)){
+            fired.add(m);
+            try{ window.dataLayer.push({event:"scroll_depth", depth:m}); }catch(_){}
+          }
+        });
+        if(fired.size === marks.length){ window.removeEventListener("scroll", handler); }
+      };
+      window.addEventListener("scroll", handler, {passive:true});
+      handler();
     }
 
     function openPurchase(){
       const url = (CONFIG.PURCHASE_URL || "").trim();
       if(url && !url.includes("TU-ENLACE-DE-COMPRA-AQUI")){
+        try{ window.dataLayer.push({event:"click_compra", location:"purchase_redirect"}); }catch(_){}
         window.open(url, "_blank", "noopener");
         return;
       }
+      openWhatsApp("METABOLISMO — " + CONFIG.DEFAULT_MESSAGE);
+    }
 
     function openFounder(){
       const url = (CONFIG.FOUNDER_URL || "").trim();
       if(url){
+        try{ window.dataLayer.push({event:"click_fundador", location:"founder_redirect"}); }catch(_){}
         window.open(url, "_blank", "noopener");
         return;
       }
+      try{ window.dataLayer.push({event:"click_fundador", location:"whatsapp"}); }catch(_){}
       openWhatsAppDefault();
     }
 
-      openWhatsApp("QUIERO COMPRAR EL SISTEMA — " + CONFIG.DEFAULT_MESSAGE);
+    function trackPurchase(e){
+      if(e && e.preventDefault){ e.preventDefault(); }
+      try{ window.dataLayer.push({event:"click_compra", location:"cta_button"}); }catch(_){}
+      openPurchase();
+      return false;
+    }
+
+    function trackFounder(e){
+      if(e && e.preventDefault){ e.preventDefault(); }
+      try{ window.dataLayer.push({event:"click_fundador", location:"founder_cta"}); }catch(_){}
+      openFounder();
+      return false;
     }
 
     function openModal(){
@@ -1526,9 +2203,46 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       if(e.target && e.target.id === "modal"){ closeModal(); }
     });
 
+    function initGuaranteeModal(){
+      const modal = document.getElementById("guaranteeModal");
+      const openBtn = document.getElementById("openGuarantee");
+      const closeBtns = [document.getElementById("closeGuarantee"), document.getElementById("closeGuarantee2")];
+      if(!modal || !openBtn) return;
+
+      const focusable = ()=> Array.from(modal.querySelectorAll("button"));
+      let lastFocus = null;
+
+      function open(){
+        lastFocus = document.activeElement;
+        modal.classList.add("on");
+        (focusable()[0] || modal).focus();
+      }
+      function close(){
+        modal.classList.remove("on");
+        if(lastFocus && typeof lastFocus.focus === "function"){ lastFocus.focus(); }
+      }
+      openBtn.addEventListener("click", open);
+      closeBtns.forEach(btn=> btn && btn.addEventListener("click", close));
+      modal.addEventListener("click", (e)=>{ if(e.target === modal){ close(); }});
+      document.addEventListener("keydown", (e)=>{ if(e.key === "Escape" && modal.classList.contains("on")){ close(); }});
+    }
+
+    captureUTMs();
     initHeroVideo();
 
+    initAnimations();
+    initGuaranteeModal();
+    initScrollDepth();
     renderTest();
+
+    (function pulseStickyCTAOnce(){
+      if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches){ return; }
+      const stickyBuy = document.querySelector(".sticky .btnPrimary.pulse-target");
+      if(stickyBuy){
+        stickyBuy.classList.add("pulse-once");
+        stickyBuy.addEventListener("animationend", ()=> stickyBuy.classList.remove("pulse-once"), { once:true });
+      }
+    })();
   </script>
 </body>
 </html>

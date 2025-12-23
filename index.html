@@ -255,6 +255,7 @@
     .videoTop{
       display:flex;align-items:center;justify-content:space-between;gap:10px;
       padding:16px 16px 0;
+      color: var(--text);
     }
     .videoActions{display:flex;align-items:center;gap:10px}
     .btnSm{padding:10px 12px;border-radius:12px;font-size:13px}
@@ -266,6 +267,7 @@
     .videoTitle{
       font-weight:900;letter-spacing:.2px;
       display:flex;align-items:center;gap:10px;
+      color: var(--text);
     }
     .pulse{
       width:10px;height:10px;border-radius:999px;
@@ -348,13 +350,29 @@
       display:flex;flex-direction:column;gap:6px;
       max-width: 54ch;
     }
-    .videoCaption strong{font-size:14px}
-    .videoCaption span{color: var(--muted); font-size:12px; line-height:1.35}
+    .videoCaption strong{font-size:16px;color: var(--text);}
+    .videoCaption span{color: var(--muted); font-size:14px; line-height:1.5}
     .hint{
       margin:0 16px 16px;
       color: var(--muted);
-      font-size:12px;
-      line-height:1.45;
+      font-size:16px;
+      line-height:1.5;
+    }
+    .videoShell .videoActions .badge{
+      background: var(--surface);
+      color: var(--text);
+      border:1px solid var(--border);
+    }
+    .videoShell .hint strong{
+      color: var(--text);
+      font-size:16px;
+      line-height:1.5;
+    }
+    .videoShell .hint p{
+      color: var(--muted) !important;
+      opacity:1 !important;
+      font-size:16px !important;
+      line-height:1.55 !important;
     }
 
     /* Section */

@@ -999,6 +999,36 @@
 
 
     <section id="confianza">
+      <style>
+        #confianza .trustActions .btn{
+          color:#F8FAFC;
+          opacity:1;
+          font-size:16px;
+          font-weight:800;
+          background:rgba(255,255,255,.06);
+          border:1px solid rgba(255,255,255,.16);
+        }
+        #confianza .trustActions .btn:nth-child(1){--trust-accent:#2dd4bf}
+        #confianza .trustActions .btn:nth-child(2){--trust-accent:#38bdf8}
+        #confianza .trustActions .btn:nth-child(3){--trust-accent:#f59e0b}
+        #confianza .trustActions .btn:hover,
+        #confianza .trustActions .btn:focus-visible{
+          background:rgba(255,255,255,.10);
+          border-color:color-mix(in srgb, var(--trust-accent, #2dd4bf) 55%, rgba(255,255,255,.24));
+          box-shadow:
+            0 0 0 1px color-mix(in srgb, var(--trust-accent, #2dd4bf) 45%, transparent),
+            0 10px 26px color-mix(in srgb, var(--trust-accent, #2dd4bf) 30%, transparent);
+        }
+        #confianza .trustActions .btn.is-active,
+        #confianza .trustActions .btn[aria-current="true"]{
+          background:rgba(255,255,255,.12);
+          border-color:color-mix(in srgb, var(--trust-accent, #2dd4bf) 65%, rgba(255,255,255,.22));
+          box-shadow:
+            0 0 0 1px color-mix(in srgb, var(--trust-accent, #2dd4bf) 55%, transparent),
+            0 14px 30px color-mix(in srgb, var(--trust-accent, #2dd4bf) 35%, transparent);
+        }
+        #confianza .trustChipRow{display:none;}
+      </style>
       <div class="wrap">
         <div class="sectionTitle">
           <h2>Respaldo, calidad y confianza</h2>
@@ -1143,13 +1173,6 @@
                 <span>NSF · cGMP · ISO‑9001 · Halal · Kosher · TGA (según producto/mercado).</span>
               </div>
             </a>
-            </div>
-
-            <div class="trustChipRow" style="margin-top:14px">
-              <span class="trustChip">Calidad</span>
-              <span class="trustChip">Certificaciones</span>
-              <span class="trustChip">Transparencia</span>
-              <span class="trustChip">Educativo</span>
             </div>
 
             <p class="trustFine">

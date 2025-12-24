@@ -525,7 +525,7 @@
     /* Motion Light Elite */
     .reveal{
       opacity:0;
-      transform:translateY(10px);
+      transform:translateY(6px);
       transition:opacity 240ms ease, transform 240ms ease;
       will-change:opacity, transform;
     }
@@ -546,7 +546,7 @@
 
     @keyframes floatSoft{
       0%{transform:translateY(0)}
-      50%{transform:translateY(-3px)}
+      50%{transform:translateY(-1.5px)}
       100%{transform:translateY(0)}
     }
 
@@ -554,7 +554,7 @@
     #incluye .systemBanner img{
       filter: drop-shadow(0 18px 28px rgba(0,0,0,.28));
       transition: transform 260ms ease;
-      animation: floatSoft 7s ease-in-out infinite;
+      animation: floatSoft 7.08s ease-in-out infinite;
       aspect-ratio: 16 / 9;
     }
 
@@ -1651,7 +1651,7 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       const img = document.querySelector("#incluye .systemBanner img");
       if(!img || prefersReducedMotion.matches) return;
       let ticking = false;
-      const maxOffset = 6;
+      const maxOffset = 3;
 
       const update = ()=>{
         ticking = false;

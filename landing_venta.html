@@ -531,7 +531,7 @@
 
     #incluye .systemBanner{
       position:relative;
-      box-shadow: 0 20px 38px rgba(0,0,0,.20);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.06), 0 18px 48px rgba(0,0,0,.22);
     }
     #incluye .systemBanner img{
       filter: drop-shadow(0 18px 38px rgba(0,0,0,.35));
@@ -540,11 +540,8 @@
       aspect-ratio: 16 / 9;
     }
     @media (hover:hover) and (pointer:fine){
-      #incluye .systemBanner:hover img{
+      #incluye .systemBanner img:hover{
         transform:translateY(-6px);
-      }
-      #incluye .systemBanner:hover{
-        box-shadow: 0 24px 44px rgba(0,0,0,.26);
       }
     }
 

@@ -1006,13 +1006,15 @@
           font-size:16px;
           font-weight:800;
           background:rgba(255,255,255,.06);
-          border:1px solid rgba(255,255,255,.16);
+          border:1px solid rgba(255,255,255,.18);
         }
         #confianza .trustActions .btn:nth-child(1){--trust-accent:#2dd4bf}
         #confianza .trustActions .btn:nth-child(2){--trust-accent:#38bdf8}
         #confianza .trustActions .btn:nth-child(3){--trust-accent:#f59e0b}
         #confianza .trustActions .btn:hover,
         #confianza .trustActions .btn:focus-visible{
+          color:#F8FAFC;
+          opacity:1;
           background:rgba(255,255,255,.10);
           border-color:color-mix(in srgb, var(--trust-accent, #2dd4bf) 55%, rgba(255,255,255,.24));
           box-shadow:
@@ -1021,13 +1023,14 @@
         }
         #confianza .trustActions .btn.is-active,
         #confianza .trustActions .btn[aria-current="true"]{
-          background:rgba(255,255,255,.12);
+          color:#F8FAFC;
+          opacity:1;
+          background:rgba(255,255,255,.10);
           border-color:color-mix(in srgb, var(--trust-accent, #2dd4bf) 65%, rgba(255,255,255,.22));
           box-shadow:
             0 0 0 1px color-mix(in srgb, var(--trust-accent, #2dd4bf) 55%, transparent),
             0 14px 30px color-mix(in srgb, var(--trust-accent, #2dd4bf) 35%, transparent);
         }
-        #confianza .trustChipRow{display:none;}
       </style>
       <div class="wrap">
         <div class="sectionTitle">

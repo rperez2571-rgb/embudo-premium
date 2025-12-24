@@ -1043,21 +1043,22 @@
 
     <section id="confianza">
       <style>
-        #confianza .trustActions .btn{
+        #confianza .trustActions .btn,
+        #confianza .trustActions .btn *{
           color:#F8FAFC !important;
           opacity:1 !important;
+        }
+        #confianza .trustActions .btn{
           font-size:15px;
           font-weight:800;
-          background:rgba(255,255,255,.06);
-          border:1px solid rgba(255,255,255,.18);
+          background:rgba(255,255,255,.09);
+          border:1px solid rgba(255,255,255,.24);
         }
         #confianza .trustActions .btn:nth-child(1){--trust-accent:#2563EB}
         #confianza .trustActions .btn:nth-child(2){--trust-accent:#0EA5A8}
         #confianza .trustActions .btn:nth-child(3){--trust-accent:#F97316}
         #confianza .trustActions .btn:hover,
         #confianza .trustActions .btn:focus-visible{
-          color:#F8FAFC !important;
-          opacity:1 !important;
           background:rgba(255,255,255,.10);
           border-color:color-mix(in srgb, var(--trust-accent, #2dd4bf) 55%, rgba(255,255,255,.24));
           box-shadow:
@@ -1066,14 +1067,11 @@
         }
         #confianza .trustActions .btn.is-active,
         #confianza .trustActions .btn[aria-current="true"]{
-          color:#F8FAFC !important;
-          opacity:1 !important;
-          background:rgba(255,255,255,.14);
-          border-color:color-mix(in srgb, var(--trust-accent, #2dd4bf) 75%, rgba(255,255,255,.22));
+          background:rgba(255,255,255,.18);
+          border-color:color-mix(in srgb, var(--trust-accent, #2dd4bf) 80%, rgba(255,255,255,.25));
           box-shadow:
             0 0 0 1px color-mix(in srgb, var(--trust-accent, #2dd4bf) 60%, transparent),
-            0 16px 36px color-mix(in srgb, var(--trust-accent, #2dd4bf) 35%, transparent);
-          transform:translateY(-1px);
+            0 18px 40px rgba(0,0,0,.32);
         }
         #confianza .trustFine{
           color:rgba(248,250,252,.82) !important;

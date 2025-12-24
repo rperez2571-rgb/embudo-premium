@@ -1038,17 +1038,19 @@
         #confianza .trustActions .btn[aria-current="true"]{
           color:#F8FAFC !important;
           opacity:1 !important;
-          background:rgba(255,255,255,.10);
-          border-color:color-mix(in srgb, var(--trust-accent, #2dd4bf) 65%, rgba(255,255,255,.22));
+          background:rgba(255,255,255,.14);
+          border-color:color-mix(in srgb, var(--trust-accent, #2dd4bf) 75%, rgba(255,255,255,.22));
           box-shadow:
-            0 0 0 1px color-mix(in srgb, var(--trust-accent, #2dd4bf) 55%, transparent),
-            0 14px 30px color-mix(in srgb, var(--trust-accent, #2dd4bf) 35%, transparent);
+            0 0 0 1px color-mix(in srgb, var(--trust-accent, #2dd4bf) 60%, transparent),
+            0 16px 36px color-mix(in srgb, var(--trust-accent, #2dd4bf) 35%, transparent);
+          transform:translateY(-1px);
         }
         #confianza .trustFine{
-          color:rgba(248,250,252,.78);
-          opacity:1;
+          color:rgba(248,250,252,.82) !important;
+          opacity:1 !important;
           font-size:15px;
-          line-height:1.55;
+          line-height:1.6;
+          max-width:72ch;
         }
         #confianza .trustChipRow{
           display:none !important;

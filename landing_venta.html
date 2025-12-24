@@ -522,6 +522,55 @@
     }
     .toast.on{opacity:1; transform:translateX(-50%) translateY(-6px)}
 
+    /* Motion Light Elite */
+    .reveal{
+      opacity:0;
+      transform:translateY(10px);
+      transition:opacity 240ms ease, transform 240ms ease;
+      will-change:opacity, transform;
+    }
+    .reveal.in{opacity:1; transform:none}
+    @media (hover:hover) and (pointer:fine){
+      .btn:hover,
+      .trustChip:hover,
+      .card:hover{
+        transform:translateY(-1px);
+        box-shadow: 0 14px 34px rgba(0,0,0,.24);
+      }
+      .btn:active,
+      .trustChip:active,
+      .card:active{
+        transform:translateY(0);
+      }
+    }
+
+    @keyframes floatSoft{
+      0%{transform:translateY(0)}
+      50%{transform:translateY(-3px)}
+      100%{transform:translateY(0)}
+    }
+
+    #incluye .systemBanner{position:relative}
+    #incluye .systemBanner img{
+      filter: drop-shadow(0 18px 28px rgba(0,0,0,.28));
+      transition: transform 260ms ease;
+      animation: floatSoft 7s ease-in-out infinite;
+      aspect-ratio: 16 / 9;
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .reveal,
+      .btn,
+      .trustChip,
+      .card{
+        transition:none !important;
+      }
+      #incluye .systemBanner img{
+        animation:none;
+        transform:none !important;
+      }
+    }
+
     /* Bottom */
     .footer{
       padding:24px 0 96px;
@@ -728,7 +777,7 @@
 
   <header class="hero">
     <div class="wrap heroGrid">
-      <div class="panel">
+      <div class="panel reveal">
         <div class="panelInner">
           <div class="kicker">
             <span class="tag">📍 Monterrey</span>
@@ -801,7 +850,7 @@
         </div>
       </div>
 
-      <div class="panel videoShell">
+      <div class="panel videoShell reveal">
         <div class="videoTop">
           <div class="videoTitle"><span class="pulse"></span> Video de Rafael (abre con intención)</div>
           <div class="videoActions">
@@ -839,7 +888,7 @@
   </header>
 
   <main>
-    <section>
+    <section class="reveal">
       <div class="wrap">
         <div class="sectionTitle">
           <h2>Metabolismo: lo que casi nadie explica (y ahí está el problema)</h2>
@@ -917,7 +966,7 @@
       </div>
     </section>
 
-    <section id="test">
+    <section id="test" class="reveal">
       <div class="wrap">
         <div class="sectionTitle">
           <h2>Test Metabólico Express (60 segundos)</h2>
@@ -971,7 +1020,7 @@
     </section>
 
     
-    <section id="incluye">
+    <section id="incluye" class="reveal">
       <style>
         #incluye .systemBanner{
           padding:16px 0 10px;
@@ -1011,7 +1060,7 @@
     </section>
 
 
-    <section id="confianza">
+    <section id="confianza" class="reveal">
       <style>
         #confianza .trustActions .btn{
           color:#F8FAFC !important;
@@ -1211,7 +1260,7 @@
       </div>
     </section>
 
-<section id="comprar">
+<section id="comprar" class="reveal">
       <div class="wrap">
         <div class="sectionTitle">
           <h2>Listo para empezar (sin vueltas)</h2>
@@ -1578,7 +1627,54 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
 
     initHeroVideo();
 
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    function initReveal(){
+      const items = Array.from(document.querySelectorAll(".reveal"));
+      if (prefersReducedMotion.matches) {
+        items.forEach((el)=> el.classList.add("in"));
+        return;
+      }
+      const observer = new IntersectionObserver((entries, obs)=>{
+        entries.forEach((entry)=>{
+          if(entry.isIntersecting){
+            entry.target.classList.add("in");
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: "0px 0px -10% 0px" });
+
+      items.forEach((el)=> observer.observe(el));
+    }
+
+    function initSystemParallax(){
+      const img = document.querySelector("#incluye .systemBanner img");
+      if(!img || prefersReducedMotion.matches) return;
+      let ticking = false;
+      const maxOffset = 6;
+
+      const update = ()=>{
+        ticking = false;
+        const rect = img.getBoundingClientRect();
+        const viewport = window.innerHeight || 1;
+        const progress = Math.min(Math.max((viewport - rect.top) / (viewport + rect.height), 0), 1);
+        const offset = (progress - 0.5) * 2 * maxOffset;
+        img.style.transform = `translateY(${offset.toFixed(2)}px)`;
+      };
+
+      const onScroll = ()=>{
+        if(ticking) return;
+        ticking = true;
+        requestAnimationFrame(update);
+      };
+
+      update();
+      window.addEventListener("scroll", onScroll, { passive: true });
+    }
+
     renderTest();
+    initReveal();
+    initSystemParallax();
   </script>
 </body>
 </html>

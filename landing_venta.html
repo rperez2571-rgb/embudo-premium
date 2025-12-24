@@ -1,0 +1,1579 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Bariátrica Natural — Sistema Metabólico (Unici-Té + Balance) para Monterrey. Acompañamiento por WhatsApp. Contenido educativo." />
+  <title>Bariátrica Natural 🫡 | Sistema Metabólico — Monterrey</title>
+
+  <style>
+    :root{
+      --ink:#081318;
+      --bg:#07161b;
+      --card:#0b1f26;
+      --card2:#0b2b34;
+      --muted:#a9c0c8;
+      --muted2:#cfe0e5;
+      --white:#ffffff;
+      --blue:#0B2B34;
+      --green:#0B6B3A;
+      --cta:#F28C28;
+      --line: rgba(255,255,255,.10);
+      --shadow: 0 18px 60px rgba(0,0,0,.35);
+      --radius: 18px;
+      --radius2: 26px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color: var(--white);
+      background:
+        radial-gradient(1200px 600px at 18% 10%, rgba(11,107,58,.25), transparent 55%),
+        radial-gradient(900px 520px at 80% 0%, rgba(242,140,40,.20), transparent 55%),
+        linear-gradient(180deg, #051015 0%, #07161b 55%, #061217 100%);
+      overflow-x:hidden;
+    }
+    a{color:inherit}
+    .wrap{max-width:1160px;margin:0 auto;padding:0 18px}
+    .nav{
+      position:sticky;top:0;z-index:50;
+      backdrop-filter: blur(10px);
+      background: rgba(5,16,21,.75);
+      border-bottom: 1px solid var(--line);
+    }
+    .navInner{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:14px 0;
+      gap:10px;
+    }
+    .brand{
+      display:flex;align-items:center;gap:10px;
+      font-weight:800;letter-spacing:.2px;
+    }
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 12px;border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color: var(--muted2);
+      font-size:12px;
+      white-space:nowrap;
+    }
+    .navLinks{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+    .btn{
+      border:0;cursor:pointer;
+      padding:12px 14px;border-radius:12px;
+      font-weight:700;
+      transition: transform .12s ease, filter .12s ease, background .12s ease;
+      text-decoration:none;
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      white-space:nowrap;
+    }
+    .btn:active{transform:scale(.98)}
+    .btnGhost{
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--line);
+      color: var(--white);
+    }
+    .btnCta{
+      background: linear-gradient(135deg, var(--cta), #ffb14a);
+      color:#101010;
+      box-shadow: 0 10px 28px rgba(242,140,40,.26);
+    }
+    .btnGreen{
+      background: linear-gradient(135deg, var(--green), #19a45a);
+      color:#07120d;
+      box-shadow: 0 10px 28px rgba(11,107,58,.25);
+    }
+
+    .hero{padding:34px 0 10px}
+    .heroGrid{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    @media (max-width: 980px){
+      .heroGrid{grid-template-columns:1fr;gap:14px}
+      .navLinks{justify-content:flex-start}
+    }
+    .panel{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .panelInner{padding:22px}
+    h1{
+      margin:0 0 10px;
+      font-size: clamp(28px, 3.6vw, 44px);
+      line-height:1.08;
+      letter-spacing:-.5px;
+    }
+    .sub{
+      margin:0 0 16px;
+      color: var(--muted2);
+      font-size: 16px;
+      line-height:1.55;
+      max-width: 62ch;
+    }
+    .kicker{
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+      margin-bottom:12px;
+    }
+    .kicker .tag{
+      padding:8px 12px;border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      font-size:12px;
+      color: var(--muted2);
+      display:inline-flex;gap:8px;align-items:center;
+    }
+    .bullets{
+      margin:14px 0 18px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    @media (max-width: 640px){.bullets{grid-template-columns:1fr}}
+    .bullet{
+      padding:12px 12px;
+      border-radius: 14px;
+      border:1px solid var(--line);
+      background: rgba(5,16,21,.45);
+      color: var(--muted2);
+      font-size: 13px;
+      line-height:1.35;
+    }
+    .ctaRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+    .fine{
+      margin-top:12px;
+      color: rgba(207,224,229,.78);
+      font-size: 12px;
+      line-height:1.45;
+    }
+
+    /* Video card */
+    .videoShell{
+      position:relative;
+      height: 100%;
+      min-height: 430px;
+      background:
+        radial-gradient(520px 320px at 28% 10%, rgba(11,107,58,.35), transparent 60%),
+        radial-gradient(520px 320px at 75% 0%, rgba(242,140,40,.25), transparent 60%),
+        linear-gradient(180deg, rgba(11,43,52,.70) 0%, rgba(11,31,38,.88) 100%);
+    }
+    .videoTop{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      padding:16px 16px 0;
+    }
+    .videoActions{display:flex;align-items:center;gap:10px}
+    .btnSm{padding:10px 12px;border-radius:12px;font-size:13px}
+    @media (max-width: 520px){
+      .videoActions{gap:8px}
+      .btnSm{padding:9px 10px;font-size:12px}
+    }
+
+    .videoTitle{
+      font-weight:900;letter-spacing:.2px;
+      display:flex;align-items:center;gap:10px;
+    }
+    .pulse{
+      width:10px;height:10px;border-radius:999px;
+      background: var(--cta);
+      box-shadow: 0 0 0 0 rgba(242,140,40,.45);
+      animation:pulse 1.6s infinite;
+    }
+    @keyframes pulse{
+      0%{box-shadow:0 0 0 0 rgba(242,140,40,.45)}
+      70%{box-shadow:0 0 0 14px rgba(242,140,40,0)}
+      100%{box-shadow:0 0 0 0 rgba(242,140,40,0)}
+    }
+    .videoFrame{
+      position:relative;
+      margin:14px 16px 16px;
+      border-radius: 18px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.16);
+      background:#02080b;
+      box-shadow: 0 18px 48px rgba(0,0,0,.35);
+      height: min(72vh, 560px);
+      aspect-ratio: 9 / 16;
+      max-width: 360px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .heroVideo{
+      position:absolute;inset:0;
+      width:100%;height:100%;
+      object-fit:contain;
+      background:#02080b;
+      display:none;
+    }
+    .videoFrame.hasVideo .heroVideo{display:block}
+    .videoFrame.hasVideo .videoPoster,
+    .videoFrame.hasVideo .playBtn,
+    .videoFrame.hasVideo .videoOverlay{display:none}
+
+    .videoPoster{
+      position:absolute;inset:0;
+      background-image: url("assets/rafael_vertical_poster.jpg");
+      background-size: cover;
+      background-position: center;
+      filter: saturate(1.05) contrast(1.05);
+      transform: scale(1.02);
+    }
+    .videoOverlay{
+      position:absolute;inset:0;
+      background:
+        radial-gradient(520px 300px at 30% 0%, rgba(255,255,255,.08), transparent 60%),
+        linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,.62));
+      display:flex;align-items:flex-end;
+      padding:16px;
+    }
+    .playBtn{
+      position:absolute;inset:0;
+      display:flex;align-items:center;justify-content:center;
+      cursor:pointer;
+    }
+    .playCircle{
+      width:86px;height:86px;border-radius:999px;
+      background: rgba(242,140,40,.95);
+      color:#111;
+      display:flex;align-items:center;justify-content:center;
+      box-shadow: 0 16px 36px rgba(242,140,40,.28);
+      border: 1px solid rgba(255,255,255,.35);
+      transform: translateY(-8px);
+      transition: transform .16s ease, filter .16s ease;
+    }
+    .playBtn:hover .playCircle{transform: translateY(-10px) scale(1.02); filter:saturate(1.08)}
+    .tri{
+      width:0;height:0;
+      border-left: 18px solid #111;
+      border-top: 12px solid transparent;
+      border-bottom: 12px solid transparent;
+      margin-left:4px;
+    }
+    .videoCaption{
+      position:relative;
+      display:flex;flex-direction:column;gap:6px;
+      max-width: 54ch;
+    }
+    .videoCaption strong{font-size:14px}
+    .videoCaption span{color: rgba(207,224,229,.85); font-size:12px; line-height:1.35}
+    .hint{
+      margin:0 16px 16px;
+      color: rgba(207,224,229,.78);
+      font-size:12px;
+      line-height:1.45;
+    }
+
+    /* Section */
+    section{padding:18px 0}
+    .sectionTitle{
+      display:flex;align-items:flex-end;justify-content:space-between;gap:14px;
+      margin:0 0 10px;
+    }
+    .sectionTitle h2{
+      margin:0;
+      font-size: clamp(18px, 2.2vw, 28px);
+      letter-spacing:-.2px;
+    }
+    .sectionTitle p{
+      margin:0;
+      color: rgba(207,224,229,.8);
+      font-size: 13px;
+      max-width: 62ch;
+      line-height:1.5;
+    }
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    @media (max-width: 980px){.grid3{grid-template-columns:1fr 1fr}}
+    @media (max-width: 720px){.grid3{grid-template-columns:1fr}}
+    @media (max-width: 980px){.grid2{grid-template-columns:1fr}}
+    .card{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      border-radius: var(--radius);
+      overflow:hidden;
+      box-shadow: 0 10px 32px rgba(0,0,0,.22);
+    }
+    .cardPad{padding:18px}
+    /* Metabolismo (primer bloque): alinear el Permiso Cofepris al mismo nivel en ambas tarjetas */
+    main > section:first-of-type .card{display:flex;flex-direction:column}
+    main > section:first-of-type .cardPad{display:flex;flex-direction:column;flex:1}
+    main > section:first-of-type .cardPad .callout:last-child{margin-top:auto}
+
+    .img{
+      width:100%;
+      display:block;
+      height:auto;
+      background:#0b1f26;
+    }
+    /* Product media: mantiene proporción (sin distorsión) */
+    .productMedia{
+      width:100%;
+      background:#0b1f26;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+    }
+    .productMedia img{
+      display:block;
+      max-width:100%;
+      height:auto;
+      max-height:260px;
+      object-fit:contain;
+    }
+    .systemMedia{
+      width:100%;
+      background:#0b1f26;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:14px;
+    }
+    .systemMedia img{
+      display:block;
+      max-width:100%;
+      height:auto;
+      max-height:360px;
+      object-fit:contain;
+    }
+
+    /* Full-width banner for Sistema Feel Great (no padding, no cropping) */
+    .systemBanner{
+      width:100%;
+      overflow:hidden;
+      border-radius:16px 16px 0 0;
+      background: rgba(255,255,255,.02);
+    }
+    .systemBanner img{
+      display:block;
+      width:100%;
+      height:auto;
+    }
+
+    /* Bigger CTAs (only where applied) */
+    .btnXL{
+      padding:16px 18px;
+      border-radius:14px;
+      font-size:16px;
+      letter-spacing:.2px;
+    }
+    @media (max-width:700px){
+      .btnXL{width:100%}
+    }
+    .pillRow{display:flex;gap:10px;flex-wrap:wrap}
+    .pill{
+      padding:10px 12px;border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(5,16,21,.35);
+      font-weight:800;
+      font-size: 12px;
+      color: var(--muted2);
+    }
+    .list{
+      margin:10px 0 0;
+      padding:0 0 0 18px;
+      color: var(--muted2);
+      line-height:1.55;
+      font-size: 14px;
+    }
+    .callout{
+      margin-top:14px;
+      padding:14px 14px;
+      border-radius: 16px;
+      border:1px solid rgba(242,140,40,.35);
+      background: rgba(242,140,40,.08);
+      color: rgba(255,255,255,.92);
+      font-size: 13px;
+      line-height:1.45;
+    }
+
+    /* Extra blocks for product descriptions (premium, sin alterar colores) */
+    .subcopy{
+      margin-top:14px;
+      padding-top:14px;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+    .subcopyLead{
+      margin:0;
+      color: rgba(207,224,229,.86);
+      font-size: 13px;
+      line-height:1.55;
+    }
+    .subcopyNote{
+      margin:10px 0 0;
+      font-weight:900;
+      color: rgba(207,224,229,.92);
+      font-size:13px;
+    }
+    .checkBullets{
+      list-style:none;
+      padding:0;
+      margin:10px 0 0;
+      color: var(--muted2);
+      line-height:1.45;
+      font-size: 14px;
+    }
+    .checkBullets li{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      margin:10px 0;
+    }
+    .checkBullets li::before{
+      content:"✓";
+      width:22px;
+      height:22px;
+      flex:0 0 22px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.92);
+      font-weight:900;
+      font-size:12px;
+      margin-top:1px;
+    }
+
+    /* Capture form */
+    .formGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+      margin-top:12px;
+    }
+    @media (max-width: 560px){.formGrid{grid-template-columns:1fr}}
+    label{font-size:12px;color: rgba(207,224,229,.86); display:block; margin:0 0 6px}
+    input{
+      width:100%;
+      padding:12px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.18);
+      color: var(--white);
+      outline:none;
+    }
+    input:focus{border-color: rgba(242,140,40,.55); box-shadow: 0 0 0 4px rgba(242,140,40,.12)}
+    .formActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .consent{font-size:12px;color: rgba(207,224,229,.78);line-height:1.4;margin-top:10px}
+
+    /* Test */
+    .testGrid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:14px;
+      align-items:stretch;
+    }
+    @media (max-width: 980px){.testGrid{grid-template-columns:1fr}}
+    .checkList{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    @media (max-width: 640px){.checkList{grid-template-columns:1fr}}
+    .check{
+      display:flex;gap:10px;align-items:flex-start;
+      padding:12px 12px;
+      border-radius: 14px;
+      border:1px solid var(--line);
+      background: rgba(5,16,21,.35);
+      cursor:pointer;
+      user-select:none;
+    }
+    .check input{width:18px;height:18px;margin-top:2px}
+    .check strong{display:block;font-size:13px}
+    .check span{display:block;color: rgba(207,224,229,.78); font-size:12px; line-height:1.35; margin-top:2px}
+    .resultBox{
+      height:100%;
+      display:flex;flex-direction:column;gap:10px;
+    }
+    .score{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      padding:14px 14px;border-radius:16px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+    }
+    .score strong{font-size:14px}
+    .score b{font-size:22px}
+    .resultText{
+      padding:14px 14px;border-radius:16px;
+      border:1px solid rgba(11,107,58,.25);
+      background: rgba(11,107,58,.08);
+      color: rgba(255,255,255,.92);
+      font-size:13px;line-height:1.45;
+      flex:1;
+    }
+    .miniBtns{display:flex;gap:10px;flex-wrap:wrap}
+    .toast{
+      position:fixed;left:50%;bottom:92px;transform:translateX(-50%);
+      background: rgba(0,0,0,.75);
+      border: 1px solid rgba(255,255,255,.16);
+      color:#fff;
+      padding:10px 12px;
+      border-radius: 12px;
+      font-size:13px;
+      opacity:0;pointer-events:none;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+    .toast.on{opacity:1; transform:translateX(-50%) translateY(-6px)}
+
+    /* Bottom */
+    .footer{
+      padding:24px 0 96px;
+      color: rgba(207,224,229,.78);
+      font-size:12px;
+      line-height:1.5;
+      border-top: 1px solid var(--line);
+      margin-top: 14px;
+    }
+
+    .footerInner{max-width:820px;margin:0 auto;text-align:center;padding:0 14px}
+    .footerInner p{margin:0}
+    .footerInner p + p{margin-top:10px}
+    .footerInner strong{color:rgba(255,255,255,.92)}
+
+    /* Sticky whatsapp */
+    .sticky{
+      position:fixed;left:0;right:0;bottom:0;z-index:60;
+      background: rgba(5,16,21,.82);
+      border-top: 1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(10px);
+      padding:10px 12px;
+    }
+    .stickyInner{max-width:1160px;margin:0 auto;display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap}
+    .stickyInner > div{text-align:center}
+    .stickyInner small{color: rgba(207,224,229,.78); display:block; line-height:1.25}
+    .stickyInner b{display:block}
+    .hideDesktop{display:none}
+    @media (max-width: 980px){.hideDesktop{display:block}}
+  
+    /* Trust / Respaldo (rediseño premium) */
+    .trustGrid{display:grid;grid-template-columns: 1fr 1.15fr;gap:14px;align-items:stretch}
+    @media (max-width: 980px){.trustGrid{grid-template-columns:1fr}}
+    .trustBrief{position:relative;overflow:hidden}
+    .trustBrief::before{
+      content:"";
+      position:absolute;
+      inset:-60px -60px auto auto;
+      width:260px;height:260px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(242,140,40,.22), transparent 60%),
+        radial-gradient(circle at 60% 70%, rgba(11,107,58,.20), transparent 62%);
+      pointer-events:none;
+      opacity:.95;
+    }
+    .trustKicker{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      color:rgba(207,224,229,.9);
+      font-size:12px;
+      position:relative;
+      z-index:1;
+    }
+    .trustTitle{margin:10px 0 8px;font-size:18px;letter-spacing:-.2px;position:relative;z-index:1}
+    .trustText{margin:0;color:rgba(207,224,229,.85);font-size:14px;line-height:1.55;position:relative;z-index:1}
+    .trustPoints{margin:14px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;position:relative;z-index:1}
+    .trustPoints li{display:flex;gap:10px;align-items:flex-start;color:rgba(207,224,229,.88);font-size:13px;line-height:1.45}
+    .trustDot{
+      width:22px;height:22px;border-radius:8px;
+      background: rgba(242,140,40,.14);
+      border:1px solid rgba(242,140,40,.35);
+      display:flex;align-items:center;justify-content:center;
+      flex:0 0 auto;
+      margin-top:1px;
+      box-shadow: 0 10px 18px rgba(0,0,0,.22);
+    }
+    .trustDot svg{width:14px;height:14px;fill:none;stroke:rgba(242,140,40,.95);stroke-width:2}
+    .trustActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;position:relative;z-index:1}
+    .trustFine{margin-top:10px;color:rgba(207,224,229,.65);font-size:12px;line-height:1.4;position:relative;z-index:1}
+    .trustChipRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;position:relative;z-index:1}
+    .trustChip{
+      padding:6px 10px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.04);
+      font-size:12px;color:rgba(207,224,229,.85);
+    }
+
+    .trustGallery{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    @media (max-width: 520px){.trustGallery{grid-template-columns:1fr}}
+    .trustTile{position:relative;display:block;text-decoration:none;transition:transform .15s ease, box-shadow .15s ease}
+    .trustTile:hover{transform:translateY(-1px)}
+    .trustTile.span2{grid-column:1 / -1}
+    .trustMedia{
+      background:#07161b;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      padding:12px;
+    }
+    .trustMedia img{
+      width:100%;
+      height:220px;
+      object-fit:contain;
+      display:block;
+      background:#07161b;
+      border-radius:12px;
+    }
+    .trustTile.span2 .trustMedia img{height:260px}
+    .trustTile.noCap .trustMedia{border-bottom:none}
+
+    /* Trust tiles — diseño interno (sin imágenes “captura”) */
+    .trustBoard{
+      width:100%;
+      height:220px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.12);
+      background:
+        radial-gradient(circle at 20% 18%, rgba(242,140,40,.18), transparent 62%),
+        radial-gradient(circle at 80% 85%, rgba(11,107,58,.16), transparent 62%),
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      padding:14px;
+      box-sizing:border-box;
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+    }
+    .trustBoard.certBoard{height:auto;min-height:260px;overflow:visible}
+    .trustBoard.pdrBoard{height:auto;min-height:260px}
+
+    .trustBoard .hintLine{
+      margin-top:10px;
+      padding-top:10px;
+      border-top:1px dashed rgba(255,255,255,.14);
+      font-size:10.5px;
+      color:rgba(207,224,229,.68);
+    }
+
+    /* PDR */
+    .pdrBoard{justify-content:center; gap:10px;}
+    .pdrRow{display:flex;align-items:center;gap:10px}
+    .pdrIcon{
+      width:58px;height:58px;border-radius:16px;
+      background: rgba(242,140,40,.14);
+      border:1px solid rgba(242,140,40,.35);
+      display:flex;align-items:center;justify-content:center;
+      box-shadow: 0 14px 26px rgba(0,0,0,.28);
+      flex:0 0 auto;
+    }
+    .pdrIcon svg{width:30px;height:30px;fill:none;stroke:rgba(242,140,40,.95);stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+    .pdrTxt b{display:block;font-size:18px;letter-spacing:-.2px}
+    .pdrTxt span{display:block;margin-top:3px;color:rgba(207,224,229,.86);font-size:12px;line-height:1.25}
+    .pdrTxt em{display:block;margin-top:6px;color:rgba(207,224,229,.72);font-size:11px;font-style:normal;line-height:1.25}
+
+    /* Certificaciones */
+    .certBoard{gap:10px}
+    .certTop{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+    .certTop .t{font-weight:1000;font-size:13px;line-height:1.1}
+    .certTop .s{margin-top:4px;color:rgba(207,224,229,.72);font-size:11px;line-height:1.25}
+    .certPill{
+      padding:6px 10px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      color:rgba(207,224,229,.88);
+      font-size:11px;font-weight:900;
+      white-space:nowrap;
+    }
+    .certGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:2px}
+    .certBadge{
+      display:flex;gap:10px;align-items:center;
+      padding:9px 10px;border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.16);
+    }
+    .certIcon{
+      width:32px;height:32px;border-radius:12px;
+      background: rgba(11,107,58,.14);
+      border:1px solid rgba(11,107,58,.32);
+      display:flex;align-items:center;justify-content:center;
+      flex:0 0 auto;
+    }
+    .certIcon svg{width:18px;height:18px;fill:none;stroke:rgba(11,107,58,.95);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+    .certTxt strong{display:block;font-size:11.5px;line-height:1.05;color:rgba(255,255,255,.92)}
+    .certTxt span{display:block;margin-top:2px;font-size:10.5px;line-height:1.15;color:rgba(207,224,229,.72)}
+
+    .trustCap{padding:14px 16px}
+    .trustCap strong{display:block;font-size:14px}
+    .trustCap span{display:block;margin-top:4px;color:rgba(207,224,229,.78);font-size:12.5px;line-height:1.35}
+
+  </style>
+</head>
+
+<body>
+  <div class="nav">
+    <div class="wrap navInner">
+      <div class="brand">
+        <div style="display:flex;flex-direction:column;line-height:1.05">
+          <span style="font-size:14px;opacity:.9">Bariátrica Natural 🫡</span>
+          <span style="font-size:12px;color:rgba(207,224,229,.78);font-weight:700">Sistema Metabólico — Monterrey</span>
+        </div>
+        <span class="badge">📲 WhatsApp · Paso a paso</span>
+      </div>
+
+      <div class="navLinks">
+        <a class="btn btnGhost" href="#test">Test</a>
+        <a class="btn btnGhost" href="#incluye">Sistema</a>
+        <a class="btn btnGhost" href="#confianza">Respaldo</a>
+        <a class="btn btnCta" href="#comprar">Empezar</a>
+      </div>
+    </div>
+  </div>
+
+  <header class="hero">
+    <div class="wrap heroGrid">
+      <div class="panel">
+        <div class="panelInner">
+          <div class="kicker">
+            <span class="tag">📍 Monterrey</span>
+            <span class="tag">🧠 Estructura + método</span>
+            <span class="tag">⚡ Aquí no vendemos magia</span>
+          </div>
+
+          <h1>Sistema Metabólico Bariátrica Natural</h1>
+          <p class="sub">
+            Somos el <strong>Equipo Fundador</strong> de <strong>Bariátrica Natural</strong> en <strong>Monterrey</strong>. 
+            Estamos levantando una comunidad con <strong>estructura, bulla y método</strong> — sin promesas mágicas. 
+            <strong>Te guiamos paso a paso</strong> por WhatsApp para que empieces con claridad.
+          </p>
+
+          <div class="bullets">
+            <div class="bullet">✅ Sistema Feel Great (Bariátrica Natural 🫡): <strong>Unici-Té</strong> + <strong>Balance</strong> (con guía paso a paso).</div>
+            <div class="bullet">✅ Acompañamiento real por WhatsApp (no “tips sueltos”).</div>
+            <div class="bullet">✅ Enfoque en hábitos y consistencia (no “soluciones mágicas”).</div>
+            <div class="bullet">✅ Contenido educativo para que entiendas tu metabolismo.</div>
+          </div>
+
+          <div class="card" style="margin-top:12px">
+            <div class="cardPad">
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap">
+                <div>
+                  <div style="font-weight:900;font-size:14px;letter-spacing:.2px">Entra por WhatsApp (rápido)</div>
+                  <div style="color:rgba(207,224,229,.82);font-size:12px;margin-top:6px;line-height:1.35">
+                    Completa esto y te abre WhatsApp con el mensaje listo: <strong>METABOLISMO</strong>.
+                  </div>
+                </div>
+                <span class="badge">🔒 Datos mínimos · Sin estrés</span>
+              </div>
+
+              <form id="leadForm" autocomplete="on">
+                <div class="formGrid" style="margin-top:14px">
+                  <div>
+                    <label for="name">Nombre</label>
+                    <input id="name" name="name" placeholder="Tu nombre" required />
+                  </div>
+                  <div>
+                    <label for="city">Ciudad</label>
+                    <input id="city" name="city" placeholder="Monterrey / San Nicolás / Guadalupe…" required />
+                  </div>
+                  <div>
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="email" placeholder="tucorreo@email.com" required />
+                  </div>
+                  <div>
+                    <label for="phone">Teléfono (WhatsApp)</label>
+                    <input id="phone" name="phone" inputmode="tel" placeholder="+52 81… / +1 787…" required />
+                  </div>
+                </div>
+
+                <div class="formActions">
+                  <button class="btn btnGreen" type="submit">📲 Abrir WhatsApp y enviar “METABOLISMO”</button>
+                </div>
+
+                <div class="consent">
+                  Al enviar, aceptas que te contactemos por WhatsApp para darte orientación educativa y seguimiento.
+                  <strong>No es diagnóstico médico.</strong>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <p class="fine">
+            Nota: Este contenido es educativo y no sustituye una evaluación médica. Si tienes diabetes, embarazo/lactancia,
+            o condiciones médicas, consulta con un profesional de la salud.
+          </p>
+        </div>
+      </div>
+
+      <div class="panel videoShell">
+        <div class="videoTop">
+          <div class="videoTitle"><span class="pulse"></span> Video de Rafael (abre con intención)</div>
+          <div class="videoActions">
+            <span class="badge">🎬 Cinemático · premium</span>
+            <button class="btn btnGhost btnSm" type="button" id="openVideoTools">📹 Subir mi video</button>
+          </div>
+        </div>
+
+        <div class="videoFrame" id="videoFrame">
+          <div class="videoPoster"></div>
+          <video id="heroVideo" class="heroVideo" playsinline controls preload="metadata"></video>
+          <div class="playBtn" id="openVideo">
+            <div class="playCircle" aria-label="Reproducir video">
+              <div class="tri"></div>
+            </div>
+          </div>
+          <div class="videoOverlay">
+            <div class="videoCaption">
+              <strong>“Monterrey… esto se levanta con estructura.”</strong>
+              <span>
+                Reemplaza este video con el tuyo (Rafael) para que la página venda sola.
+                Abajo te dejo el texto sugerido.
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hint">
+          <strong>Script corto (30–45s) para tu video:</strong><br/>
+          “Soy Rafael. Estamos levantando Monterrey con Bariátrica Natural 🫡: estructura, método y acompañamiento real.
+          Aquí no vendemos magia. Si quieres entender tu metabolismo y empezar con Unici-Té + Balance, escribe <b>METABOLISMO</b> y te guiamos paso a paso.”
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div class="wrap">
+        <div class="sectionTitle">
+          <h2>Metabolismo: lo que casi nadie explica (y ahí está el problema)</h2>
+          <p>
+            Cuando el metabolismo se desbalancea, puede estar relacionado con muchas condiciones comunes. Aquí hablamos claro,
+            sin promesas mágicas y con enfoque educativo.
+          </p>
+        </div>
+
+                <div class="grid2">
+          <div class="card">
+            <div class="productMedia"><img src="assets/unici_front.png" alt="Unici-Té" /></div>
+            <div class="cardPad">
+              <div class="pillRow">
+                <span class="pill">Unici-Té</span>
+                <span class="pill">30 sobres</span>
+                <span class="pill">ICT: 36067</span>
+              </div>
+              <ul class="list">
+                <li><strong>Contenido:</strong> 30 sobres (5.1 g c/u).</li>
+                <li><strong>Presentación:</strong> polvo para preparar una bebida (limón y hierbas).</li>
+              </ul>
+              <div class="subcopy">
+                <p class="subcopyLead">
+                  Levántese y vaya con Unici-Té. Esta bebida de yerba mate altamente concentrada contiene una mezcla única de compuestos vegetales conocidos por:
+                </p>
+                <ul class="checkBullets">
+                  <li>Apoya la producción de GLP-1</li>
+                  <li>Mejorar el estado de ánimo</li>
+                  <li>Aumentar la energía</li>
+                  <li>Aumentar la claridad mental</li>
+                  <li>suprimir el apetito</li>
+                </ul>
+                <p class="subcopyNote">Además, ¡es sin azúcar!</p>
+              </div>
+              <div class="callout">
+                📌 <strong>Permiso Cofepris:</strong> 163300201A1848
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="productMedia"><img src="assets/balance_front.png" alt="Balance" /></div>
+            <div class="cardPad">
+              <div class="pillRow">
+                <span class="pill">Balance</span>
+                <span class="pill">30 sobres</span>
+                <span class="pill">ICT: 34575</span>
+              </div>
+              <ul class="list">
+                <li><strong>Contenido:</strong> 30 sobres.</li>
+                <li><strong>Presentación:</strong> suplemento alimenticio en polvo con fibra, vitaminas y minerales.</li>
+              </ul>
+              <div class="subcopy">
+                <p class="subcopyLead">
+                  Balance es la solución inteligente para una nutrición equilibrada. Esta mezcla patentada de fibras, nutrientes y compuestos vegetales está diseñada específicamente para:
+                </p>
+                <ul class="checkBullets">
+                  <li>Absorción lenta de carbohidratos para que te sientas satisfecho por más tiempo</li>
+                  <li>Promover la digestión adecuada y la absorción del colesterol.</li>
+                  <li>Aporta 9 vitaminas y minerales esenciales</li>
+                </ul>
+              </div>
+              <div class="callout">
+                🛡️ <strong>Libre de gluten • Vegano</strong>
+                <div class="fine">Nota: certificaciones pueden variar por producto/mercado.</div>
+              </div>
+
+              <div class="callout">
+                📌 <strong>Permiso Cofepris:</strong> 163300201A1848
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="test">
+      <div class="wrap">
+        <div class="sectionTitle">
+          <h2>Test Metabólico Express (60 segundos)</h2>
+          <p>Marca lo que te pasa con frecuencia. No es diagnóstico: es una guía para conversar y decidir tu siguiente paso.</p>
+        </div>
+
+        <div class="testGrid">
+          <div class="card">
+            <div class="cardPad">
+              <div class="checkList" id="checkList">
+                <!-- checks injected by JS -->
+              </div>
+
+              <div class="formActions" style="margin-top:14px">
+                <button class="btn btnGreen" type="button" onclick="computeTest()">Ver mi resultado</button>
+                <button class="btn btnGhost" type="button" onclick="resetTest()">Limpiar</button>
+              </div>
+
+              <p class="fine" style="margin-top:12px">
+                Si marcas varios síntomas, no significa “diagnóstico”. Significa que vale la pena revisar hábitos y,
+                si aplica, validar con tu médico (ej. glucosa en ayunas, HbA1c, lípidos, presión).
+              </p>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="cardPad resultBox">
+              <div class="score">
+                <strong>Tu puntuación</strong>
+                <b id="scoreNum">0</b>
+              </div>
+
+              <div class="resultText" id="resultText">
+                Marca tus señales y dale a “Ver mi resultado”.
+                Te diré qué significa a nivel educativo y el siguiente paso recomendado.
+              </div>
+
+              <div class="miniBtns">
+                <button class="btn btnCta" type="button" onclick="sendResultToWhatsApp()">Enviar resultado por WhatsApp</button>
+                <button class="btn btnGhost" type="button" onclick="shareResult()">Compartir</button>
+              </div>
+
+              <p class="fine" style="margin:6px 0 0">
+                Pro tip: muchas personas sienten “sueño después de comer”, “antojos” o “sed” sin saber que el metabolismo se puede entrenar.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    
+    <section id="incluye">
+      <style>
+        #incluye .systemBanner{
+          padding:16px 0 10px;
+        }
+        #incluye .systemBanner img{
+          max-width:1100px;
+          width:100%;
+          height:auto;
+          max-height:420px;
+          object-fit:contain;
+          margin:0 auto;
+        }
+      </style>
+      <div class="wrap">
+        <div class="sectionTitle">
+          <h2>¿Qué incluye el Sistema Bariátrica Natural?</h2>
+          <p>Lo que compras no es solo una caja. Es el sistema + acompañamiento para que se sostenga.</p>
+        </div>
+
+        <div class="grid3">
+          <div class="card" style="grid-column: 1 / -1;">
+            <div class="systemBanner"><img src="assets/product_stack.png" alt="Sistema Feel Great (2 Unici-Té + 1 Balance)" /></div>
+            <div class="cardPad">
+              <h3 style="margin:0 0 8px;font-size:18px">Sistema Feel Great 🫡</h3>
+              <ul class="list" style="font-size:15px">
+                <li><strong>Incluye:</strong> 2 Unici-Té (ICT 36067) + 1 Balance (ICT 34575).</li>
+                <li><strong>Contenido:</strong> 2 cajas de Unici-Té (30 sobres de 5.1 g c/u) + 1 caja de Balance (30 sobres).</li>
+                <li><strong>Guía:</strong> te acompañamos por WhatsApp para que lo hagas con claridad.</li>
+              </ul>
+
+              <div class="callout">
+                📌 <strong>Permiso Cofepris:</strong> 163300201A1848
+              </div>
+</div>
+          </div>
+        </div>
+    </section>
+
+
+    <section id="confianza">
+      <style>
+        #confianza .trustActions .btn{
+          color:#F8FAFC;
+          opacity:1;
+          font-size:16px;
+          font-weight:800;
+          background:rgba(255,255,255,.06);
+          border:1px solid rgba(255,255,255,.18);
+        }
+        #confianza .trustActions .btn:nth-child(1){--trust-accent:#2dd4bf}
+        #confianza .trustActions .btn:nth-child(2){--trust-accent:#38bdf8}
+        #confianza .trustActions .btn:nth-child(3){--trust-accent:#f59e0b}
+        #confianza .trustActions .btn:hover,
+        #confianza .trustActions .btn:focus-visible{
+          color:#F8FAFC;
+          opacity:1;
+          background:rgba(255,255,255,.10);
+          border-color:color-mix(in srgb, var(--trust-accent, #2dd4bf) 55%, rgba(255,255,255,.24));
+          box-shadow:
+            0 0 0 1px color-mix(in srgb, var(--trust-accent, #2dd4bf) 45%, transparent),
+            0 10px 26px color-mix(in srgb, var(--trust-accent, #2dd4bf) 30%, transparent);
+        }
+        #confianza .trustActions .btn.is-active,
+        #confianza .trustActions .btn[aria-current="true"]{
+          color:#F8FAFC;
+          opacity:1;
+          background:rgba(255,255,255,.10);
+          border-color:color-mix(in srgb, var(--trust-accent, #2dd4bf) 65%, rgba(255,255,255,.22));
+          box-shadow:
+            0 0 0 1px color-mix(in srgb, var(--trust-accent, #2dd4bf) 55%, transparent),
+            0 14px 30px color-mix(in srgb, var(--trust-accent, #2dd4bf) 35%, transparent);
+        }
+        #confianza .trustFine{
+          color:rgba(248,250,252,.78);
+          opacity:1;
+          font-size:15px;
+          line-height:1.55;
+        }
+      </style>
+      <div class="wrap">
+        <div class="sectionTitle">
+          <h2>Respaldo, calidad y confianza</h2>
+          <p>Transparencia: evidencia visual y documentos de referencia. (Las certificaciones pueden variar por mercado/SKU).</p>
+        </div>
+
+        <!-- Bloque unificado (sin repeticiones) -->
+        <div class="card trustBrief trustUnified">
+          <div class="cardPad">
+            <div class="trustKicker">🔎 Evidencia visible · enfoque educativo</div>
+            <h3 class="trustTitle">Certificación, calidad y confianza</h3>
+            <p class="trustText">
+              Aquí tienes los avales y certificaciones para tomar tu decisión con claridad.
+              Puedes abrir cada evidencia en grande cuando lo necesites.
+            </p>
+
+            <div class="trustActions">
+              <a class="btn btnGhost" href="https://www.unicityscience.org/clinical-validation-studies/?lang=es" target="_blank" rel="noopener">🔬 Ciencia de Unicity</a>
+              
+            </div>
+
+            <div class="trustGallery" style="margin-top:14px">
+              <a class="card trustTile span2" href="assets/harvard.png" target="_blank" rel="noopener">
+              <div class="trustMedia">
+                <img src="assets/harvard.png" alt="Harvard Medical School Executive Education (certificación)" />
+              </div>
+              <div class="trustCap">
+                <strong>Certificación Harvard</strong>
+                <span>Executive Education · Nutrición sostenible y hábitos.</span>
+              </div>
+            </a>
+
+              <a class="card trustTile" href="https://www.pdr.net/full-prescribing-information/hl/?druglabelid=24170" target="_blank" rel="noopener" aria-label="Abrir evidencia PDR">
+              <div class="trustMedia">
+                <div class="trustBoard pdrBoard">
+                  <div class="pdrRow">
+                    <div class="pdrIcon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M6 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 0-2 0V4z"/>
+                        <path d="M6 4v16"/>
+                        <path d="M9 8h7"/>
+                        <path d="M9 12h7"/>
+                        <path d="M9 16h5"/>
+                      </svg>
+                    </div>
+                    <div class="pdrTxt">
+                      <b>PDR</b>
+                      <span>Prescribers’ Digital Reference</span>
+                                          </div>
+                  </div>
+                  <div class="hintLine">Click para abrir.</div>
+                </div>
+              </div>
+                          <div class="trustCap">
+                <strong>PDR</strong>
+                <span>Referencia consultada por profesionales (material informativo).</span>
+              </div>
+</a>
+
+              <a class="card trustTile" href="assets/unicity_certifications.png" target="_blank" rel="noopener" aria-label="Abrir certificaciones Unicity">
+              <div class="trustMedia">
+                <div class="trustBoard certBoard">
+                  <div class="certTop">
+                    <div>
+                      <div class="t">Certificaciones de calidad</div>
+                      <div class="s">Estándares internacionales (según producto/mercado/SKU)</div>
+                    </div>
+                    <span class="certPill">UNICITY</span>
+                  </div>
+
+                  <div class="certGrid">
+                    <div class="certBadge">
+                      <div class="certIcon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                          <path d="M12 3l7 4v6c0 5-3 8-7 8s-7-3-7-8V7l7-4z"/>
+                          <path d="M9 12l2 2 4-4"/>
+                        </svg>
+                      </div>
+                      <div class="certTxt"><strong>NSF</strong><span>Calidad y seguridad</span></div>
+                    </div>
+
+                    <div class="certBadge">
+                      <div class="certIcon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                          <path d="M7 21V10l5 3v-3l5 3V9l5 3v9H7z"/>
+                          <path d="M11 21v-6"/>
+                          <path d="M15 21v-6"/>
+                        </svg>
+                      </div>
+                      <div class="certTxt"><strong>cGMP</strong><span>Buenas prácticas</span></div>
+                    </div>
+
+                    <div class="certBadge">
+                      <div class="certIcon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                          <path d="M9 4h6l1 2h3v16H5V6h3l1-2z"/>
+                          <path d="M9 4v4h6V4"/>
+                          <path d="M8 12h8"/>
+                          <path d="M8 16h6"/>
+                        </svg>
+                      </div>
+                      <div class="certTxt"><strong>ISO‑9001</strong><span>Gestión de calidad</span></div>
+                    </div>
+
+                    <div class="certBadge">
+                      <div class="certIcon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                          <path d="M15 3a8 8 0 1 0 0 18a7 7 0 1 1 0-18z"/>
+                        </svg>
+                      </div>
+                      <div class="certTxt"><strong>Halal</strong><span>Certificación</span></div>
+                    </div>
+
+                    <div class="certBadge">
+                      <div class="certIcon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                          <path d="M12 3l3.5 6H8.5L12 3z"/>
+                          <path d="M12 21l-3.5-6h7L12 21z"/>
+                          <path d="M8.5 9h7l3.5 6H5l3.5-6z"/>
+                        </svg>
+                      </div>
+                      <div class="certTxt"><strong>Kosher</strong><span>Certificación</span></div>
+                    </div>
+
+                    <div class="certBadge">
+                      <div class="certIcon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                          <path d="M7 8h10v4H7z"/>
+                          <path d="M5 12h14v4H5z"/>
+                          <path d="M8 16v5h8v-5"/>
+                        </svg>
+                      </div>
+                      <div class="certTxt"><strong>TGA</strong><span>Regulación</span></div>
+                    </div>
+                  </div>
+
+                  <div class="hintLine">Click para abrir.</div>
+                </div>
+              </div>
+              <div class="trustCap">
+                <strong>Certificaciones Unicity</strong>
+                <span>NSF · cGMP · ISO‑9001 · Halal · Kosher · TGA (según producto/mercado).</span>
+              </div>
+            </a>
+            </div>
+
+            <p class="trustFine">
+              Nota: las certificaciones pueden variar por producto/mercado. Si estás en medicamento o tienes condición médica, consulta con tu profesional de salud.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+<section id="comprar">
+      <div class="wrap">
+        <div class="sectionTitle">
+          <h2>Listo para empezar (sin vueltas)</h2>
+          <p>Si quieres hacerlo bien, con estructura y acompañamiento, aquí está el siguiente paso.</p>
+        </div>
+
+        <div class="grid2">
+          <div class="card">
+            <div class="systemMedia"><img src="assets/product_stack.png" alt="Sistema Feel Great (2 Unici-Té + 1 Balance)" /></div>
+            <div class="cardPad">
+              <h3 style="margin:0 0 8px;font-size:18px">Opción 1: Comprar el Sistema</h3>
+              <p style="margin:0;color:rgba(207,224,229,.85);font-size:14px;line-height:1.55">
+                Compra y de inmediato te acompañamos por WhatsApp para arrancar con claridad.
+              </p>
+              <p class="fine" style="margin-top:12px">Si prefieres, escríbenos por WhatsApp y te guiamos para escoger la opción correcta.</p>
+              <div class="formActions" style="margin-top:14px">
+                <button class="btn btnCta btnXL" type="button" onclick="openPurchase()">🛒 Comprar ahora</button>
+                <button class="btn btnGhost" type="button" onclick="openWhatsAppDefault()">Prefiero WhatsApp</button>
+              </div>
+            </div>
+          </div>
+
+
+
+                    <div class="card">
+            <div class="cardPad">
+              <h3 style="margin:0 0 8px;font-size:18px">Opción 2: Quiero emprender (Equipo Fundador)</h3>
+              <p style="margin:0;color:rgba(207,224,229,.85);font-size:14px;line-height:1.55">
+Si quieres emprender con una <strong>compañía global</strong> y construir una <strong>fuente de ingreso adicional</strong> con un sistema duplicable — con o sin experiencia — puedes aplicar para ser parte del <strong>Equipo Fundador</strong> en Monterrey.
+                Te damos <strong>entrenamiento, acompañamiento y comunidad</strong>: estructura, impulso y método para arrancar con claridad.
+                Escríbenos por <strong>WhatsApp</strong> y te enviamos el plan de inicio y requisitos.
+              </p>
+              <div class="formActions" style="margin-top:14px">
+                <a class="btn btnGreen" href="https://enrollment.unicity.com/c/LaSaludesRiqueza" target="_blank" rel="noopener">🚀 Quiero ser parte</a>
+                <button class="btn btnGhost" type="button" onclick="openWhatsAppDefault()">📲 Info por WhatsApp</button>
+              </div>
+              <p class="fine" style="margin-top:12px">
+                Nota: esto es una oportunidad de negocio independiente; no se garantizan ingresos. Resultados dependen de esfuerzo, consistencia y mercado.
+              </p>
+            </div>
+          </div>
+          </div>
+        </div>
+
+        <div class="footer">
+          <div class="footerInner">
+            <p><strong>Contenido educativo.</strong> No sustituye asesoría médica personalizada ni diagnóstico. Niños menores de 7 años y mujeres embarazadas deben consultar con su médico.</p>
+            <p>“Bariátrica Natural” es un nombre de campaña. “Unici-Té” y “Balance” son productos comercializados por Unicity.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="sticky">
+    <div class="stickyInner">
+      <div>
+        <b>¿Listo? Escribe METABOLISMO</b>
+        <small>Te guiamos paso a paso por WhatsApp.</small>
+      </div>
+      <button class="btn btnCta" type="button" onclick="openWhatsAppDefault()">📲 WhatsApp</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Listo ✅</div>
+
+  <!-- Modal (simple) -->
+  <div id="modal" style="position:fixed;inset:0;background:rgba(0,0,0,.62);display:none;align-items:center;justify-content:center;z-index:80;padding:18px;">
+    <div style="max-width:760px;width:100%;border-radius:18px;border:1px solid rgba(255,255,255,.14);background:rgba(5,16,21,.92);box-shadow:0 18px 60px rgba(0,0,0,.45);overflow:hidden">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.10)">
+        <strong>Video de Rafael</strong>
+        <button class="btn btnGhost" style="padding:10px 12px" onclick="closeModal()">Cerrar</button>
+      </div>
+      <div style="padding:16px">
+        <p style="margin:0;color:rgba(207,224,229,.85);line-height:1.55;font-size:14px">
+          Sube aquí tu video <b>vertical (9:16)</b> y se reemplaza al instante en esta página (para que lo veas antes de publicarlo).
+          <br/><br/>
+          <b>Tip:</b> exporta en <b>1080×1920</b>, formato <b>MP4 (H.264)</b>, 30fps.
+        </p>
+
+        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px">
+          <label class="btn btnCta btnXL" style="padding:12px 14px;border-radius:12px;font-size:14px" for="videoUploadInput">⬆️ Subir video (MP4)</label>
+          <input id="videoUploadInput" type="file" accept="video/*" style="display:none" />
+          <button class="btn btnGhost" style="padding:12px 14px;border-radius:12px" type="button" id="resetDemoVideo">↩︎ Volver al demo</button>
+        </div>
+
+        <div style="margin-top:12px;padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);font-family:ui-mono, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace;font-size:12.5px;color:rgba(240,248,250,.92)">
+          Reemplazo fácil (permanente): si vas a subir el embudo a hosting, sustituye el archivo <b>assets/rafael_vertical.mp4</b> por tu video (mismo nombre).
+        </div>
+</div>
+    </div>
+  </div>
+
+  <script>
+    const CONFIG = {
+      WHATSAPP_NUMBER: "17872321516", // +1 787 232-1516 (sin signos)
+      DEFAULT_MESSAGE: "METABOLISMO",
+      PURCHASE_URL: "https://ufeelgreat.com/c/LaSaludesRiqueza",
+      FOUNDER_URL: "https://enrollment.unicity.com/c/LaSaludesRiqueza",
+      VIDEO_SRC: "assets/rafael_vertical.mp4",
+      VIDEO_POSTER: "assets/rafael_vertical_poster.jpg",
+      LEAD_WEBHOOK_URL: "" // opcional: pega aquí tu n8n/servidor si quieres guardar leads
+    };
+
+    function initHeroVideo(){
+      const frame = document.getElementById("videoFrame");
+      const vid = document.getElementById("heroVideo");
+      if(!frame || !vid) return;
+
+      const src = (CONFIG.VIDEO_SRC || "").trim();
+      if(!src) return;
+
+      if(CONFIG.VIDEO_POSTER){
+        vid.setAttribute("poster", CONFIG.VIDEO_POSTER);
+      }
+
+      vid.src = src;
+
+      vid.addEventListener("loadeddata", ()=> {
+        frame.classList.add("hasVideo");
+      }, { once:true });
+
+      // Si el archivo no existe todavía, dejamos el poster/overlay como fallback (sin romper el diseño).
+      vid.addEventListener("error", ()=> {}, { once:true });
+    }
+
+
+    const TEST_ITEMS = [
+      {k:"antojos", t:"Antojos fuertes (especialmente dulce/harinas)", d:"Sientes que te “jala” el carbohidrato."},
+      {k:"energia", t:"Energía baja al despertar", d:"Te cuesta arrancar aunque hayas dormido."},
+      {k:"cintura", t:"Cintura inflamada o “barriga dura”", d:"Notas hinchazón frecuente."},
+      {k:"sueño_post", t:"Te da sueño después de comer", d:"Pesadez o bajón fuerte post‑comida."},
+      {k:"sed", t:"Mucha sed / boca seca frecuente", d:"No por calor o ejercicio."},
+      {k:"miccion", t:"Orinas más de lo normal", d:"Especialmente en la noche o sin explicación."},
+      {k:"hambre", t:"Hambre constante / picoteo", d:"Te cuesta estar sin comer entre horas."},
+      {k:"sueño_malo", t:"Sueño pobre o te despiertas cansado", d:"Te levantas sin sentir descanso real."},
+      {k:"niebla", t:"“Niebla mental” / enfoque flojo", d:"Te cuesta concentrarte en el día."},
+      {k:"ansiedad", t:"Ansiedad por comida o por la noche", d:"Inquietud que se calma comiendo."}
+    ];
+
+    let lastResultText = "";
+    let lastScore = 0;
+
+    function toast(msg){
+      const el = document.getElementById("toast");
+      el.textContent = msg;
+      el.classList.add("on");
+      setTimeout(()=> el.classList.remove("on"), 1400);
+    }
+
+    function scrollToId(id){
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.scrollIntoView({behavior:"smooth", block:"start"});
+    }
+
+    function cleanDigits(v){ return (v||"").toString().replace(/\D/g,""); }
+
+    function openWhatsApp(message){
+      const num = cleanDigits(CONFIG.WHATSAPP_NUMBER);
+      const text = encodeURIComponent(message);
+      const url = `https://wa.me/${num}?text=${text}`;
+      window.open(url, "_blank", "noopener");
+    }
+
+    function openWhatsAppDefault(){
+      openWhatsApp(CONFIG.DEFAULT_MESSAGE);
+    }
+
+    function buildLeadMessage(data){
+      const lines = [
+        CONFIG.DEFAULT_MESSAGE,
+        "",
+        `Nombre: ${data.name}`,
+        `Ciudad: ${data.city}`,
+        `Email: ${data.email}`,
+        `Tel: ${data.phone}`,
+        "",
+        "Quiero orientación del Sistema Metabólico Bariátrica Natural."
+      ];
+      return lines.join("\n");
+    }
+
+    async function postLead(data){
+      if(!CONFIG.LEAD_WEBHOOK_URL) return;
+      try{
+        await fetch(CONFIG.LEAD_WEBHOOK_URL, {
+          method: "POST",
+          headers: {"Content-Type":"application/json"},
+          body: JSON.stringify({source:"landing_bariatrica_natural", ...data, ts: new Date().toISOString()})
+        });
+      }catch(e){
+        // Silencioso: no rompemos conversión
+      }
+    }
+
+    document.getElementById("leadForm").addEventListener("submit", async (e)=>{
+      e.preventDefault();
+      const data = {
+        name: document.getElementById("name").value.trim(),
+        city: document.getElementById("city").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        phone: document.getElementById("phone").value.trim()
+      };
+      if(!data.name || !data.city || !data.email || !data.phone){
+        toast("Completa los campos ✅");
+        return;
+      }
+      await postLead(data);
+      openWhatsApp(buildLeadMessage(data));
+    });
+
+    function renderTest(){
+      const list = document.getElementById("checkList");
+      list.innerHTML = "";
+      TEST_ITEMS.forEach((it, idx)=>{
+        const id = `t_${idx}`;
+        const div = document.createElement("label");
+        div.className = "check";
+        div.setAttribute("for", id);
+        div.innerHTML = `
+          <input id="${id}" type="checkbox" data-k="${it.k}">
+          <div>
+            <strong>${it.t}</strong>
+            <span>${it.d}</span>
+          </div>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    function computeTest(){
+      const checks = Array.from(document.querySelectorAll('#checkList input[type="checkbox"]'));
+      const score = checks.filter(c=>c.checked).length;
+      lastScore = score;
+      document.getElementById("scoreNum").textContent = score;
+
+      let level = "";
+      let msg = "";
+
+      if(score <= 2){
+        level = "Señales leves";
+        msg = `Tienes ${score} señal(es). Esto sugiere que tu punto de partida podría ser leve. Buen momento para crear estructura y sostener hábitos.`;
+      } else {
+        level = "Posible resistencia a la insulina";
+        msg = `Tienes ${score} señales. Con 3 o más señales, es posible que haya resistencia a la insulina (educativo, no diagnóstico).`;
+        msg += `\n\nResistencia a la insulina = tu cuerpo necesita más insulina para manejar la misma glucosa, porque las células no responden igual.`;
+        msg += `\n\nPuede contribuir a: antojos/hambre frecuente, sueño o bajón después de comer y aumento de cintura.`;
+        msg += `\n\nCon el tiempo puede aumentar el riesgo de prediabetes/diabetes tipo 2 y otros problemas metabólicos.`;
+        msg += `\n\nSugerencia: consulta a tu médico general y pregunta por evaluación con glucosa e insulina en ayunas (y HbA1c; HOMA‑IR si aplica), según tu caso.`;
+      }
+
+      msg += "\n\nSi quieres guía paso a paso con Unici-Té + Balance, escribe METABOLISMO y te acompañamos.";
+      lastResultText = `Resultado: ${level}. Puntuación: ${score}.\n${msg}`;
+
+      document.getElementById("resultText").textContent = msg.replace(/\n\n/g, "\n");
+      toast("Resultado listo ✅");
+    }
+
+    function resetTest(){
+      Array.from(document.querySelectorAll('#checkList input[type="checkbox"]')).forEach(c=>c.checked=false);
+      lastScore = 0; lastResultText = "";
+      document.getElementById("scoreNum").textContent = "0";
+      document.getElementById("resultText").textContent = "Marca tus señales y dale a “Ver mi resultado”. Te diré qué significa a nivel educativo y el siguiente paso recomendado.";
+      toast("Listo ✅");
+    }
+
+    function sendResultToWhatsApp(){
+      if(!lastResultText){
+        computeTest();
+      }
+      openWhatsApp(lastResultText || CONFIG.DEFAULT_MESSAGE);
+    }
+
+    async function shareResult(){
+      const text = lastResultText || (CONFIG.DEFAULT_MESSAGE + " — Bariátrica Natural Monterrey");
+      const shareData = { title: "Bariátrica Natural", text, url: window.location.href };
+      try{
+        if(navigator.share){
+          await navigator.share(shareData);
+        }else{
+          await navigator.clipboard.writeText(text + "\n" + window.location.href);
+          toast("Copiado ✅");
+        }
+      }catch(e){
+        try{
+          await navigator.clipboard.writeText(text + "\n" + window.location.href);
+          toast("Copiado ✅");
+        }catch(_){}
+      }
+    }
+
+    function openPurchase(){
+      const url = (CONFIG.PURCHASE_URL || "").trim();
+      if(url && !url.includes("TU-ENLACE-DE-COMPRA-AQUI")){
+        window.open(url, "_blank", "noopener");
+        return;
+      }
+
+    function openFounder(){
+      const url = (CONFIG.FOUNDER_URL || "").trim();
+      if(url){
+        window.open(url, "_blank", "noopener");
+        return;
+      }
+      openWhatsAppDefault();
+    }
+
+      openWhatsApp("QUIERO COMPRAR EL SISTEMA — " + CONFIG.DEFAULT_MESSAGE);
+    }
+
+    function openModal(){
+      document.getElementById("modal").style.display = "flex";
+    }
+    function closeModal(){
+      document.getElementById("modal").style.display = "none";
+    }
+    
+    // Abrir modal desde el botón de herramientas
+    const _openToolsBtn = document.getElementById("openVideoTools");
+    if(_openToolsBtn){ _openToolsBtn.addEventListener("click", openModal); }
+
+    // Subir video local (solo para ti, desde tu computadora)
+    const _videoInput = document.getElementById("videoUploadInput");
+    if(_videoInput){
+      _videoInput.addEventListener("change", ()=>{
+        const file = _videoInput.files && _videoInput.files[0];
+        if(!file) return;
+        const frame = document.getElementById("videoFrame");
+        const vid = document.getElementById("heroVideo");
+        try{
+          const url = URL.createObjectURL(file);
+          vid.src = url;
+          vid.load();
+          frame.classList.add("hasVideo");
+          closeModal();
+          vid.play().catch(()=>{});
+        }catch(e){
+          // fallback silencioso
+        }
+      });
+    }
+
+    // Volver al video demo
+    const _resetBtn = document.getElementById("resetDemoVideo");
+    if(_resetBtn){
+      _resetBtn.addEventListener("click", ()=>{
+        const frame = document.getElementById("videoFrame");
+        const vid = document.getElementById("heroVideo");
+        vid.src = (CONFIG.VIDEO_SRC || "");
+        vid.load();
+        if(CONFIG.VIDEO_POSTER){
+          vid.setAttribute("poster", CONFIG.VIDEO_POSTER);
+        }
+        frame.classList.add("hasVideo");
+        closeModal();
+      });
+    }
+
+    document.getElementById("openVideo").addEventListener("click", openModal);
+    document.getElementById("modal").addEventListener("click", (e)=>{
+      if(e.target && e.target.id === "modal"){ closeModal(); }
+    });
+
+    initHeroVideo();
+
+    renderTest();
+  </script>
+</body>
+</html>

@@ -522,6 +522,36 @@
     }
     .toast.on{opacity:1; transform:translateX(-50%) translateY(-6px)}
 
+    /* Motion Light Elite: sistema */
+    @keyframes floatStack{
+      0%{transform:translateY(0)}
+      50%{transform:translateY(-4px)}
+      100%{transform:translateY(0)}
+    }
+
+    #incluye .systemBanner{
+      position:relative;
+      box-shadow: 0 0 0 1px rgba(255,255,255,.06), 0 18px 48px rgba(0,0,0,.22);
+    }
+    #incluye .systemBanner img{
+      filter: drop-shadow(0 18px 38px rgba(0,0,0,.35));
+      transition: transform 260ms ease;
+      animation: floatStack 7.5s ease-in-out infinite;
+      aspect-ratio: 16 / 9;
+    }
+    @media (hover:hover) and (pointer:fine){
+      #incluye .systemBanner img:hover{
+        transform:translateY(-6px);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      #incluye .systemBanner img{
+        animation:none;
+        transform:none !important;
+      }
+    }
+
     /* Bottom */
     .footer{
       padding:24px 0 96px;
@@ -1014,20 +1044,20 @@
     <section id="confianza">
       <style>
         #confianza .trustActions .btn{
-          color:#F8FAFC;
-          opacity:1;
-          font-size:16px;
+          color:#F8FAFC !important;
+          opacity:1 !important;
+          font-size:15px;
           font-weight:800;
           background:rgba(255,255,255,.06);
           border:1px solid rgba(255,255,255,.18);
         }
-        #confianza .trustActions .btn:nth-child(1){--trust-accent:#2dd4bf}
-        #confianza .trustActions .btn:nth-child(2){--trust-accent:#38bdf8}
-        #confianza .trustActions .btn:nth-child(3){--trust-accent:#f59e0b}
+        #confianza .trustActions .btn:nth-child(1){--trust-accent:#2563EB}
+        #confianza .trustActions .btn:nth-child(2){--trust-accent:#0EA5A8}
+        #confianza .trustActions .btn:nth-child(3){--trust-accent:#F97316}
         #confianza .trustActions .btn:hover,
         #confianza .trustActions .btn:focus-visible{
-          color:#F8FAFC;
-          opacity:1;
+          color:#F8FAFC !important;
+          opacity:1 !important;
           background:rgba(255,255,255,.10);
           border-color:color-mix(in srgb, var(--trust-accent, #2dd4bf) 55%, rgba(255,255,255,.24));
           box-shadow:
@@ -1036,19 +1066,24 @@
         }
         #confianza .trustActions .btn.is-active,
         #confianza .trustActions .btn[aria-current="true"]{
-          color:#F8FAFC;
-          opacity:1;
-          background:rgba(255,255,255,.10);
-          border-color:color-mix(in srgb, var(--trust-accent, #2dd4bf) 65%, rgba(255,255,255,.22));
+          color:#F8FAFC !important;
+          opacity:1 !important;
+          background:rgba(255,255,255,.14);
+          border-color:color-mix(in srgb, var(--trust-accent, #2dd4bf) 75%, rgba(255,255,255,.22));
           box-shadow:
-            0 0 0 1px color-mix(in srgb, var(--trust-accent, #2dd4bf) 55%, transparent),
-            0 14px 30px color-mix(in srgb, var(--trust-accent, #2dd4bf) 35%, transparent);
+            0 0 0 1px color-mix(in srgb, var(--trust-accent, #2dd4bf) 60%, transparent),
+            0 16px 36px color-mix(in srgb, var(--trust-accent, #2dd4bf) 35%, transparent);
+          transform:translateY(-1px);
         }
         #confianza .trustFine{
-          color:rgba(248,250,252,.78);
-          opacity:1;
+          color:rgba(248,250,252,.82) !important;
+          opacity:1 !important;
           font-size:15px;
-          line-height:1.55;
+          line-height:1.6;
+          max-width:72ch;
+        }
+        #confianza .trustChipRow{
+          display:none !important;
         }
       </style>
       <div class="wrap">

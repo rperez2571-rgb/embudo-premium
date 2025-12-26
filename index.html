@@ -1044,36 +1044,42 @@
 
     <section id="confianza">
       <style>
-        #confianza .trustActions .btn,
-        #confianza .trustActions .btn *{
+        #confianza .trustActions .btn{
           color:#F8FAFC !important;
           opacity:1 !important;
-        }
-        #confianza .trustActions .btn{
           font-size:15px;
           font-weight:800;
           background:rgba(255,255,255,.05);
-          border:1px solid color-mix(in srgb, var(--trust-accent) 55%, rgba(255,255,255,.18));
         }
         #confianza .trustActions .btn:nth-child(1){--trust-accent:#2563EB}
         #confianza .trustActions .btn:nth-child(2){--trust-accent:#0EA5A8}
         #confianza .trustActions .btn:nth-child(3){--trust-accent:#F97316}
+        #confianza .trustActions .btn:nth-child(1){
+          border:1px solid rgba(37,99,235,.70) !important;
+          box-shadow: inset 0 0 0 1px rgba(37,99,235,.18);
+        }
+        #confianza .trustActions .btn:nth-child(2){
+          border:1px solid rgba(14,165,168,.70) !important;
+          box-shadow: inset 0 0 0 1px rgba(14,165,168,.18);
+        }
+        #confianza .trustActions .btn:nth-child(3){
+          border:1px solid rgba(249,115,22,.70) !important;
+          box-shadow: inset 0 0 0 1px rgba(249,115,22,.18);
+        }
         #confianza .trustActions .btn:hover,
         #confianza .trustActions .btn:focus-visible{
           background:rgba(255,255,255,.08);
-          border-color:color-mix(in srgb, var(--trust-accent) 70%, rgba(255,255,255,.22));
-          box-shadow:
-            0 0 0 1px color-mix(in srgb, var(--trust-accent) 45%, transparent),
-            0 12px 28px color-mix(in srgb, var(--trust-accent) 22%, transparent);
+          transform:translateY(-1px);
         }
         #confianza .trustActions .btn.is-active,
         #confianza .trustActions .btn[aria-current="true"]{
           background:rgba(255,255,255,.12);
-          border-color:color-mix(in srgb, var(--trust-accent) 85%, rgba(255,255,255,.24));
-          box-shadow:
-            0 0 0 1px color-mix(in srgb, var(--trust-accent) 65%, transparent),
-            0 16px 36px rgba(0,0,0,.30);
-          transform:translateY(-1px);
+          box-shadow: 0 16px 36px rgba(0,0,0,.30);
+        }
+        #confianza .pdrTxt,
+        #confianza .pdrTxt *{
+          color:#F8FAFC !important;
+          opacity:1 !important;
         }
         #confianza .trustFine{
           color:rgba(248,250,252,.82) !important;

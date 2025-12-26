@@ -1049,7 +1049,9 @@
           opacity:1 !important;
           font-size:15px;
           font-weight:800;
-          background:rgba(255,255,255,.05);
+          background:rgba(255,255,255,.06);
+          border-radius:999px !important;
+          padding:14px 18px;
         }
         #confianza .trustActions .btn:nth-child(1){--trust-accent:#2563EB}
         #confianza .trustActions .btn:nth-child(2){--trust-accent:#0EA5A8}
@@ -1076,6 +1078,15 @@
           background:rgba(255,255,255,.12);
           box-shadow: 0 16px 36px rgba(0,0,0,.30);
         }
+        #confianza .trustTile[href*="pdr.net"] .trustCap{
+          background: rgba(15,23,42,.55) !important;
+          color: rgba(248,250,252,.90) !important;
+          border-top: 1px solid rgba(255,255,255,.10);
+        }
+        #confianza .trustTile[href*="pdr.net"] .trustCap span,
+        #confianza .trustTile[href*="pdr.net"] .trustCap strong{
+          color: rgba(248,250,252,.90) !important;
+        }
         #confianza .pdrTxt,
         #confianza .pdrTxt *{
           color:#F8FAFC !important;
@@ -1090,6 +1101,16 @@
         }
         #confianza .trustChipRow{
           display:none !important;
+        }
+        #comprar .grid2 > .card:nth-of-type(2) h3{
+          color:#F8FAFC !important;
+          opacity:1 !important;
+          font-weight:800;
+          font-size:18px;
+        }
+        #comprar .grid2 > .card:nth-of-type(2) p{
+          color:rgba(248,250,252,.78);
+          opacity:1 !important;
         }
       </style>
       <div class="wrap">

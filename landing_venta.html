@@ -1054,6 +1054,44 @@
     .gActions .btn{border-radius:14px;padding:10px 14px}
 
   </style>
+
+<style id="motion-stack-venta">
+/* MOTION STACK (VENTA) */
+@keyframes floatStackVenta{
+  0%,100%{transform:translate3d(0,0,0)}
+  50%{transform:translate3d(0,-6px,0)}
+}
+
+/* Apunta directo a product_stack.png en #incluye (venta) */
+#incluye img[src$="product_stack.png"],
+#incluye .systemBanner img[src$="product_stack.png"],
+#incluye .systemMedia img[src$="product_stack.png"]{
+  animation: floatStackVenta 6.8s ease-in-out infinite !important;
+  will-change: transform, filter;
+  filter: drop-shadow(0 18px 38px rgba(0,0,0,.35));
+  transform: translate3d(0,0,0);
+}
+
+/* Hover premium (solo desktop) */
+@media (hover:hover){
+  #incluye img[src$="product_stack.png"]:hover{
+    animation-play-state: paused !important;
+    transform: translate3d(0,-10px,0) !important;
+    filter: drop-shadow(0 26px 60px rgba(0,0,0,.45));
+  }
+}
+
+/* Accesibilidad: si el sistema pide reducir movimiento, se apaga */
+@media (prefers-reduced-motion: reduce){
+  #incluye img[src$="product_stack.png"],
+  #incluye .systemBanner img[src$="product_stack.png"],
+  #incluye .systemMedia img[src$="product_stack.png"]{
+    animation: none !important;
+    transform: none !important;
+  }
+}
+</style>
+
 </head>
 
 <body>

@@ -933,6 +933,42 @@
     }
     #confianza .trustChip:hover{transform:translateY(-1px);box-shadow: var(--shadow-soft);}
 
+    /* CONFIAZA: tabs con borde de color + PDR legible + sin stretch raro */
+    #confianza .trustGallery{align-items:start;}
+    #confianza .trustTile{align-self:start;}
+
+    #confianza .trustActionsRow .btn{
+      border-radius:999px !important;
+      font-weight:900 !important;
+      letter-spacing:.2px !important;
+    }
+    #confianza .trustActionsRow .btn:nth-child(1){--tab-accent: rgba(37,99,235,.90);}  /* azul */
+    #confianza .trustActionsRow .btn:nth-child(2){--tab-accent: rgba(11,107,58,.92);}  /* verde */
+    #confianza .trustActionsRow .btn:nth-child(3){--tab-accent: rgba(242,140,40,.95);} /* naranja */
+
+    #confianza .trustActionsRow .btnGhost{
+      background: rgba(11,18,32,.92) !important;
+      color:#F8FAFC !important;
+      border:1px solid color-mix(in srgb, var(--tab-accent) 72%, rgba(255,255,255,.10)) !important;
+      box-shadow:
+        0 0 0 1px color-mix(in srgb, var(--tab-accent) 35%, transparent),
+        0 12px 26px rgba(0,0,0,.18) !important;
+    }
+    @media (hover:hover){
+      #confianza .trustActionsRow .btnGhost:hover{
+        transform: translateY(-2px) !important;
+        box-shadow:
+          0 0 0 1px color-mix(in srgb, var(--tab-accent) 55%, transparent),
+          0 18px 34px rgba(0,0,0,.22) !important;
+      }
+    }
+
+    /* PDR legible (el tile usa b/span, no h3/p) */
+    #confianza .pdrTxt b{color:#0B1220 !important;}
+    #confianza .pdrTxt span,
+    #confianza .pdrTxt em,
+    #confianza .trustBoard .hintLine{color:#334155 !important; opacity:1 !important;}
+
     #confianza .certTxt strong{
       color:#FFFFFF !important;
       font-size:17px !important;
@@ -1056,38 +1092,69 @@
   </style>
 
 <style id="motion-stack-venta">
-/* MOTION STACK (VENTA) */
+/* MOTION STACK (VENTA) — v2 (más visible, Fortune 500) */
 @keyframes floatStackVenta{
-  0%,100%{transform:translate3d(0,0,0)}
-  50%{transform:translate3d(0,-6px,0)}
+  0%,100%{transform:translate3d(0,0,0) rotate(0deg) scale(1)}
+  50%{transform:translate3d(0,-16px,0) rotate(-0.7deg) scale(1.012)}
+}
+@keyframes glowVenta{
+  0%,100%{box-shadow:0 18px 58px rgba(0,0,0,.22)}
+  50%{box-shadow:0 26px 78px rgba(0,0,0,.30)}
+}
+@keyframes sheenVenta{
+  0%{transform:translate3d(-55%,0,0) rotate(10deg); opacity:0}
+  20%{opacity:.38}
+  50%{opacity:.20}
+  80%{opacity:.34}
+  100%{transform:translate3d(55%,0,0) rotate(10deg); opacity:0}
 }
 
-/* Apunta directo a product_stack.png en #incluye (venta) */
+/* Banner del sistema (solo #incluye) */
+#incluye .systemBanner{position:relative; overflow:hidden; animation: glowVenta 4.6s ease-in-out infinite;}
+#incluye .systemBanner::after{
+  content:"";
+  position:absolute;
+  inset:-35% -60%;
+  background: linear-gradient(120deg,
+    transparent 0%,
+    rgba(242,140,40,.18) 35%,
+    rgba(11,107,58,.14) 52%,
+    transparent 68%);
+  filter: blur(8px);
+  pointer-events:none;
+  transform:translate3d(-55%,0,0) rotate(10deg);
+  opacity:0;
+  animation: sheenVenta 6.2s ease-in-out infinite;
+}
+
+/* Imagen product_stack: animación visible */
 #incluye img[src$="product_stack.png"],
 #incluye .systemBanner img[src$="product_stack.png"],
 #incluye .systemMedia img[src$="product_stack.png"]{
-  animation: floatStackVenta 6.8s ease-in-out infinite !important;
-  will-change: transform, filter;
-  filter: drop-shadow(0 18px 38px rgba(0,0,0,.35));
+  animation: floatStackVenta 4.6s cubic-bezier(.45,0,.25,1) infinite !important;
+  will-change: transform;
   transform: translate3d(0,0,0);
+  filter: drop-shadow(0 28px 82px rgba(0,0,0,.46));
 }
 
 /* Hover premium (solo desktop) */
 @media (hover:hover){
-  #incluye img[src$="product_stack.png"]:hover{
+  #incluye .systemBanner:hover img[src$="product_stack.png"]{
     animation-play-state: paused !important;
-    transform: translate3d(0,-10px,0) !important;
-    filter: drop-shadow(0 26px 60px rgba(0,0,0,.45));
+    transform: translate3d(0,-22px,0) rotate(-0.9deg) scale(1.016) !important;
+    filter: drop-shadow(0 34px 96px rgba(0,0,0,.55));
   }
 }
 
-/* Accesibilidad: si el sistema pide reducir movimiento, se apaga */
+/* Accesibilidad: si reduce motion, se apaga TODO lo animado */
 @media (prefers-reduced-motion: reduce){
+  #incluye .systemBanner{animation:none !important;}
+  #incluye .systemBanner::after{animation:none !important; opacity:0 !important;}
   #incluye img[src$="product_stack.png"],
   #incluye .systemBanner img[src$="product_stack.png"],
   #incluye .systemMedia img[src$="product_stack.png"]{
-    animation: none !important;
-    transform: none !important;
+    animation:none !important;
+    transform:none !important;
   }
 }
 </style>

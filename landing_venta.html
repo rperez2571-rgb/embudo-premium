@@ -1008,25 +1008,40 @@
       font-weight:900 !important;
       letter-spacing:.2px !important;
     }
-    #confianza .trustActionsRow .btn:nth-child(1){--tab-accent: rgba(37,99,235,.90);}  /* azul */
-    #confianza .trustActionsRow .btn:nth-child(2){--tab-accent: rgba(11,107,58,.92);}  /* verde */
-    #confianza .trustActionsRow .btn:nth-child(3){--tab-accent: rgba(242,140,40,.95);} /* naranja */
+    #confianza .trustActionsRow .btn:nth-child(1){--tab-accent: rgb(37,99,235);}  /* azul */
+    #confianza .trustActionsRow .btn:nth-child(2){--tab-accent: rgb(11,107,58);}  /* verde */
+    #confianza .trustActionsRow .btn:nth-child(3){--tab-accent: rgb(242,140,40);} /* naranja */
 
     #confianza .trustActionsRow .btnGhost{
       background: rgba(11,18,32,.92) !important;
       color:#F8FAFC !important;
-      border:1px solid color-mix(in srgb, var(--tab-accent) 72%, rgba(255,255,255,.10)) !important;
+      border:1px solid var(--tab-accent) !important;
       box-shadow:
-        0 0 0 1px color-mix(in srgb, var(--tab-accent) 35%, transparent),
+        0 0 0 1px color-mix(in srgb, var(--tab-accent) 40%, transparent),
         0 12px 26px rgba(0,0,0,.18) !important;
     }
     @media (hover:hover){
       #confianza .trustActionsRow .btnGhost:hover{
         transform: translateY(-2px) !important;
         box-shadow:
-          0 0 0 1px color-mix(in srgb, var(--tab-accent) 55%, transparent),
+          0 0 0 2px color-mix(in srgb, var(--tab-accent) 65%, transparent),
+          0 0 12px color-mix(in srgb, var(--tab-accent) 32%, transparent),
           0 18px 34px rgba(0,0,0,.22) !important;
       }
+    }
+    #confianza .trustActionsRow .btnGhost:active{
+      box-shadow:
+        0 0 0 2px color-mix(in srgb, var(--tab-accent) 65%, transparent),
+        0 0 10px color-mix(in srgb, var(--tab-accent) 30%, transparent),
+        0 14px 28px rgba(0,0,0,.2) !important;
+    }
+    #confianza .trustActionsRow .btnGhost:focus-visible{
+      outline:2px solid rgba(255,255,255,.95);
+      outline-offset:2px;
+      box-shadow:
+        0 0 0 2px color-mix(in srgb, var(--tab-accent) 65%, transparent),
+        0 0 12px color-mix(in srgb, var(--tab-accent) 32%, transparent),
+        0 14px 28px rgba(0,0,0,.2) !important;
     }
 
     /* PDR legible (el tile usa b/span, no h3/p) */

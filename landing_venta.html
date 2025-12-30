@@ -1008,43 +1008,49 @@
       font-weight:900 !important;
       letter-spacing:.2px !important;
     }
-    #confianza .trustActionsRow > :is(a, button):nth-of-type(1){--tab-accent: rgb(37,99,235);}  /* azul */
-    #confianza .trustActionsRow > :is(a, button):nth-of-type(2){--tab-accent: rgb(11,107,58);}  /* verde */
-    #confianza .trustActionsRow > :is(a, button):nth-of-type(3){--tab-accent: rgb(242,140,40);} /* naranja */
+    #confianza .trustActionsRow button:nth-of-type(1){--tab-accent: rgb(37,99,235);}  /* azul */
+    #confianza .trustActionsRow button:nth-of-type(2){--tab-accent: rgb(11,107,58);}  /* verde */
+    #confianza .trustActionsRow button:nth-of-type(3){--tab-accent: rgb(242,140,40);} /* naranja */
+    #confianza .trustActionsRow .btn:nth-of-type(1){--tab-accent: rgb(37,99,235);}  /* azul */
+    #confianza .trustActionsRow .btn:nth-of-type(2){--tab-accent: rgb(11,107,58);}  /* verde */
+    #confianza .trustActionsRow .btn:nth-of-type(3){--tab-accent: rgb(242,140,40);} /* naranja */
 
-    #confianza .trustActionsRow :is(a, button){
-      border:2px solid var(--tab-accent, #64748b) !important;
+    #confianza .trustActionsRow button,
+    #confianza .trustActionsRow .btn{
+      border:2px solid transparent !important;
+      box-shadow:
+        0 0 0 2px var(--tab-accent, #64748b),
+        0 10px 24px rgba(15,23,42,.16) !important;
     }
     #confianza .trustActionsRow .btnGhost{
       background: rgba(11,18,32,.92) !important;
       color:#F8FAFC !important;
-      border:2px solid var(--tab-accent, #64748b) !important;
-      box-shadow:
-        0 0 0 1px color-mix(in srgb, var(--tab-accent, #64748b) 35%, transparent),
-        0 12px 26px rgba(0,0,0,.18) !important;
     }
     @media (hover:hover){
-      #confianza .trustActionsRow .btnGhost:hover{
+      #confianza .trustActionsRow button:hover,
+      #confianza .trustActionsRow .btn:hover{
         transform: translateY(-2px) !important;
         box-shadow:
-          0 0 0 2px color-mix(in srgb, var(--tab-accent, #64748b) 70%, transparent),
-          0 0 12px color-mix(in srgb, var(--tab-accent, #64748b) 38%, transparent),
-          0 18px 34px rgba(0,0,0,.22) !important;
+          0 0 0 3px var(--tab-accent, #64748b),
+          0 0 10px color-mix(in srgb, var(--tab-accent, #64748b) 45%, transparent),
+          0 16px 30px rgba(15,23,42,.2) !important;
       }
     }
-    #confianza .trustActionsRow .btnGhost:active{
+    #confianza .trustActionsRow button:active,
+    #confianza .trustActionsRow .btn:active{
       box-shadow:
-        0 0 0 2px color-mix(in srgb, var(--tab-accent, #64748b) 70%, transparent),
-        0 0 10px color-mix(in srgb, var(--tab-accent, #64748b) 34%, transparent),
-        0 14px 28px rgba(0,0,0,.2) !important;
+        0 0 0 3px var(--tab-accent, #64748b),
+        0 0 8px color-mix(in srgb, var(--tab-accent, #64748b) 35%, transparent),
+        0 12px 26px rgba(15,23,42,.18) !important;
     }
-    #confianza .trustActionsRow .btnGhost:focus-visible{
+    #confianza .trustActionsRow button:focus-visible,
+    #confianza .trustActionsRow .btn:focus-visible{
       outline:2px solid rgba(255,255,255,.95);
       outline-offset:2px;
       box-shadow:
-        0 0 0 2px color-mix(in srgb, var(--tab-accent, #64748b) 70%, transparent),
-        0 0 12px color-mix(in srgb, var(--tab-accent, #64748b) 38%, transparent),
-        0 14px 28px rgba(0,0,0,.2) !important;
+        0 0 0 3px var(--tab-accent, #64748b),
+        0 0 10px color-mix(in srgb, var(--tab-accent, #64748b) 45%, transparent),
+        0 14px 28px rgba(15,23,42,.2) !important;
     }
 
     /* PDR legible (el tile usa b/span, no h3/p) */

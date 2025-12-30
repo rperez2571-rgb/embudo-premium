@@ -315,6 +315,9 @@
       border:1px solid rgba(255,255,255,.10);
       box-shadow: 0 8px 18px rgba(0,0,0,.18);
     }
+    .videoShell .videoTop{
+      justify-content:flex-end;
+    }
     .videoActions{display:flex;align-items:center;gap:10px}
     .btnSm{padding:10px 12px;border-radius:12px;font-size:13px}
     @media (max-width: 520px){
@@ -1028,9 +1031,13 @@
 
     /* PDR legible (el tile usa b/span, no h3/p) */
     #confianza .pdrTxt b{color:#0B1220 !important;font-size:20px !important;letter-spacing:-.2px !important;}
-    #confianza .pdrTxt span{color:#1F2937 !important; opacity:1 !important;font-size:15px !important;line-height:1.4 !important;}
-    #confianza .pdrTxt em{color:#1F2937 !important; opacity:1 !important;font-size:13.5px !important;line-height:1.4 !important;}
+    #confianza .pdrTxt span{color:#0F172A !important; opacity:1 !important;font-size:15px !important;line-height:1.4 !important;font-weight:600 !important;}
+    #confianza .pdrTxt em{color:#0F172A !important; opacity:1 !important;font-size:13.5px !important;line-height:1.4 !important;font-weight:600 !important;}
     #confianza .trustBoard .hintLine{color:#1F2937 !important; opacity:1 !important;font-size:13px !important;}
+    #confianza .trustBoard .hintLine{
+      color:#0B1220 !important;
+      font-weight:700 !important;
+    }
 
     #confianza .certTxt strong{
       color:#FFFFFF !important;
@@ -1063,6 +1070,13 @@
       display:flex;align-items:center;justify-content:center;
       box-shadow: 0 14px 26px rgba(15,23,42,.12);
       flex:0 0 auto;
+    }
+    #confianza .pdrIcon{
+      background: rgba(22,163,74,.24);
+      border-color: rgba(22,163,74,.72);
+      box-shadow:
+        0 0 0 1px rgba(11,18,32,.25),
+        0 16px 28px rgba(15,23,42,.18);
     }
     .pdrIcon svg{width:34px;height:34px;fill:none;stroke:rgba(22,163,74,.98);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
     .pdrTxt b{display:block;font-size:20px;letter-spacing:-.2px}
@@ -1162,6 +1176,18 @@
     @media (max-width:640px){
       .guaranteePad{align-items:flex-start}
       .guaranteeTitle{font-size:17px}
+    }
+    #comprar .cardPad > p[style*="rgba(71,85,105"]{
+      color: rgba(226,232,240,.88) !important;
+    }
+    #comprar .cardPad > p[style*="rgba(71,85,105"] strong{
+      color: rgba(248,250,252,.96);
+    }
+    .guaranteeCard .guaranteeSub{
+      color: rgba(226,232,240,.86);
+    }
+    .guaranteeCard .fine{
+      color: rgba(226,232,240,.7);
     }
     /* Garantía modal */
     .gOverlay{
@@ -1376,7 +1402,6 @@
 
       <div class="panel videoShell">
         <div class="videoTop">
-          <div class="videoTitle"><span class="pulse"></span> Video de Rafael (abre con intención)</div>
           <div class="videoActions">
             <span class="badge">Cinemático · premium</span>
             <button class="btn btnGhost btnSm" type="button" id="openVideoTools">Subir mi video</button>

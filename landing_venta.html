@@ -52,6 +52,8 @@
       margin:0;
       font-family: var(--font-base);
       color: var(--text);
+      font-size:17px;
+      line-height:1.6;
       background-color: var(--bg);
       background:
         radial-gradient(1200px 620px at 18% 12%, rgba(249,115,22,.14), transparent 55%),
@@ -60,6 +62,12 @@
       overflow-x:hidden;
     }
     a{color:var(--link)}
+    a:focus-visible{
+      outline:2px solid rgba(96,165,250,.95);
+      outline-offset:2px;
+      border-radius:8px;
+    }
+    img{max-width:100%;height:auto;display:block}
     .nav a{color:var(--text);text-decoration:none;}
     .wrap{max-width:1160px;margin:0 auto;padding:0 18px}
     .nav{
@@ -118,7 +126,8 @@
     }
     .btn:active{transform: translateY(0);}
     .btn:focus-visible{
-      outline:none;
+      outline:2px solid rgba(248,250,252,.95);
+      outline-offset:2px;
       box-shadow:0 0 0 4px rgba(37,99,235,.18);
     }
     .btn:disabled,
@@ -132,7 +141,11 @@
       box-shadow: 0 14px 32px rgba(249,115,22,.18);
     }
     .btnPrimary:hover{background: var(--cta-hover);border-color: var(--cta-hover);}
-    .btnPrimary:focus-visible{box-shadow:0 0 0 4px rgba(249,115,22,.22);}
+    .btnPrimary:focus-visible{
+      outline:2px solid rgba(255,255,255,.95);
+      outline-offset:2px;
+      box-shadow:0 0 0 4px rgba(249,115,22,.22);
+    }
 
     .btnSecondary{
       background: #25D366;
@@ -141,7 +154,11 @@
       box-shadow: 0 10px 24px rgba(37,211,102,.16);
     }
     .btnSecondary:hover{background: #1EBE5D;border-color:#1EBE5D;}
-    .btnSecondary:focus-visible{box-shadow:0 0 0 4px rgba(37,211,102,.22);}
+    .btnSecondary:focus-visible{
+      outline:2px solid rgba(255,255,255,.95);
+      outline-offset:2px;
+      box-shadow:0 0 0 4px rgba(37,211,102,.22);
+    }
 
     .btnGhost{
       background: var(--surface);
@@ -195,8 +212,8 @@
     .sub{
       margin:0 0 16px;
       color: var(--muted);
-      font-size: 16px;
-      line-height:1.55;
+      font-size: 17px;
+      line-height:1.6;
       max-width: 62ch;
     }
     .kicker{
@@ -224,22 +241,58 @@
       border:1px solid var(--border);
       background: var(--surface);
       color: var(--muted);
-      font-size: 13px;
-      line-height:1.35;
+      font-size: 15px;
+      line-height:1.5;
     }
     .ctaRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
     .fine{
       margin-top:12px;
       color: var(--muted2);
-      font-size: 12px;
-      line-height:1.45;
+      font-size: 13.5px;
+      line-height:1.55;
     }
     @media (max-width: 640px){
-      body{font-size:15px;line-height:1.6;}
-      .sub{line-height:1.65;font-size:15.5px;}
-      .sectionTitle p{line-height:1.6;font-size:14px;}
-      .bullet{line-height:1.45;font-size:13.5px;}
-      .fine{line-height:1.55;font-size:12.5px;}
+      body{font-size:17px;line-height:1.65;}
+      .sub{line-height:1.65;font-size:17px;}
+      .sectionTitle p{line-height:1.6;font-size:16px;}
+      .bullet{line-height:1.55;font-size:15.5px;}
+      .fine{line-height:1.6;font-size:14px;}
+    }
+    @media (max-width: 430px){
+      body{font-size:17.5px;line-height:1.7;}
+      .btn,
+      .btnSm,
+      .btnXL,
+      .trustActionsRow .btn{
+        font-size:18px;
+        line-height:1.3;
+      }
+      .btn{padding:14px 16px;}
+      .btnSm{padding:12px 14px;}
+      .sub{font-size:17.5px;line-height:1.7;}
+      .sectionTitle p,
+      .list,
+      .checkBullets,
+      .trustText,
+      .resultText,
+      .hint,
+      .videoShell .hint,
+      .videoShell .hint p,
+      .gText,
+      .gList{
+        font-size:16.5px;
+        line-height:1.65;
+      }
+      .bullet,
+      .callout,
+      .subcopyLead,
+      .fine,
+      .trustPoints li,
+      .check span{
+        font-size:16px;
+        line-height:1.6;
+      }
+      .pill{font-size:13px;line-height:1.3;}
     }
 
     /* Video card */
@@ -261,6 +314,9 @@
       margin:0 16px 0;
       border:1px solid rgba(255,255,255,.10);
       box-shadow: 0 8px 18px rgba(0,0,0,.18);
+    }
+    .videoShell .videoTop{
+      justify-content:flex-end;
     }
     .videoActions{display:flex;align-items:center;gap:10px}
     .btnSm{padding:10px 12px;border-radius:12px;font-size:13px}
@@ -414,10 +470,10 @@
     }
     .sectionTitle p{
       margin:0;
-      color: rgba(71,85,105,.8);
-      font-size: 13px;
+      color: rgba(226,232,240,.92);
+      font-size: 15.5px;
       max-width: 62ch;
-      line-height:1.5;
+      line-height:1.6;
     }
     .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
     .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
@@ -452,6 +508,7 @@
       display:flex;
       align-items:center;
       justify-content:center;
+      overflow:hidden;
       padding:18px;
     }
     .productMedia img{
@@ -470,6 +527,7 @@
       display:flex;
       align-items:center;
       justify-content:center;
+      overflow:hidden;
       padding:14px;
     }
     .systemMedia img{
@@ -492,6 +550,8 @@
       display:block;
       width:100%;
       height:auto;
+      object-fit:contain;
+      object-position:center;
       aspect-ratio: 1670 / 1206;
     }
 
@@ -518,9 +578,9 @@
     .list{
       margin:10px 0 0;
       padding:0 0 0 18px;
-      color: var(--muted2);
-      line-height:1.55;
-      font-size: 14px;
+      color: var(--muted);
+      line-height:1.6;
+      font-size: 15.5px;
     }
     .callout{
       margin-top:14px;
@@ -529,8 +589,8 @@
       border:1px solid rgba(22,163,74,.20);
       background: rgba(22,163,74,.08);
       color: var(--text);
-      font-size: 13px;
-      line-height:1.45;
+      font-size: 14.5px;
+      line-height:1.55;
     }
 
     /* Extra blocks for product descriptions (premium, sin alterar colores) */
@@ -542,8 +602,8 @@
     .subcopyLead{
       margin:0;
       color: var(--muted);
-      font-size: 13px;
-      line-height:1.55;
+      font-size: 14.5px;
+      line-height:1.6;
     }
     .subcopyNote{
       margin:10px 0 0;
@@ -556,8 +616,8 @@
       padding:0;
       margin:10px 0 0;
       color: var(--muted2);
-      line-height:1.45;
-      font-size: 14px;
+      line-height:1.55;
+      font-size: 15px;
     }
     .checkBullets li{
       display:flex;
@@ -598,11 +658,12 @@
       border: 1px solid var(--border);
       background: var(--surface);
       color: var(--text);
-      outline:none;
+      outline:2px solid transparent;
+      outline-offset:2px;
     }
     input:focus{border-color: var(--cta); box-shadow: 0 0 0 4px rgba(22,163,74,.14)}
     .formActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-    .consent{font-size:12px;color: var(--muted2);line-height:1.4;margin-top:10px}
+    .consent{font-size:13.5px;color: rgba(203,213,225,.95);line-height:1.55;margin-top:10px}
 
     /* Test */
     .testGrid{
@@ -743,14 +804,14 @@
       border:1px solid var(--border);
       background:var(--surface);
       color:var(--muted);
-      font-size:12px;
+      font-size:13px;
       position:relative;
       z-index:1;
     }
-    .trustTitle{margin:10px 0 8px;font-size:18px;letter-spacing:-.2px;position:relative;z-index:1}
-    .trustText{margin:0;color:rgba(71,85,105,.85);font-size:14px;line-height:1.55;position:relative;z-index:1}
+    .trustTitle{margin:10px 0 8px;font-size:20px;letter-spacing:-.2px;position:relative;z-index:1}
+    .trustText{margin:0;color:rgba(71,85,105,.85);font-size:15.5px;line-height:1.6;position:relative;z-index:1}
     .trustPoints{margin:14px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;position:relative;z-index:1}
-    .trustPoints li{display:flex;gap:10px;align-items:flex-start;color:rgba(71,85,105,.88);font-size:13px;line-height:1.45}
+    .trustPoints li{display:flex;gap:10px;align-items:flex-start;color:rgba(71,85,105,.88);font-size:14.5px;line-height:1.55}
     .trustDot{
       width:22px;height:22px;border-radius:8px;
       background: rgba(22,163,74,.14);
@@ -764,13 +825,13 @@
     .trustActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;position:relative;z-index:1;justify-content:center}
     .trustActionsRow{grid-column:1 / -1; justify-content:center; margin-top:6px;}
     .trustActionsRow .btn{min-width:200px; text-align:center; padding:12px 16px;}
-    .trustFine{margin-top:10px;color:rgba(71,85,105,.65);font-size:12px;line-height:1.4;position:relative;z-index:1}
+    .trustFine{margin-top:10px;color:rgba(71,85,105,.65);font-size:13.5px;line-height:1.5;position:relative;z-index:1}
     .trustChipRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;position:relative;z-index:1}
     .trustChip{
       padding:6px 10px;border-radius:999px;
       border:1px solid var(--border);
       background:var(--surface);
-      font-size:12px;color:var(--muted);
+      font-size:13px;color:var(--muted);
       transition: transform var(--anim-fast) ease, box-shadow var(--anim-fast) ease, background var(--anim-fast) ease, border-color var(--anim-fast) ease, color var(--anim-fast) ease;
     }
 
@@ -783,11 +844,13 @@
       background:var(--surface);
       border-bottom:1px solid var(--border);
       padding:12px;
+      overflow:hidden;
     }
     .trustMedia img{
       width:100%;
       height:220px;
       object-fit:contain;
+      object-position:center;
       display:block;
       background:var(--surface);
       border-radius:12px;
@@ -828,6 +891,9 @@
       font-size:18px !important;
       line-height:1.55 !important;
     }
+    #confianza .sectionTitle{align-items:center;}
+    #confianza .sectionTitle p{color:rgba(226,232,240,.95) !important;font-size:16px !important;line-height:1.6 !important;}
+    #confianza .sectionTitle h2{font-size: clamp(20px, 2.4vw, 30px);}
     #confianza .trustTile,
     #confianza .trustCard,
     #confianza .trustItem{
@@ -942,49 +1008,60 @@
       font-weight:900 !important;
       letter-spacing:.2px !important;
     }
-    #confianza .trustActionsRow .btn:nth-child(1){--tab-accent: rgba(11,107,58,.92);}  /* verde marca */
-    #confianza .trustActionsRow .btn:nth-child(2){--tab-accent: rgba(11,107,58,.92);}  /* verde marca */
-    #confianza .trustActionsRow .btn:nth-child(3){--tab-accent: rgba(11,107,58,.92);}  /* verde marca */
+    #confianza .trustActionsRow button:nth-of-type(1){--tab-accent: rgb(37,99,235);}  /* azul */
+    #confianza .trustActionsRow button:nth-of-type(2){--tab-accent: rgb(11,107,58);}  /* verde */
+    #confianza .trustActionsRow button:nth-of-type(3){--tab-accent: rgb(242,140,40);} /* naranja */
+    #confianza .trustActionsRow .btn:nth-of-type(1){--tab-accent: rgb(37,99,235);}  /* azul */
+    #confianza .trustActionsRow .btn:nth-of-type(2){--tab-accent: rgb(11,107,58);}  /* verde */
+    #confianza .trustActionsRow .btn:nth-of-type(3){--tab-accent: rgb(242,140,40);} /* naranja */
 
+    #confianza .trustActionsRow button,
+    #confianza .trustActionsRow .btn{
+      border:2px solid transparent !important;
+      box-shadow:
+        0 0 0 2px var(--tab-accent, #64748b),
+        0 10px 24px rgba(15,23,42,.16) !important;
+    }
     #confianza .trustActionsRow .btnGhost{
       background: rgba(11,18,32,.92) !important;
       color:#F8FAFC !important;
-      border:1px solid color-mix(in srgb, #0B6B3A 78%, rgba(255,255,255,.14)) !important;
-      box-shadow:
-        0 0 0 1px color-mix(in srgb, #0B6B3A 32%, transparent),
-        0 12px 26px rgba(0,0,0,.18) !important;
     }
     @media (hover:hover){
-      #confianza .trustActionsRow .btnGhost:hover{
+      #confianza .trustActionsRow button:hover,
+      #confianza .trustActionsRow .btn:hover{
         transform: translateY(-2px) !important;
         box-shadow:
-          0 0 0 1px color-mix(in srgb, #0B6B3A 62%, transparent),
-          0 18px 34px rgba(11,107,58,.22) !important;
-        border-color: color-mix(in srgb, #0B6B3A 88%, rgba(255,255,255,.1)) !important;
+          0 0 0 3px var(--tab-accent, #64748b),
+          0 0 10px color-mix(in srgb, var(--tab-accent, #64748b) 45%, transparent),
+          0 16px 30px rgba(15,23,42,.2) !important;
       }
     }
-    #confianza .trustActionsRow .btnGhost:active,
-    #confianza .trustActionsRow .btnGhost.is-active,
-    #confianza .trustActionsRow .btnGhost[aria-current="true"]{
-      border-color: #0B6B3A !important;
-      background: rgba(11,107,58,.16) !important;
+    #confianza .trustActionsRow button:active,
+    #confianza .trustActionsRow .btn:active{
       box-shadow:
-        0 0 0 1px rgba(11,107,58,.45),
-        0 14px 28px rgba(11,107,58,.25) !important;
+        0 0 0 3px var(--tab-accent, #64748b),
+        0 0 8px color-mix(in srgb, var(--tab-accent, #64748b) 35%, transparent),
+        0 12px 26px rgba(15,23,42,.18) !important;
     }
-    #confianza .trustActionsRow .btnGhost:focus-visible{
-      outline:none;
-      border-color:#0B6B3A !important;
+    #confianza .trustActionsRow button:focus-visible,
+    #confianza .trustActionsRow .btn:focus-visible{
+      outline:2px solid rgba(255,255,255,.95);
+      outline-offset:2px;
       box-shadow:
-        0 0 0 3px rgba(242,140,40,.55),
-        0 12px 26px rgba(11,107,58,.2) !important;
+        0 0 0 3px var(--tab-accent, #64748b),
+        0 0 10px color-mix(in srgb, var(--tab-accent, #64748b) 45%, transparent),
+        0 14px 28px rgba(15,23,42,.2) !important;
     }
 
     /* PDR legible (el tile usa b/span, no h3/p) */
-    #confianza .pdrTxt b{color:#0B1220 !important;}
-    #confianza .pdrTxt span,
-    #confianza .pdrTxt em,
-    #confianza .trustBoard .hintLine{color:#334155 !important; opacity:1 !important;}
+    #confianza .pdrTxt b{color:#0B1220 !important;font-size:20px !important;letter-spacing:-.2px !important;}
+    #confianza .pdrTxt span{color:#0F172A !important; opacity:1 !important;font-size:15px !important;line-height:1.4 !important;font-weight:600 !important;}
+    #confianza .pdrTxt em{color:#0F172A !important; opacity:1 !important;font-size:13.5px !important;line-height:1.4 !important;font-weight:600 !important;}
+    #confianza .trustBoard .hintLine{color:#1F2937 !important; opacity:1 !important;font-size:13px !important;}
+    #confianza .trustBoard .hintLine{
+      color:#0B1220 !important;
+      font-weight:700 !important;
+    }
 
     #confianza .certTxt strong{
       color:#FFFFFF !important;
@@ -1011,17 +1088,24 @@
     .pdrBoard{justify-content:center; gap:10px;}
     .pdrRow{display:flex;align-items:center;gap:10px}
     .pdrIcon{
-      width:58px;height:58px;border-radius:16px;
-      background: rgba(22,163,74,.14);
-      border:1px solid rgba(22,163,74,.35);
+      width:64px;height:64px;border-radius:18px;
+      background: rgba(22,163,74,.18);
+      border:1px solid rgba(22,163,74,.45);
       display:flex;align-items:center;justify-content:center;
       box-shadow: 0 14px 26px rgba(15,23,42,.12);
       flex:0 0 auto;
     }
-    .pdrIcon svg{width:30px;height:30px;fill:none;stroke:rgba(22,163,74,.95);stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-    .pdrTxt b{display:block;font-size:18px;letter-spacing:-.2px}
-    .pdrTxt span{display:block;margin-top:3px;color:rgba(71,85,105,.86);font-size:12px;line-height:1.25}
-    .pdrTxt em{display:block;margin-top:6px;color:rgba(71,85,105,.72);font-size:11px;font-style:normal;line-height:1.25}
+    #confianza .pdrIcon{
+      background: rgba(22,163,74,.24);
+      border-color: rgba(22,163,74,.72);
+      box-shadow:
+        0 0 0 1px rgba(11,18,32,.25),
+        0 16px 28px rgba(15,23,42,.18);
+    }
+    .pdrIcon svg{width:34px;height:34px;fill:none;stroke:rgba(22,163,74,.98);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .pdrTxt b{display:block;font-size:20px;letter-spacing:-.2px}
+    .pdrTxt span{display:block;margin-top:4px;color:rgba(71,85,105,.9);font-size:14px;line-height:1.35}
+    .pdrTxt em{display:block;margin-top:6px;color:rgba(71,85,105,.78);font-size:12.5px;font-style:normal;line-height:1.35}
 
     /* Certificaciones */
     .certBoard{gap:10px}
@@ -1057,6 +1141,52 @@
     .trustCap{padding:14px 16px}
     .trustCap strong{display:block;font-size:14px}
     .trustCap span{display:block;margin-top:4px;color:rgba(71,85,105,.78);font-size:12.5px;line-height:1.35}
+    #confianza .trustCap strong{font-size:18px !important;line-height:1.4 !important;}
+    #confianza .trustCap span{font-size:15px !important;line-height:1.5 !important;color:#E2E8F0 !important;}
+
+    #confianza .trustBrief{
+      background: linear-gradient(180deg, rgba(11,18,32,.92), rgba(11,18,32,.8));
+      border-color: rgba(148,163,184,.28);
+    }
+    #confianza .trustBrief .trustKicker{
+      background: rgba(15,23,42,.75);
+      border-color: rgba(148,163,184,.35);
+      color:#E2E8F0 !important;
+    }
+    #confianza .trustBrief .trustTitle,
+    #confianza .trustBrief .trustText,
+    #confianza .trustBrief .trustPoints li,
+    #confianza .trustBrief .trustFine{
+      color:#E2E8F0 !important;
+    }
+    #confianza .trustBrief .trustText{font-size:16px !important;line-height:1.6 !important;}
+    #confianza .trustBrief .trustChip{
+      background: rgba(15,23,42,.75) !important;
+      border-color: rgba(148,163,184,.35) !important;
+      color:#E2E8F0 !important;
+    }
+    #confianza .trustBrief .trustActionsRow .btnGhost{
+      background: rgba(15,23,42,.98) !important;
+      border-color: rgba(226,232,240,.3) !important;
+      color:#F8FAFC !important;
+      box-shadow: 0 12px 30px rgba(0,0,0,.35) !important;
+    }
+
+    #incluye .sectionTitle p{
+      color:rgba(226,232,240,.95);
+      font-size:16px;
+      line-height:1.6;
+    }
+    #incluye .sectionTitle h2{font-size: clamp(20px, 2.4vw, 30px);}
+
+    .hero .card .cardPad > div > div > div:nth-child(2){
+      color: rgba(226,232,240,.95) !important;
+      font-size: 14.5px !important;
+      line-height:1.55 !important;
+    }
+    .hero .card .cardPad > div > div > div:nth-child(2) strong{
+      color:#F8FAFC;
+    }
 
     /* Garantía */
     .guaranteeCard{
@@ -1070,6 +1200,18 @@
     @media (max-width:640px){
       .guaranteePad{align-items:flex-start}
       .guaranteeTitle{font-size:17px}
+    }
+    #comprar .cardPad > p[style*="rgba(71,85,105"]{
+      color: rgba(226,232,240,.88) !important;
+    }
+    #comprar .cardPad > p[style*="rgba(71,85,105"] strong{
+      color: rgba(248,250,252,.96);
+    }
+    .guaranteeCard .guaranteeSub{
+      color: rgba(226,232,240,.86);
+    }
+    .guaranteeCard .fine{
+      color: rgba(226,232,240,.7);
     }
     /* Garantía modal */
     .gOverlay{
@@ -1284,7 +1426,6 @@
 
       <div class="panel videoShell">
         <div class="videoTop">
-          <div class="videoTitle"><span class="pulse"></span> Video de Rafael (abre con intención)</div>
           <div class="videoActions">
             <span class="badge">Cinemático · premium</span>
             <button class="btn btnGhost btnSm" type="button" id="openVideoTools">Subir mi video</button>
@@ -1691,7 +1832,7 @@
               <p class="fine" style="margin-top:12px">Si prefieres, escríbenos por WhatsApp y te guiamos para escoger la opción correcta.</p>
               <div class="formActions" style="margin-top:14px">
                 <button class="btn btnPrimary btnXL" type="button" onclick="openPurchase()">Comprar ahora</button>
-                <button class="btn btnSecondary" type="button" onclick="openWhatsAppDefault()">Prefiero WhatsApp</button>
+                <button class="btn btnSecondary" type="button" onclick="openWhatsAppDefault()">WhatsApp</button>
               </div>
 
               <div class="card guaranteeCard" style="margin-top:14px">

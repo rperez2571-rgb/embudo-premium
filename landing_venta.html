@@ -1248,7 +1248,27 @@
     .gActions{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
     .gActions .btn{border-radius:14px;padding:10px 14px}
 
-  </style>
+  
+/* UI-17: spacing (izquierda) + aire al CTA (derecha) */
+.bullet{
+  display:inline-flex;
+  align-items:center;
+  margin:0 10px 8px 0;   /* separa “palabras” */
+}
+
+.bullet:last-child{ margin-right:0; }
+
+/* evita que el área de botones quede pegada al borde derecho */
+.gActions{
+  padding-right:14px;
+  box-sizing:border-box;
+}
+
+/* respaldo: por si el botón es el que está pegado */
+.btnSecondary{
+  margin-right:12px;
+}
+</style>
 
 <style id="motion-stack-venta">
 /* MOTION STACK (VENTA) — v2 (más visible, Fortune 500) */

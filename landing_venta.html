@@ -1464,6 +1464,151 @@ a.card.trustTile h4{
   }
 }
 </style>
+
+<style id="ui-18-hotfix-contrast">
+/* UI-18 HOTFIX: legibilidad PDR dentro de trustTile (CSS-only) */
+
+a.card.trustTile .trustBoard{
+  background: rgba(255,255,255,.06) !important;
+  border-color: rgba(160,230,255,.22) !important;
+}
+
+/* Texto principal del bloque PDR (lo que ahora no se lee) */
+a.card.trustTile .pdrTxt,
+a.card.trustTile .pdrTxt *{
+  color: rgba(245,250,255,.92) !important;
+  text-shadow: 0 1px 0 rgba(0,0,0,.35) !important;
+}
+
+/* “Click para abrir” y texto tenue dentro del cuadro */
+a.card.trustTile .trustBoard,
+a.card.trustTile .trustBoard *{
+  color: rgba(235,245,255,.82) !important;
+}
+
+/* Línea divisoria más visible (si aplica) */
+a.card.trustTile hr,
+a.card.trustTile .divider,
+a.card.trustTile .line{
+  border-color: rgba(160,230,255,.18) !important;
+  opacity: 1 !important;
+}
+</style>
+
+<style id="ui-18-hotfix-pdr-contrast-v2">
+/* UI-18 HOTFIX v2: PDR legible (forzar color/opacidad dentro del cuadro) */
+
+a.card.trustTile .trustBoard.pdrBoard,
+a.card.trustTile .pdrBoard{
+  background: rgba(255,255,255,.08) !important;
+  border-color: rgba(160,230,255,.26) !important;
+  opacity: 1 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+/* Forzar legibilidad de TODO lo que esté dentro del cuadro */
+a.card.trustTile .trustBoard.pdrBoard *,
+a.card.trustTile .pdrBoard *{
+  color: rgba(245,250,255,.94) !important;
+  opacity: 1 !important;
+  filter: none !important;
+  text-shadow: 0 1px 0 rgba(0,0,0,.45) !important;
+}
+
+/* Refuerzo específico de los textos principales */
+a.card.trustTile .pdrTxt,
+a.card.trustTile .pdrTxt *{
+  color: rgba(255,255,255,.96) !important;
+  opacity: 1 !important;
+}
+
+/* Línea punteada visible */
+a.card.trustTile .trustBoard.pdrBoard .dash,
+a.card.trustTile .pdrBoard .dash,
+a.card.trustTile .trustBoard.pdrBoard hr,
+a.card.trustTile .pdrBoard hr{
+  border-color: rgba(160,230,255,.22) !important;
+  opacity: 1 !important;
+}
+</style>
+
+<style id="ui-18-hotfix-pdr-contrast-v3">
+/* UI-18 HOTFIX v3: el problema es opacidad en PADRE + overlays. Forzamos legibilidad. */
+
+/* 1) Quitar “dimming” del tile completo (si estaba en .trustTile) */
+a.card.trustTile{
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+/* 2) Quitar dimming/filters en contenedores internos */
+a.card.trustTile .trustMedia,
+a.card.trustTile .trustBoard,
+a.card.trustTile .trustBoard.pdrBoard,
+a.card.trustTile .pdrBoard{
+  opacity: 1 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+/* 3) Si hay capas que oscurecen por pseudo-elementos, las apagamos */
+a.card.trustTile .trustBoard::before,
+a.card.trustTile .trustBoard::after,
+a.card.trustTile .pdrBoard::before,
+a.card.trustTile .pdrBoard::after{
+  content: none !important;
+  display: none !important;
+}
+
+/* 4) Forzar texto legible (incluye -webkit-text-fill-color) */
+a.card.trustTile .pdrTxt,
+a.card.trustTile .pdrTxt *{
+  color: rgba(255,255,255,.96) !important;
+  -webkit-text-fill-color: rgba(255,255,255,.96) !important;
+  opacity: 1 !important;
+  text-shadow: 0 1px 0 rgba(0,0,0,.55) !important;
+  position: relative;
+  z-index: 2;
+}
+
+/* 5) “Click para abrir” y texto dentro del cuadro */
+a.card.trustTile .trustBoard,
+a.card.trustTile .trustBoard *{
+  color: rgba(235,245,255,.88) !important;
+  -webkit-text-fill-color: rgba(235,245,255,.88) !important;
+  opacity: 1 !important;
+}
+
+/* 6) Ajuste sutil del panel para contraste */
+a.card.trustTile .trustBoard.pdrBoard,
+a.card.trustTile .pdrBoard{
+  background: rgba(255,255,255,.09) !important;
+  border-color: rgba(160,230,255,.26) !important;
+}
+</style>
+
+<style id="ui-19-topbar-container">
+/* UI-19: franja superior más centrada (CSS-only, sin tocar estructura) */
+
+/* Intenta capturar barras/header comunes sin romper otras secciones */
+:where(header,.header,.topbar,.topBar,.nav,.navbar,.heroTop,.heroHeader,.masthead){
+  padding-left: clamp(14px, 3vw, 28px) !important;
+  padding-right: clamp(14px, 3vw, 28px) !important;
+}
+
+/* Si dentro hay un contenedor flex principal, lo limitamos a un ancho cómodo */
+:where(header,.header,.topbar,.topBar,.nav,.navbar,.heroTop,.heroHeader,.masthead) > :where(.wrap,.container,.inner,.row,.bar,.topRow){
+  max-width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Respaldo: si no hay wrapper, centramos el contenido directo */
+:where(header,.header,.topbar,.topBar,.nav,.navbar,.heroTop,.heroHeader,.masthead){
+  box-sizing: border-box;
+}
+</style>
 </head>
 
 <body>

@@ -1270,6 +1270,64 @@
 }
 </style>
 
+<style id="ui-18-focus">
+/* UI-18: foco visual en tabs + cards (CSS-only, sin tocar copy/estructura) */
+
+/* 1) Tabs tipo “píldora”: borde/halo para que la vista vaya ahí */
+:where(.segmented,.tabsRow,.topTabs,.tabs,.pillRow,.sectionTabs){
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+:where(.segmented,.tabsRow,.topTabs,.tabs,.pillRow,.sectionTabs) :where(button,a){
+  position:relative;
+  border-radius:999px;
+  border:1px solid rgba(120,160,255,.28);
+  background: rgba(10,18,28,.55);
+  color: rgba(245,250,255,.92);
+  padding:12px 18px;
+  box-shadow: 0 10px 28px rgba(0,0,0,.28);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+:where(.segmented,.tabsRow,.topTabs,.tabs,.pillRow,.sectionTabs) :where(button,a):hover{
+  transform: translateY(-1px);
+  border-color: rgba(120,200,255,.55);
+  box-shadow: 0 14px 34px rgba(0,0,0,.34);
+}
+
+/* Estado activo (soporta varias implementaciones comunes) */
+:where(.segmented,.tabsRow,.topTabs,.tabs,.pillRow,.sectionTabs) :where(.active,[aria-selected="true"],[data-active="true"]){
+  border-color: rgba(120,240,255,.75);
+  box-shadow: 0 0 0 3px rgba(70,200,255,.16), 0 16px 40px rgba(0,0,0,.38);
+}
+
+/* 2) Cards (PDR / Certificaciones): más “premium” sin perder seriedad */
+:where(.card,.tile,.panel){
+  border-radius:18px;
+  border:1px solid rgba(120,160,255,.22);
+  background: radial-gradient(120% 120% at 20% 0%, rgba(90,170,255,.10), rgba(0,0,0,0)) , rgba(10,18,28,.50);
+  box-shadow: 0 14px 40px rgba(0,0,0,.32);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+:where(.card,.tile,.panel):hover{
+  transform: translateY(-2px);
+  border-color: rgba(120,240,255,.42);
+  box-shadow: 0 18px 54px rgba(0,0,0,.38);
+}
+
+/* 3) Aire interno en móvil para que nada toque bordes */
+ (max-width: 560px){
+  :where(.cardPad,.panelPad){
+    padding-left:18px;
+    padding-right:18px;
+    box-sizing:border-box;
+  }
+}
+</style>
+
 <style id="motion-stack-venta">
 /* MOTION STACK (VENTA) — v2 (más visible, Fortune 500) */
 @keyframes floatStackVenta{
@@ -1338,6 +1396,74 @@
 }
 </style>
 
+
+<style id="ui-18-focus-v3">
+/* UI-18 v3: foco real en tabs + cards (CSS-only, sin tocar copy/estructura) */
+
+/* ====== Tabs superiores: a.btn.btnGhost ====== */
+a.btn.btnGhost{
+  border:1px solid rgba(120,240,255,.62) !important;
+  background: rgba(10,18,28,.50) !important;
+  border-radius: 999px !important;
+  padding: 14px 22px !important;
+  box-shadow: 0 0 0 2px rgba(70,200,255,.12), 0 14px 34px rgba(0,0,0,.38) !important;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease !important;
+}
+
+a.btn.btnGhost:hover{
+  transform: translateY(-1px) !important;
+  border-color: rgba(120,240,255,.92) !important;
+  background: rgba(10,18,28,.58) !important;
+  box-shadow: 0 0 0 3px rgba(70,200,255,.18), 0 18px 44px rgba(0,0,0,.44) !important;
+}
+
+a.btn.btnGhost:focus-visible{
+  outline: none !important;
+  box-shadow: 0 0 0 4px rgba(70,200,255,.26), 0 18px 44px rgba(0,0,0,.44) !important;
+}
+
+/* ====== Cards documentación: a.card.trustTile ====== */
+a.card.trustTile{
+  border-radius: 22px !important;
+  border: 1px solid rgba(120,240,255,.22) !important;
+  background:
+    radial-gradient(120% 120% at 18% 0%, rgba(90,170,255,.16), rgba(0,0,0,0)),
+    rgba(10,18,28,.52) !important;
+  box-shadow: 0 18px 56px rgba(0,0,0,.42) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease !important;
+}
+
+a.card.trustTile:hover{
+  transform: translateY(-2px) !important;
+  border-color: rgba(120,240,255,.45) !important;
+  box-shadow: 0 22px 70px rgba(0,0,0,.48) !important;
+}
+
+/* Panel interno dentro del card (donde dice “Click para abrir”) */
+a.card.trustTile .trustBoard{
+  border-radius: 18px !important;
+  border: 1px solid rgba(120,240,255,.14) !important;
+  background: rgba(255,255,255,.03) !important;
+}
+
+/* Título más visible sin perder seriedad */
+a.card.trustTile .pdrTxt b,
+a.card.trustTile h3,
+a.card.trustTile h4{
+  text-shadow: 0 1px 0 rgba(0,0,0,.35);
+}
+
+/* Aire en móvil: evita bordes pegados */
+@media (max-width: 560px){
+  .cardPad.cardPad{
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+    box-sizing: border-box !important;
+  }
+}
+</style>
 </head>
 
 <body>

@@ -835,7 +835,7 @@
       background: rgba(255,255,255,.95);
       border-top: 1px solid var(--border);
       backdrop-filter: blur(12px);
-      padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+      padding:8px 12px calc(10px + env(safe-area-inset-bottom));
       display:none;
     }
     .stickyInner{max-width:1160px;margin:0 auto;display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap}
@@ -851,6 +851,35 @@
     @media (max-width: 560px){
       .navInner{flex-wrap:wrap;}
       .navLinks{width:100%;justify-content:flex-start;}
+    }
+    .stickyClose{
+      background: rgba(15,23,42,.08);
+      border:1px solid rgba(15,23,42,.18);
+      border-radius:999px;
+      width:32px;height:32px;
+      display:inline-flex;align-items:center;justify-content:center;
+      color:#0B2B34;
+      font-weight:900;
+      cursor:pointer;
+    }
+    .stickyToggle{
+      position:fixed;
+      right:14px;
+      bottom:calc(14px + env(safe-area-inset-bottom));
+      z-index:61;
+      display:none;
+    }
+    .stickyToggle .btn{
+      border-radius:999px;
+      padding:10px 14px;
+      font-size:14px;
+    }
+    @media (max-width: 720px){
+      body.has-sticky{padding-bottom:160px;}
+      body.sticky-hidden{padding-bottom:24px;}
+      .stickyInner{flex-direction:column;gap:8px;}
+      .stickyActions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
+      .stickyHeaderRow{display:flex;align-items:center;gap:10px;}
     }
     @keyframes ctaPulseOnce{
       0%{transform:scale(1); box-shadow:0 10px 28px rgba(11,107,58,.26);}
@@ -1772,8 +1801,8 @@ a.card.trustTile .pdrBoard{
                 </div>
                 <div class="formGrid" style="margin-top:14px">
                   <div>
-                    <label for="name">Nombre</label>
-                    <input id="name" name="name" placeholder="Tu nombre" required />
+                    <label for="name">Nombre y apellido</label>
+                    <input id="name" name="name" placeholder="Tu nombre y apellido" required />
                   </div>
                   <div>
                     <label for="city">Ciudad</label>
@@ -2309,15 +2338,22 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
 
   <div class="sticky">
     <div class="stickyInner">
-      <div>
-        <b>¿Listo? Escribe METABOLISMO</b>
-        <small>Te guiamos paso a paso por WhatsApp.</small>
+      <div class="stickyHeaderRow">
+        <div>
+          <b>¿Listo? Escribe METABOLISMO</b>
+          <small>Te guiamos paso a paso por WhatsApp.</small>
+        </div>
+        <button class="stickyClose" type="button" id="closeSticky" aria-label="Cerrar botones">✕</button>
       </div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+      <div class="stickyActions">
         <button class="btn btnPrimary pulse-target" type="button" onclick="openPurchase()">Comprar</button>
         <button class="btn btnSecondary" type="button" onclick="openWhatsAppDefault()">WhatsApp</button>
       </div>
     </div>
+  </div>
+
+  <div class="stickyToggle" id="openStickyWrap">
+    <button class="btn btnGhost" type="button" id="openSticky">Ver botones</button>
   </div>
 
   <div class="toast" id="toast">Listo</div>
@@ -2518,7 +2554,14 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
     }
 
     async function postLead(data){
-      const body = { ...data, hp: document.getElementById("website")?.value || "" };
+      const body = {
+        ...data,
+        hp: document.getElementById("website")?.value || "",
+        source: "landing_bariatrica_natural",
+        score: String(lastScore || 0),
+        url: window.location.href,
+        consent: "aceptado"
+      };
       if(UTM_QUERY){ body.utm = UTM_QUERY; }
       const resp = await fetch("api/lead.php", {
         method: "POST",
@@ -2595,13 +2638,15 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       }
 
       if(!result || !result.ok){
-        setLeadStatus(result && result.message ? result.message : "No se pudo guardar", true);
+        setLeadStatus("⚠️ No se pudo guardar, intenta de nuevo", true);
         setSubmitState("idle");
+        toast("⚠️ No se pudo guardar, intenta de nuevo");
         try{ window.dataLayer.push({event:"lead_submit_error", message: result && result.message ? result.message : "unknown"}); }catch(_){}
         return;
       }
 
-      setLeadStatus("Gracias, recibido", false);
+      const successMsg = result && result.message ? result.message : "✅ Registro guardado";
+      setLeadStatus(successMsg, false);
       setSubmitState("success");
       toast("Gracias, recibido");
       leadSubmitted = true;
@@ -2675,9 +2720,149 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       msg += "\n\nSi quieres guía paso a paso con Unici-Té + Balance, escribe METABOLISMO y te acompañamos.";
       lastResultText = `Resultado: ${level}. Puntuación: ${score}.\n${msg}`;
 
-      document.getElementById("resultText").textContent = msg.replace(/\n\n/g, "\n");
+      document.getElementById("resultText").innerHTML = result.html;
       toast("Resultado listo");
       try{ window.dataLayer.push({event:"complete_test", score: score}); }catch(_){}
+    }
+
+    function escapeHtml(value){
+      return (value || "").toString().replace(/[&<>"']/g, (m)=>({
+        "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"
+      }[m]));
+    }
+
+    // === Rango + patrones del Test Metabólico (mantenimiento) ===
+    function buildTestMessage(score, keys, firstName){
+      const safeName = escapeHtml(firstName);
+      const greeting = safeName ? `Hola, ${safeName} 👋` : "Hola 👋";
+
+      const ranges = [
+        {
+          min: 0, max: 2, label: "Bajo",
+          intro: "Tu nivel es bajo. Esto sugiere señales leves y una oportunidad clara de prevención.",
+          why: "Suele aparecer cuando hay rutina, descanso estable y comidas sin picos fuertes de azúcar.",
+          actions: [
+            "Desayuno con proteína + fibra.",
+            "Caminata 10–15 min después de comer.",
+            "Dormir 7–8 horas con horario fijo."
+          ],
+          medical: "Si no se toman medidas: pueden aparecer más antojos, energía inestable y aumento de cintura con el tiempo. Educativo, no diagnóstico. Consulta a tu médico si tienes dudas."
+        },
+        {
+          min: 3, max: 4, label: "Moderado",
+          intro: "Tu nivel es moderado con señales tempranas. Es buen momento para corregir en 14 días.",
+          why: "Puede aparecer con estrés, horarios irregulares o exceso de carbohidratos simples.",
+          actions: [
+            "Reduce dulces/harinas en la noche.",
+            "Hidrátate de forma constante.",
+            "Incluye proteína en cada comida."
+          ],
+          medical: "Si no se toman medidas: aumenta el riesgo de antojos, energía inestable y cintura. Sugerencia educativa: evaluar HbA1c. Educativo, no diagnóstico. Consulta a tu médico."
+        },
+        {
+          min: 5, max: 6, label: "Alto",
+          intro: "Tu nivel es alto: hay un patrón consistente que merece acción esta semana.",
+          why: "Suele relacionarse con picos y caídas de glucosa y sueño irregular.",
+          actions: [
+            "Plan de 7 días: desayuno estable todos los días.",
+            "Quita bebidas azucaradas por una semana.",
+            "Actividad diaria 20 min (caminar o movilidad)."
+          ],
+          medical: "Si no se toman medidas: sube el riesgo de prediabetes, hígado graso y triglicéridos altos. Agenda evaluación: glucosa en ayunas + HbA1c. Educativo, no diagnóstico. Consulta a tu médico."
+        },
+        {
+          min: 7, max: 8, label: "Muy alto",
+          intro: "Tu nivel es muy alto. Prioriza orden metabólico en 7–14 días.",
+          why: "Puede vincularse a resistencia a la insulina (educativo, no diagnóstico).",
+          actions: [
+            "Plato con proteína + fibra en comidas principales.",
+            "Evita pan dulce y refrescos esta semana.",
+            "Caminata 10–15 min post‑comida."
+          ],
+          medical: "Si no se toman medidas: aumenta el riesgo de prediabetes/diabetes tipo 2, presión alta y cintura mayor. Labs sugeridos: glucosa en ayunas + HbA1c + lípidos; presión y cintura. Educativo, no diagnóstico. Consulta a tu médico."
+        },
+        {
+          min: 9, max: 10, label: "Alerta muy alta",
+          intro: "Tu nivel es alerta muy alta. Es prioridad esta semana.",
+          why: "Varias señales juntas sugieren un desbalance significativo (educativo, no diagnóstico).",
+          actions: [
+            "Orden del plato: proteína → verduras → carbohidrato.",
+            "Caminata 10 min post comida.",
+            "Cero bebidas azucaradas en las próximas 24–48h."
+          ],
+          medical: "Si no se toman medidas: aumenta el riesgo de prediabetes/diabetes tipo 2, hígado graso, presión alta y triglicéridos altos. Banderas rojas: sed extrema, orina excesiva, visión borrosa, mareos, vómitos o pérdida de peso. Busca atención hoy si aparecen. Labs: glucosa en ayunas, HbA1c, lípidos, presión y cintura; +/- insulina/HOMA‑IR. Educativo, no diagnóstico. Consulta a tu médico."
+        }
+      ];
+
+      const range = ranges.find(r=>score >= r.min && score <= r.max) || ranges[0];
+
+      // === Módulos por patrón (mantenimiento) ===
+      const modules = [];
+      if(keys.includes("sed") && keys.includes("miccion")){
+        modules.push({
+          title: "Posible glucosa elevada",
+          text: "Sed/boca seca u orina frecuente pueden aparecer cuando la glucosa sube y el cuerpo intenta compensar.",
+          action: "Hoy: agua frecuente, evita bebidas azucaradas y considera pedir glucosa en ayunas + HbA1c."
+        });
+      }
+      if(keys.includes("sueño_post") && keys.includes("antojos")){
+        modules.push({
+          title: "Picos y caídas de glucosa",
+          text: "Sueño post‑comida y antojos indican altibajos de energía.",
+          action: "Hoy: orden del plato (proteína → verduras → carbohidrato) y caminata 10 min post comida."
+        });
+      }
+      if(keys.includes("hambre")){
+        modules.push({
+          title: "Hambre persistente",
+          text: "Hambre constante puede venir de comidas poco saciantes o picos de azúcar.",
+          action: "Hoy: agrega proteína y fibra en cada comida."
+        });
+      }
+      if(keys.includes("niebla") && keys.includes("energia")){
+        modules.push({
+          title: "Energía inestable/sueño",
+          text: "Niebla mental + energía baja al despertar suele mejorar con descanso y desayunos más estables.",
+          action: "Hoy: desayuno proteico o ayuno guiado + sueño temprano."
+        });
+      }
+      if(keys.includes("cintura")){
+        modules.push({
+          title: "Inflamación/visceral",
+          text: "Cintura inflamada puede relacionarse con inflamación y grasa visceral.",
+          action: "Hoy: proteína + fibra, reduce ultraprocesados, fuerza 2–3x/sem."
+        });
+      }
+      if(keys.includes("ansiedad")){
+        modules.push({
+          title: "Ventana nocturna/cortisol",
+          text: "Ansiedad por comida en la noche puede venir de hábitos y estrés.",
+          action: "Hoy: cena balanceada y rutina de sueño constante."
+        });
+      }
+
+      const moduleHtml = modules.slice(0, 3).map(mod=>(
+        `<p><strong>${escapeHtml(mod.title)}:</strong> ${escapeHtml(mod.text)}<br><em>Acción:</em> ${escapeHtml(mod.action)}</p>`
+      )).join("");
+
+      const html = `
+        <p><strong>${greeting}</strong></p>
+        <p><strong>Nivel:</strong> ${escapeHtml(range.label)}.</p>
+        <p>${escapeHtml(range.intro)}</p>
+        <p><strong>¿Por qué puede pasar?</strong> ${escapeHtml(range.why)}</p>
+        <p><strong>3 acciones concretas:</strong></p>
+        <ul>
+          ${range.actions.map(a=>`<li>${escapeHtml(a)}</li>`).join("")}
+        </ul>
+        <p>${escapeHtml(range.medical)}</p>
+        ${moduleHtml ? `<div><strong>Patrones detectados:</strong>${moduleHtml}</div>` : ""}
+        <p><strong>Educativo, no diagnóstico.</strong></p>
+        <p><strong>Si quieres guía paso a paso con Unici-Té + Balance, escribe METABOLISMO.</strong></p>
+      `;
+
+      const plainText = `${greeting}\n\nNivel: ${range.label}.\n${range.intro}\n\n¿Por qué puede pasar? ${range.why}\n\n3 acciones concretas:\n• ${range.actions.join("\n• ")}\n\n${range.medical}\n${modules.length ? "\nPatrones detectados:\n" + modules.slice(0, 3).map(mod=>`• ${mod.title}: ${mod.text} Acción: ${mod.action}`).join("\n") : ""}\n\nEducativo, no diagnóstico.\n\nSi quieres guía paso a paso con Unici-Té + Balance, escribe METABOLISMO.`;
+
+      return { html, plainText };
     }
 
     function resetTest(){

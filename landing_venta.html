@@ -686,7 +686,6 @@
       position:absolute;
       inset:-10px -10px auto -10px;
       padding:14px 16px;
-      height:auto;
       border-radius:18px;
       border:1px solid rgba(11,107,58,.35);
       background: rgba(11,107,58,.2);
@@ -716,37 +715,6 @@
     .testLocked .formActions .btn{
       opacity:.6;
       pointer-events:none;
-    }
-    .testLockOverlay .lockMsg{
-      display:block;
-      font-size: clamp(14px, 3.4vw, 16px);
-      line-height:1.35;
-      overflow-wrap:anywhere;
-    }
-    @media (max-width: 480px){
-      .sectionTitle h2{font-size: clamp(20px, 5vw, 24px);}
-      .testLockOverlay{
-        position:relative;
-        inset:auto;
-        padding:14px 16px;
-        flex-direction:column;
-        align-items:flex-start;
-        gap:10px;
-      }
-      .testLockOverlay .btn{
-        width:100%;
-        justify-content:center;
-        font-size:15px;
-      }
-    }
-    @media (min-width: 600px) and (max-width: 900px){
-      .testLockOverlay{
-        padding:16px 18px;
-      }
-      .testLockOverlay .lockMsg{
-        font-size: clamp(15px, 2.4vw, 17px);
-        line-height:1.4;
-      }
     }
     .checkList{display:grid;grid-template-columns:1fr 1fr;gap:10px}
     @media (max-width: 640px){.checkList{grid-template-columns:1fr}}
@@ -2016,7 +1984,7 @@ a.card.trustTile .pdrBoard{
 
         <div class="testLockWrap" id="testLockWrap">
           <div class="testLockOverlay" id="testLockOverlay">
-            🔒 <span class="lockMsg">Para ver tu resultado y usar el test, completa Nombre y Email (1 minuto).</span>
+            🔒 <span>Para ver tu resultado y usar el test, completa Nombre y Email (1 minuto).</span>
             <button class="btn btnPrimary" type="button" id="unlockTestBtn">Desbloquear test</button>
           </div>
 
@@ -2680,7 +2648,7 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       const successMsg = result && result.message ? result.message : "✅ Registro guardado";
       setLeadStatus(successMsg, false);
       setSubmitState("success");
-      toast(successMsg);
+      toast("Gracias, recibido");
       leadSubmitted = true;
       setResultLockState(false);
       try{ window.dataLayer.push({event:"lead_submit_success"}); }catch(_){}
@@ -2730,10 +2698,27 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       const bar = document.getElementById("scoreBar");
       if(bar){ bar.style.width = `${pct}%`; }
 
-      const checkedKeys = checks.filter(c=>c.checked).map(c=>c.dataset.k);
+      let level = "";
+      let msg = "";
+
+      if(score <= 2){
+        level = "Señales leves";
+        msg = `Tienes ${score} señal(es). Esto sugiere que tu punto de partida podría ser leve. Buen momento para crear estructura y sostener hábitos.`;
+      } else {
+        level = "Posible resistencia a la insulina";
+        msg = `Tienes ${score} señales. Con 3 o más señales, es posible que haya resistencia a la insulina (educativo, no diagnóstico).`;
+        msg += `\n\nResistencia a la insulina = tu cuerpo necesita más insulina para manejar la misma glucosa, porque las células no responden igual.`;
+        msg += `\n\nPuede contribuir a: antojos/hambre frecuente, sueño o bajón después de comer y aumento de cintura.`;
+        msg += `\n\nCon el tiempo puede aumentar el riesgo de prediabetes/diabetes tipo 2 y otros problemas metabólicos.`;
+        msg += `\n\nSugerencia: consulta a tu médico general y pregunta por evaluación con glucosa e insulina en ayunas (y HbA1c; HOMA‑IR si aplica), según tu caso.`;
+      }
+
       const firstName = getLeadFirstName();
-      const result = buildTestMessage(score, checkedKeys, firstName);
-      lastResultText = result.plainText;
+      if(firstName){
+        msg = `Hola, ${firstName} 👋\n\n${msg}`;
+      }
+      msg += "\n\nSi quieres guía paso a paso con Unici-Té + Balance, escribe METABOLISMO y te acompañamos.";
+      lastResultText = `Resultado: ${level}. Puntuación: ${score}.\n${msg}`;
 
       document.getElementById("resultText").innerHTML = result.html;
       toast("Resultado listo");
@@ -2951,8 +2936,7 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       try{
         const raw = (getStoredLead()?.name || "").trim();
         if(!raw){ return ""; }
-        const firstName = raw.split(/\s+/)[0] || "";
-        return firstName ? firstName : "";
+        return raw.split(/\s+/)[0];
       }catch(_){ return ""; }
     }
 
@@ -3222,47 +3206,12 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
 
     const params = new URLSearchParams(window.location.search);
     if(params.get("share") === "1"){
-      try{ localStorage.removeItem(LEAD_KEY); }catch(_){}
-      leadSubmitted = false;
       scrollToId("test");
       if(!leadSubmitted){
         setResultLockState(true);
         setTestLockedState(true);
       }
     }
-
-    (function initStickyCTA(){
-      const KEY = "bn_hide_bottom_cta";
-      const sticky = document.querySelector(".sticky");
-      const closeBtn = document.getElementById("closeSticky");
-      const openWrap = document.getElementById("openStickyWrap");
-      const openBtn = document.getElementById("openSticky");
-      if(!sticky){ return; }
-
-      const applyState = (hidden)=>{
-        sticky.style.display = hidden ? "none" : "";
-        document.body.classList.toggle("has-sticky", !hidden);
-        document.body.classList.toggle("sticky-hidden", hidden);
-        if(openWrap){ openWrap.style.display = hidden ? "block" : "none"; }
-      };
-
-      let hidden = false;
-      try{ hidden = localStorage.getItem(KEY) === "1"; }catch(_){ hidden = false; }
-      applyState(hidden);
-
-      if(closeBtn){
-        closeBtn.addEventListener("click", ()=>{
-          try{ localStorage.setItem(KEY, "1"); }catch(_){}
-          applyState(true);
-        });
-      }
-      if(openBtn){
-        openBtn.addEventListener("click", ()=>{
-          try{ localStorage.removeItem(KEY); }catch(_){}
-          applyState(false);
-        });
-      }
-    })();
 
     (function pulseStickyCTAOnce(){
       if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches){ return; }

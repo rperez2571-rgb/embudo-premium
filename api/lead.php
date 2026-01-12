@@ -176,27 +176,35 @@ $fields = [
 $segment = clean_str($payload['segment'] ?? ($payload['lead_type'] ?? 'consumo'), 40);
 $segment = $segment ?: 'consumo';
 $honeypot = clean_str($payload['website'] ?? ($payload['hp'] ?? ''), 40);
+$source = clean_str($payload['source'] ?? 'landing_bariatrica_natural', 60);
+$score = clean_str($payload['score'] ?? '', 12);
+$url = clean_str($payload['url'] ?? '', 300);
+$consent = clean_str($payload['consent'] ?? '', 80);
 
 if($honeypot !== ''){
   respond(false, 'Error de validación', 400);
 }
 
-foreach($fields as $key => $value){
-  if($value === ''){
-    respond(false, 'Completa todos los campos', 422);
-  }
+if($fields['name'] === '' || $fields['email'] === ''){
+  respond(false, 'Completa nombre y email', 422);
 }
 
 if(!filter_var($fields['email'], FILTER_VALIDATE_EMAIL)){
   respond(false, 'Email inválido', 422);
 }
 
-$digits = preg_replace('/\D+/', '', $fields['phone']);
-if(strlen($digits) < 7 || strlen($digits) > 20){
-  respond(false, 'Teléfono inválido', 422);
+if($fields['phone'] !== ''){
+  $digits = preg_replace('/\D+/', '', $fields['phone']);
+  if(strlen($digits) < 7 || strlen($digits) > 20){
+    respond(false, 'Teléfono inválido', 422);
+  }
 }
 
 $fieldsSafe = array_map('csv_safe', $fields);
+$sourceSafe = csv_safe($source);
+$scoreSafe = csv_safe($score);
+$urlSafe = csv_safe($url);
+$consentSafe = csv_safe($consent);
 
 $dir = __DIR__ . '/../data';
 if(!is_dir($dir) && !mkdir($dir, 0755, true)){
@@ -205,6 +213,20 @@ if(!is_dir($dir) && !mkdir($dir, 0755, true)){
 
 $file = $dir . '/leads.csv';
 $fileExisted = file_exists($file);
+$emailLower = strtolower($fields['email']);
+if($fileExisted && $emailLower !== ''){
+  if($fpRead = @fopen($file, 'r')){
+    while(($row = fgetcsv($fpRead)) !== false){
+      if(empty($row) || !isset($row[3])){ continue; }
+      $rowEmail = strtolower(trim((string)$row[3]));
+      if($rowEmail === $emailLower){
+        fclose($fpRead);
+        respond(true, 'Ya estás registrado ✅');
+      }
+    }
+    fclose($fpRead);
+  }
+}
 $fp = @fopen($file, 'a');
 if(!$fp){
   respond(false, 'No se pudo guardar', 500);
@@ -216,10 +238,10 @@ if(!flock($fp, LOCK_EX)){
 }
 
 if(!$fileExisted){
-  fputcsv($fp, ['timestamp', 'name', 'city', 'email', 'phone', 'segment']);
+  fputcsv($fp, ['fecha_hora', 'nombre', 'ciudad', 'email', 'telefono', 'fuente', 'score', 'url', 'consentimiento']);
 }
 
-fputcsv($fp, [date('c'), $fieldsSafe['name'], $fieldsSafe['city'], $fieldsSafe['email'], $fieldsSafe['phone'], $segment]);
+fputcsv($fp, [date('c'), $fieldsSafe['name'], $fieldsSafe['city'], $fieldsSafe['email'], $fieldsSafe['phone'], $sourceSafe, $scoreSafe, $urlSafe, $consentSafe]);
 flock($fp, LOCK_UN);
 fclose($fp);
 
@@ -229,6 +251,10 @@ $leadPayload = [
   'email' => $fieldsSafe['email'],
   'phone' => $fieldsSafe['phone'],
   'segment' => $segment,
+  'source' => $sourceSafe,
+  'score' => $scoreSafe,
+  'url' => $urlSafe,
+  'consent' => $consentSafe,
   'ts' => date('c')
 ];
 

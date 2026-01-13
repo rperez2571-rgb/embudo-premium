@@ -707,6 +707,19 @@
       font-size:14px;
     }
     .testLockOverlay.is-hidden{display:none;}
+    @media (max-width: 480px){
+      .testLockOverlay{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:10px;
+        font-size:clamp(14px, 4.2vw, 15px);
+        line-height:1.4;
+      }
+      .testLockOverlay .btn{
+        width:100%;
+        text-align:center;
+      }
+    }
     .testLocked .check{
       opacity:.6;
       pointer-events:none;
@@ -875,8 +888,8 @@
       font-size:14px;
     }
     @media (max-width: 720px){
-      body.has-sticky{padding-bottom:160px;}
-      body.sticky-hidden{padding-bottom:24px;}
+      body.has-sticky{padding-bottom:calc(160px + env(safe-area-inset-bottom));}
+      body.sticky-hidden{padding-bottom:calc(24px + env(safe-area-inset-bottom));}
       .stickyInner{flex-direction:column;gap:8px;}
       .stickyActions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
       .stickyHeaderRow{display:flex;align-items:center;gap:10px;}
@@ -3212,6 +3225,35 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
         resultText.textContent = "Para ver tu resultado y usar el test, completa Nombre, Email y Teléfono (1 minuto).";
       }
     }
+
+    const STICKY_STORAGE_KEY = "bn_sticky_hidden";
+    const stickyBar = document.querySelector(".sticky");
+    const stickyToggle = document.getElementById("openStickyWrap");
+    function setStickyVisibility(isVisible){
+      if(stickyBar){ stickyBar.style.display = isVisible ? "" : "none"; }
+      const isMobileSticky = window.matchMedia && window.matchMedia("(max-width: 720px)").matches;
+      if(stickyToggle){ stickyToggle.style.display = !isVisible && isMobileSticky ? "block" : "none"; }
+      document.body.classList.toggle("has-sticky", isVisible);
+      document.body.classList.toggle("sticky-hidden", !isVisible);
+    }
+    try{
+      const stickyHidden = localStorage.getItem(STICKY_STORAGE_KEY) === "1";
+      setStickyVisibility(!stickyHidden);
+      const closeSticky = document.getElementById("closeSticky");
+      const openSticky = document.getElementById("openSticky");
+      if(closeSticky){
+        closeSticky.addEventListener("click", ()=>{
+          localStorage.setItem(STICKY_STORAGE_KEY, "1");
+          setStickyVisibility(false);
+        });
+      }
+      if(openSticky){
+        openSticky.addEventListener("click", ()=>{
+          localStorage.removeItem(STICKY_STORAGE_KEY);
+          setStickyVisibility(true);
+        });
+      }
+    }catch(_){}
 
     (function pulseStickyCTAOnce(){
       if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches){ return; }

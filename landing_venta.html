@@ -1984,7 +1984,7 @@ a.card.trustTile .pdrBoard{
 
         <div class="testLockWrap" id="testLockWrap">
           <div class="testLockOverlay" id="testLockOverlay">
-            🔒 <span>Para ver tu resultado y usar el test, completa Nombre y Email (1 minuto).</span>
+            🔒 <span>Para ver tu resultado y usar el test, completa Nombre, Email y Teléfono (1 minuto).</span>
             <button class="btn btnPrimary" type="button" id="unlockTestBtn">Desbloquear test</button>
           </div>
 
@@ -1995,7 +1995,7 @@ a.card.trustTile .pdrBoard{
                 <div class="testGateIcon">🔒</div>
                 <div>
                   <strong>Desbloquea tu resultado final</strong>
-                  <span>Completa tu Nombre y Email en el formulario de arriba. Luego vuelve y obtén tu lectura educativa.</span>
+                  <span>Completa tu Nombre, Email y Teléfono en el formulario de arriba. Luego vuelve y obtén tu lectura educativa.</span>
                 </div>
               </div>
               <div class="checkList" id="checkList">
@@ -2003,7 +2003,7 @@ a.card.trustTile .pdrBoard{
               </div>
 
               <div class="formActions" style="margin-top:14px">
-                <button class="btn btnPrimary" type="button" onclick="computeTest()">Ver mi resultado</button>
+                <button class="btn btnPrimary" type="button" onclick="renderTestResult()">Ver mi resultado</button>
                 <button class="btn btnGhost" type="button" onclick="resetTest()">Limpiar</button>
               </div>
 
@@ -2025,7 +2025,7 @@ a.card.trustTile .pdrBoard{
               </div>
 
               <div class="resultText" id="resultText">
-                Para ver tu resultado y usar el test, completa Nombre y Email (1 minuto).
+                Para ver tu resultado y usar el test, completa Nombre, Email y Teléfono (1 minuto).
               </div>
 
               <div class="shareCard">
@@ -2552,6 +2552,11 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       el.textContent = msg || "";
     }
 
+    function showSavedOk(){
+      setLeadStatus("Guardado ✅", false);
+      toast("Guardado ✅");
+    }
+
     async function postLead(data){
       const body = {
         ...data,
@@ -2638,10 +2643,19 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       });
     }
 
+    function renderTestResult(){
+      if(!isLeadValid()){
+        requireLeadForResult();
+        return;
+      }
+      computeTest();
+    }
+
     function computeTest(){
       if(!requireLeadForResult()){ return; }
       const checks = Array.from(document.querySelectorAll('#checkList input[type="checkbox"]'));
       const score = checks.filter(c=>c.checked).length;
+      const keys = checks.filter(c=>c.checked).map(c=>c.getAttribute("data-k")).filter(Boolean);
       lastScore = score;
       document.getElementById("scoreNum").textContent = score;
       const total = TEST_ITEMS.length;
@@ -2669,7 +2683,9 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
         msg = `Hola, ${firstName} 👋\n\n${msg}`;
       }
       msg += "\n\nSi quieres guía paso a paso con Unici-Té + Balance, escribe METABOLISMO y te acompañamos.";
-      lastResultText = `Resultado: ${level}. Puntuación: ${score}.\n${msg}`;
+
+      const result = buildTestMessage(score, keys, firstName);
+      lastResultText = result.plainText || `Resultado: ${level}. Puntuación: ${score}.\n${msg}`;
 
       document.getElementById("resultText").innerHTML = result.html;
       toast("Resultado listo");
@@ -2823,7 +2839,7 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       if(leadSubmitted){
         document.getElementById("resultText").textContent = "Marca tus señales y dale a “Ver mi resultado”. Te diré qué significa a nivel educativo y el siguiente paso recomendado.";
       }else{
-        document.getElementById("resultText").textContent = "Para ver tu resultado y usar el test, completa Nombre y Email (1 minuto).";
+        document.getElementById("resultText").textContent = "Para ver tu resultado y usar el test, completa Nombre, Email y Teléfono (1 minuto).";
       }
       toast("Listo");
     }
@@ -2869,6 +2885,18 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       box.classList.toggle("is-locked", isLocked);
     }
 
+    function setTestLocked(isLocked){
+      setTestLockedState(isLocked);
+    }
+
+    function enableTestControls(isEnabled){
+      setTestLockedState(!isEnabled);
+    }
+
+    function scrollToTest(){
+      scrollToId("test");
+    }
+
     function setTestLockedState(isLocked){
       const wrap = document.getElementById("testLockWrap");
       const overlay = document.getElementById("testLockOverlay");
@@ -2883,53 +2911,65 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       });
     }
 
+    function getBnLead() {
+      try{ return JSON.parse(localStorage.getItem(LEAD_KEY) || "null"); }
+      catch(_){ return null; }
+    }
+
+    function isBnLeadValid() {
+      const lead = getBnLead();
+      if(!lead) return false;
+      return !!(lead.name_full && lead.email && lead.phone);
+    }
+
+    function isLeadValid(){
+      return isBnLeadValid();
+    }
+
     function getLeadFirstName(){
       try{
-        const raw = (getStoredLead()?.name || "").trim();
+        const raw = (getBnLead()?.name_full || "").trim();
         if(!raw){ return ""; }
         return raw.split(/\s+/)[0];
       }catch(_){ return ""; }
     }
 
-    function isLeadValid(lead){
+    function isLeadPayloadValid(lead){
       if(!lead) return false;
-      const nameOk = (lead.name || "").trim().length >= 2;
+      const nameOk = (lead.name_full || "").trim().length >= 2;
       const emailOk = /@/.test(lead.email || "") && /\./.test(lead.email || "");
-      return nameOk && emailOk;
+      const phoneDigits = (lead.phone || "").replace(/\D+/g, "");
+      const phoneOk = phoneDigits.length >= 7;
+      return nameOk && emailOk && phoneOk;
     }
 
     function tryUnlockLeadFromForm(notify){
       const nameField = document.getElementById("name");
       const emailField = document.getElementById("email");
+      const phoneField = document.getElementById("phone");
+      const cityField = document.getElementById("city");
       const leadPayload = {
-        name: nameField ? nameField.value.trim() : "",
-        email: emailField ? emailField.value.trim() : "",
+        name_full: nameField ? nameField.value.trim() : "",
+        email: emailField ? emailField.value.trim().toLowerCase() : "",
+        phone: phoneField ? phoneField.value.trim() : "",
+        city: cityField ? cityField.value.trim() : "",
         ts: new Date().toISOString()
       };
-      if(!isLeadValid(leadPayload)){
+      if(!isLeadPayloadValid(leadPayload)){
         if(notify){
-          setLeadStatus("Completa nombre y email válidos", true);
-          toast("Completa nombre y email válidos");
+          setLeadStatus("Completa nombre, email y teléfono válidos", true);
+          toast("Completa nombre, email y teléfono válidos");
         }
         return false;
       }
       try{
         localStorage.setItem(LEAD_KEY, JSON.stringify(leadPayload));
+        localStorage.setItem("bn_test_unlocked", "1");
       }catch(_){}
       leadSubmitted = true;
       setResultLockState(false);
       setTestLockedState(false);
       return true;
-    }
-
-    function getStoredLead(){
-      try{
-        const raw = localStorage.getItem(LEAD_KEY);
-        if(!raw) return null;
-        return JSON.parse(raw);
-      }catch(_){
-        return null;
-      }
     }
 
     function requireLeadForResult(){
@@ -2945,7 +2985,7 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       setTestLockedState(true);
       const resultText = document.getElementById("resultText");
       if(resultText){
-        resultText.textContent = "Para ver tu resultado y usar el test, completa Nombre y Email (1 minuto).";
+        resultText.textContent = "Para ver tu resultado y usar el test, completa Nombre, Email y Teléfono (1 minuto).";
       }
       toast("Completa tus datos para ver el resultado");
       openLeadForm();
@@ -3120,8 +3160,16 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
     }
 
     captureUTMs();
+    const params = new URLSearchParams(window.location.search);
+    const isShareMode = params.get("share") === "1";
+    if(isShareMode){
+      try{
+        localStorage.removeItem(LEAD_KEY);
+        localStorage.removeItem("bn_test_unlocked");
+      }catch(_){}
+    }
     try{
-      leadSubmitted = isLeadValid(getStoredLead());
+      leadSubmitted = !isShareMode && isBnLeadValid();
     }catch(_){
       leadSubmitted = false;
     }
@@ -3155,12 +3203,13 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       });
     }
 
-    const params = new URLSearchParams(window.location.search);
-    if(params.get("share") === "1"){
+    if(isShareMode){
       scrollToId("test");
-      if(!leadSubmitted){
-        setResultLockState(true);
-        setTestLockedState(true);
+      setResultLockState(true);
+      setTestLockedState(true);
+      const resultText = document.getElementById("resultText");
+      if(resultText){
+        resultText.textContent = "Para ver tu resultado y usar el test, completa Nombre, Email y Teléfono (1 minuto).";
       }
     }
 

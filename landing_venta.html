@@ -1819,7 +1819,7 @@ a.card.trustTile .pdrBoard{
                 </div>
 
                 <div class="formActions">
-                  <button class="btn btnPrimary" type="submit"><span>Guardar datos</span></button>
+                  <button class="btn btnPrimary" type="submit"><span>Guardar y continuar</span></button>
                 </div>
 
                 <div class="consent">
@@ -2576,7 +2576,7 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       return json;
     }
 
-    document.getElementById("leadForm").addEventListener("submit", async (e)=>{
+    document.getElementById("leadForm").addEventListener("submit", (e)=>{
       e.preventDefault();
       setLeadStatus("", false);
       try{ window.dataLayer.push({event:"lead_submit_attempt"}); }catch(_){}
@@ -2591,13 +2591,12 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
 
       markInvalid([
         {el: document.getElementById("name"), invalid: !data.name},
-        {el: document.getElementById("email"), invalid: !data.email},
-        {el: document.getElementById("phone"), invalid: !data.phone}
+        {el: document.getElementById("email"), invalid: !data.email}
       ]);
 
-      if(!data.name || !data.email || !data.phone){
-        setLeadStatus("Falta Nombre, Email y Teléfono", true);
-        toast("Falta Nombre, Email y Teléfono");
+      if(!data.name || !data.email){
+        setLeadStatus("Falta Nombre y Email", true);
+        toast("Falta Nombre y Email");
         return;
       }
 
@@ -2608,50 +2607,21 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
         return;
       }
 
-      const nameFull = (data.name || "").trim();
-      const email = (data.email || "").trim().toLowerCase();
-      const phone = (data.phone || "").trim();
-      const city = (data.city || "").trim();
-      const leadPayload = {
-        name_full: nameFull,
-        email: email,
-        phone: phone,
-        city: city,
-        ts: new Date().toISOString()
-      };
-      if(!isLeadPayloadValid(leadPayload)){
-        setLeadStatus("Completa nombre, email y teléfono válidos", true);
-        toast("Completa nombre, email y teléfono válidos");
-        return;
-      }
-
-      setLeadStatus("Guardando…", false);
-
-      let result;
-      try{
-        result = await postLead(data);
-      }catch(_){
-        result = {ok:false, message:"No se pudo guardar"};
-      }
-
-      if(!result || !result.ok){
-        setLeadStatus("⚠️ No se pudo guardar, intenta de nuevo", true);
-        toast("⚠️ No se pudo guardar, intenta de nuevo");
-        try{ window.dataLayer.push({event:"lead_submit_error", message: result && result.message ? result.message : "unknown"}); }catch(_){}
+      const leadPayload = { name: data.name || "", email: data.email || "", ts: new Date().toISOString() };
+      if(!isLeadValid(leadPayload)){
+        setLeadStatus("Completa nombre y email válidos", true);
+        toast("Completa nombre y email válidos");
         return;
       }
 
       try{
         localStorage.setItem(LEAD_KEY, JSON.stringify(leadPayload));
-        localStorage.setItem("bn_test_unlocked", "1");
       }catch(_){}
       leadSubmitted = true;
       setResultLockState(false);
-      setTestLocked(false);
-      enableTestControls(true);
-      showSavedOk();
-      try{ window.dataLayer.push({event:"lead_submit_success"}); }catch(_){}
-      scrollToTest();
+      setTestLockedState(false);
+      setLeadStatus("Guardado ✅", false);
+      scrollToId("test");
     });
 
     function renderTest(){

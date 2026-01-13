@@ -707,6 +707,19 @@
       font-size:14px;
     }
     .testLockOverlay.is-hidden{display:none;}
+    @media (max-width: 480px){
+      .testLockOverlay{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:10px;
+        font-size:clamp(14px, 4.2vw, 15px);
+        line-height:1.4;
+      }
+      .testLockOverlay .btn{
+        width:100%;
+        text-align:center;
+      }
+    }
     .testLocked .check{
       opacity:.6;
       pointer-events:none;
@@ -875,8 +888,8 @@
       font-size:14px;
     }
     @media (max-width: 720px){
-      body.has-sticky{padding-bottom:160px;}
-      body.sticky-hidden{padding-bottom:24px;}
+      body.has-sticky{padding-bottom:calc(160px + env(safe-area-inset-bottom));}
+      body.sticky-hidden{padding-bottom:calc(24px + env(safe-area-inset-bottom));}
       .stickyInner{flex-direction:column;gap:8px;}
       .stickyActions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
       .stickyHeaderRow{display:flex;align-items:center;gap:10px;}
@@ -1787,14 +1800,14 @@ a.card.trustTile .pdrBoard{
                     <div>
                       <div style="font-weight:900;font-size:14px;letter-spacing:.2px">Entra por WhatsApp (rápido)</div>
                   <div style="color:rgba(71,85,105,.82);font-size:12px;margin-top:6px;line-height:1.35">
-                    Completa esto y te abre WhatsApp con el mensaje listo: <strong>METABOLISMO</strong>.
+                    Completa esto para guardar tu avance y continuar con el test.
                   </div>
                     </div>
                 <span class="badge">Datos mínimos · Sin estrés</span>
               </div>
                   
 
-              <form id="leadForm" autocomplete="on">
+              <form id="leadForm" autocomplete="on" novalidate>
                 <div style="position:absolute;left:-9999px;opacity:0;pointer-events:none" aria-hidden="true">
                   <label for="website">Sitio web</label>
                   <input id="website" name="website" tabindex="-1" autocomplete="off" />
@@ -1806,7 +1819,7 @@ a.card.trustTile .pdrBoard{
                   </div>
                   <div>
                     <label for="city">Ciudad</label>
-                    <input id="city" name="city" placeholder="Monterrey / San Nicolás / Guadalupe…" required />
+                    <input id="city" name="city" placeholder="Monterrey / San Nicolás / Guadalupe…" />
                   </div>
                   <div>
                     <label for="email">Email</label>
@@ -1814,18 +1827,18 @@ a.card.trustTile .pdrBoard{
                   </div>
                   <div>
                     <label for="phone">Teléfono (WhatsApp)</label>
-                    <input id="phone" name="phone" inputmode="tel" placeholder="+52 81… / +1 787…" required />
+                    <input id="phone" name="phone" inputmode="tel" placeholder="+52 81… / +1 787…" />
                   </div>
                 </div>
 
                 <div class="formActions">
-                  <button class="btn btnSecondary" type="submit"><span>Abrir WhatsApp y enviar “METABOLISMO”</span></button>
+                  <button class="btn btnPrimary" type="submit"><span>Guardar datos</span></button>
                 </div>
 
                 <div class="consent">
-                  Al enviar, aceptas que te contactemos por WhatsApp para darte orientación educativa y seguimiento.
+                  Al guardar, aceptas que te contactemos por WhatsApp para darte orientación educativa y seguimiento.
                   <strong>No es diagnóstico médico.</strong>
-                  <br/>Al enviar aceptas que te contactemos por email/WhatsApp. Puedes solicitar baja.
+                  <br/>Al guardar aceptas que te contactemos por email/WhatsApp. Puedes solicitar baja.
                 </div>
 
                 <div class="consent" id="leadStatus" role="status" aria-live="polite" style="display:none"></div>
@@ -1984,7 +1997,7 @@ a.card.trustTile .pdrBoard{
 
         <div class="testLockWrap" id="testLockWrap">
           <div class="testLockOverlay" id="testLockOverlay">
-            🔒 <span>Para ver tu resultado y usar el test, completa Nombre y Email (1 minuto).</span>
+            🔒 <span>Para ver tu resultado y usar el test, completa Nombre, Email y Teléfono (1 minuto).</span>
             <button class="btn btnPrimary" type="button" id="unlockTestBtn">Desbloquear test</button>
           </div>
 
@@ -1995,7 +2008,7 @@ a.card.trustTile .pdrBoard{
                 <div class="testGateIcon">🔒</div>
                 <div>
                   <strong>Desbloquea tu resultado final</strong>
-                  <span>Completa tu Nombre y Email en el formulario de arriba. Luego vuelve y obtén tu lectura educativa.</span>
+                  <span>Completa tu Nombre, Email y Teléfono en el formulario de arriba. Luego vuelve y obtén tu lectura educativa.</span>
                 </div>
               </div>
               <div class="checkList" id="checkList">
@@ -2003,7 +2016,7 @@ a.card.trustTile .pdrBoard{
               </div>
 
               <div class="formActions" style="margin-top:14px">
-                <button class="btn btnPrimary" type="button" onclick="computeTest()">Ver mi resultado</button>
+                <button class="btn btnPrimary" type="button" onclick="renderTestResult()">Ver mi resultado</button>
                 <button class="btn btnGhost" type="button" onclick="resetTest()">Limpiar</button>
               </div>
 
@@ -2025,7 +2038,7 @@ a.card.trustTile .pdrBoard{
               </div>
 
               <div class="resultText" id="resultText">
-                Para ver tu resultado y usar el test, completa Nombre y Email (1 minuto).
+                Para ver tu resultado y usar el test, completa Nombre, Email y Teléfono (1 minuto).
               </div>
 
               <div class="shareCard">
@@ -2047,6 +2060,10 @@ a.card.trustTile .pdrBoard{
             </div>
           </div>
         </div>
+        </div>
+
+        <div class="formActions" style="margin-top:18px">
+          <button class="btn btnSecondary" type="button" onclick="openWhatsAppSupport()">Soporte por WhatsApp</button>
         </div>
 
       </div>
@@ -2491,6 +2508,17 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       openWhatsApp(CONFIG.DEFAULT_MESSAGE);
     }
 
+    function openWhatsAppSupport(){
+      const data = {
+        name: sanitizeLeadField(document.getElementById("name")?.value, 120),
+        city: sanitizeLeadField(document.getElementById("city")?.value, 120),
+        email: sanitizeLeadField(document.getElementById("email")?.value, 160),
+        phone: sanitizeLeadField(document.getElementById("phone")?.value, 40)
+      };
+      const hasLeadBasics = (data.name || "").trim() && (data.email || "").trim();
+      openWhatsApp(hasLeadBasics ? buildLeadMessage(data) : CONFIG.DEFAULT_MESSAGE);
+    }
+
     function buildLeadMessage(data){
       const lines = [
         CONFIG.DEFAULT_MESSAGE,
@@ -2515,22 +2543,6 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
     }
 
     const formEl = document.getElementById("leadForm");
-    const submitBtn = formEl ? formEl.querySelector('button[type="submit"]') : null;
-    const submitLabel = submitBtn ? submitBtn.querySelector("span") : null;
-    const submitLabelDefault = submitLabel ? submitLabel.textContent : "";
-
-    function setSubmitState(state){
-      if(!submitBtn) return;
-      const isLoading = state === "loading";
-      submitBtn.classList.toggle("is-loading", isLoading);
-      submitBtn.setAttribute("aria-busy", isLoading ? "true" : "false");
-      submitBtn.disabled = isLoading;
-      if(submitLabel){
-        if(state === "loading"){ submitLabel.textContent = "Enviando…"; }
-        else if(state === "success"){ submitLabel.textContent = "Gracias"; }
-        else { submitLabel.textContent = submitLabelDefault; }
-      }
-    }
 
     function markInvalid(fields){
       let firstInvalid = null;
@@ -2551,6 +2563,11 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       el.style.display = msg ? "block" : "none";
       el.style.color = isError ? "rgba(239,68,68,.95)" : "rgba(71,85,105,.9)";
       el.textContent = msg || "";
+    }
+
+    function showSavedOk(){
+      setLeadStatus("Guardado ✅", false);
+      toast("Guardado ✅");
     }
 
     async function postLead(data){
@@ -2575,7 +2592,6 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
     document.getElementById("leadForm").addEventListener("submit", async (e)=>{
       e.preventDefault();
       setLeadStatus("", false);
-      setSubmitState("idle");
       try{ window.dataLayer.push({event:"lead_submit_attempt"}); }catch(_){}
       try{ window.dataLayer.push({event:"submit_lead"}); }catch(_){}
 
@@ -2588,14 +2604,13 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
 
       markInvalid([
         {el: document.getElementById("name"), invalid: !data.name},
-        {el: document.getElementById("city"), invalid: !data.city},
         {el: document.getElementById("email"), invalid: !data.email},
         {el: document.getElementById("phone"), invalid: !data.phone}
       ]);
 
-      if(!data.name || !data.city || !data.email || !data.phone){
-        setLeadStatus("Completa los campos", true);
-        toast("Completa los campos");
+      if(!data.name || !data.email || !data.phone){
+        setLeadStatus("Falta Nombre, Email y Teléfono", true);
+        toast("Falta Nombre, Email y Teléfono");
         return;
       }
 
@@ -2606,29 +2621,24 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
         return;
       }
 
-      const phoneDigits = (data.phone || "").replace(/\D+/g, "");
-      if(phoneDigits.length < 7 || phoneDigits.length > 20){
-        setLeadStatus("Teléfono inválido", true);
-        markInvalid([{el: document.getElementById("phone"), invalid:true}]);
+      const nameFull = (data.name || "").trim();
+      const email = (data.email || "").trim().toLowerCase();
+      const phone = (data.phone || "").trim();
+      const city = (data.city || "").trim();
+      const leadPayload = {
+        name_full: nameFull,
+        email: email,
+        phone: phone,
+        city: city,
+        ts: new Date().toISOString()
+      };
+      if(!isLeadPayloadValid(leadPayload)){
+        setLeadStatus("Completa nombre, email y teléfono válidos", true);
+        toast("Completa nombre, email y teléfono válidos");
         return;
       }
-
-      const leadPayload = { name: data.name || "", email: data.email || "", ts: new Date().toISOString() };
-      if(!isLeadValid(leadPayload)){
-        setLeadStatus("Completa nombre y email válidos", true);
-        toast("Completa nombre y email válidos");
-        return;
-      }
-
-      try{
-        localStorage.setItem(LEAD_KEY, JSON.stringify(leadPayload));
-      }catch(_){}
-      leadSubmitted = true;
-      setResultLockState(false);
-      setTestLockedState(false);
 
       setLeadStatus("Guardando…", false);
-      setSubmitState("loading");
 
       let result;
       try{
@@ -2639,33 +2649,22 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
 
       if(!result || !result.ok){
         setLeadStatus("⚠️ No se pudo guardar, intenta de nuevo", true);
-        setSubmitState("idle");
         toast("⚠️ No se pudo guardar, intenta de nuevo");
         try{ window.dataLayer.push({event:"lead_submit_error", message: result && result.message ? result.message : "unknown"}); }catch(_){}
         return;
       }
 
-      const successMsg = result && result.message ? result.message : "✅ Registro guardado";
-      setLeadStatus(successMsg, false);
-      setSubmitState("success");
-      toast("Gracias, recibido");
+      try{
+        localStorage.setItem(LEAD_KEY, JSON.stringify(leadPayload));
+        localStorage.setItem("bn_test_unlocked", "1");
+      }catch(_){}
       leadSubmitted = true;
       setResultLockState(false);
+      setTestLocked(false);
+      enableTestControls(true);
+      showSavedOk();
       try{ window.dataLayer.push({event:"lead_submit_success"}); }catch(_){}
-      try{ window.dataLayer.push({event:"submit_lead"}); }catch(_){}
-
-      if(CONFIG.LEAD_WEBHOOK_URL){
-        try{
-          await fetch(CONFIG.LEAD_WEBHOOK_URL, {
-            method: "POST",
-            headers: {"Content-Type":"application/json"},
-            body: JSON.stringify({source:"landing_bariatrica_natural", ...data, ts: new Date().toISOString(), utm: UTM_QUERY || null})
-          });
-        }catch(_){ /* silencioso */ }
-      }
-
-      openWhatsApp(buildLeadMessage(data));
-      setTimeout(()=> setSubmitState("idle"), 2400);
+      scrollToTest();
     });
 
     function renderTest(){
@@ -2687,10 +2686,19 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       });
     }
 
+    function renderTestResult(){
+      if(!isLeadValid()){
+        requireLeadForResult();
+        return;
+      }
+      computeTest();
+    }
+
     function computeTest(){
       if(!requireLeadForResult()){ return; }
       const checks = Array.from(document.querySelectorAll('#checkList input[type="checkbox"]'));
       const score = checks.filter(c=>c.checked).length;
+      const keys = checks.filter(c=>c.checked).map(c=>c.getAttribute("data-k")).filter(Boolean);
       lastScore = score;
       document.getElementById("scoreNum").textContent = score;
       const total = TEST_ITEMS.length;
@@ -2718,7 +2726,9 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
         msg = `Hola, ${firstName} 👋\n\n${msg}`;
       }
       msg += "\n\nSi quieres guía paso a paso con Unici-Té + Balance, escribe METABOLISMO y te acompañamos.";
-      lastResultText = `Resultado: ${level}. Puntuación: ${score}.\n${msg}`;
+
+      const result = buildTestMessage(score, keys, firstName);
+      lastResultText = result.plainText || `Resultado: ${level}. Puntuación: ${score}.\n${msg}`;
 
       document.getElementById("resultText").innerHTML = result.html;
       toast("Resultado listo");
@@ -2872,7 +2882,7 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       if(leadSubmitted){
         document.getElementById("resultText").textContent = "Marca tus señales y dale a “Ver mi resultado”. Te diré qué significa a nivel educativo y el siguiente paso recomendado.";
       }else{
-        document.getElementById("resultText").textContent = "Para ver tu resultado y usar el test, completa Nombre y Email (1 minuto).";
+        document.getElementById("resultText").textContent = "Para ver tu resultado y usar el test, completa Nombre, Email y Teléfono (1 minuto).";
       }
       toast("Listo");
     }
@@ -2918,6 +2928,18 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       box.classList.toggle("is-locked", isLocked);
     }
 
+    function setTestLocked(isLocked){
+      setTestLockedState(isLocked);
+    }
+
+    function enableTestControls(isEnabled){
+      setTestLockedState(!isEnabled);
+    }
+
+    function scrollToTest(){
+      scrollToId("test");
+    }
+
     function setTestLockedState(isLocked){
       const wrap = document.getElementById("testLockWrap");
       const overlay = document.getElementById("testLockOverlay");
@@ -2932,53 +2954,65 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       });
     }
 
+    function getBnLead() {
+      try{ return JSON.parse(localStorage.getItem(LEAD_KEY) || "null"); }
+      catch(_){ return null; }
+    }
+
+    function isBnLeadValid() {
+      const lead = getBnLead();
+      if(!lead) return false;
+      return !!(lead.name_full && lead.email && lead.phone);
+    }
+
+    function isLeadValid(){
+      return isBnLeadValid();
+    }
+
     function getLeadFirstName(){
       try{
-        const raw = (getStoredLead()?.name || "").trim();
+        const raw = (getBnLead()?.name_full || "").trim();
         if(!raw){ return ""; }
         return raw.split(/\s+/)[0];
       }catch(_){ return ""; }
     }
 
-    function isLeadValid(lead){
+    function isLeadPayloadValid(lead){
       if(!lead) return false;
-      const nameOk = (lead.name || "").trim().length >= 2;
+      const nameOk = (lead.name_full || "").trim().length >= 2;
       const emailOk = /@/.test(lead.email || "") && /\./.test(lead.email || "");
-      return nameOk && emailOk;
+      const phoneDigits = (lead.phone || "").replace(/\D+/g, "");
+      const phoneOk = phoneDigits.length >= 7;
+      return nameOk && emailOk && phoneOk;
     }
 
     function tryUnlockLeadFromForm(notify){
       const nameField = document.getElementById("name");
       const emailField = document.getElementById("email");
+      const phoneField = document.getElementById("phone");
+      const cityField = document.getElementById("city");
       const leadPayload = {
-        name: nameField ? nameField.value.trim() : "",
-        email: emailField ? emailField.value.trim() : "",
+        name_full: nameField ? nameField.value.trim() : "",
+        email: emailField ? emailField.value.trim().toLowerCase() : "",
+        phone: phoneField ? phoneField.value.trim() : "",
+        city: cityField ? cityField.value.trim() : "",
         ts: new Date().toISOString()
       };
-      if(!isLeadValid(leadPayload)){
+      if(!isLeadPayloadValid(leadPayload)){
         if(notify){
-          setLeadStatus("Completa nombre y email válidos", true);
-          toast("Completa nombre y email válidos");
+          setLeadStatus("Completa nombre, email y teléfono válidos", true);
+          toast("Completa nombre, email y teléfono válidos");
         }
         return false;
       }
       try{
         localStorage.setItem(LEAD_KEY, JSON.stringify(leadPayload));
+        localStorage.setItem("bn_test_unlocked", "1");
       }catch(_){}
       leadSubmitted = true;
       setResultLockState(false);
       setTestLockedState(false);
       return true;
-    }
-
-    function getStoredLead(){
-      try{
-        const raw = localStorage.getItem(LEAD_KEY);
-        if(!raw) return null;
-        return JSON.parse(raw);
-      }catch(_){
-        return null;
-      }
     }
 
     function requireLeadForResult(){
@@ -2994,7 +3028,7 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       setTestLockedState(true);
       const resultText = document.getElementById("resultText");
       if(resultText){
-        resultText.textContent = "Para ver tu resultado y usar el test, completa Nombre y Email (1 minuto).";
+        resultText.textContent = "Para ver tu resultado y usar el test, completa Nombre, Email y Teléfono (1 minuto).";
       }
       toast("Completa tus datos para ver el resultado");
       openLeadForm();
@@ -3169,8 +3203,16 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
     }
 
     captureUTMs();
+    const params = new URLSearchParams(window.location.search);
+    const isShareMode = params.get("share") === "1";
+    if(isShareMode){
+      try{
+        localStorage.removeItem(LEAD_KEY);
+        localStorage.removeItem("bn_test_unlocked");
+      }catch(_){}
+    }
     try{
-      leadSubmitted = isLeadValid(getStoredLead());
+      leadSubmitted = !isShareMode && isBnLeadValid();
     }catch(_){
       leadSubmitted = false;
     }
@@ -3204,14 +3246,44 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       });
     }
 
-    const params = new URLSearchParams(window.location.search);
-    if(params.get("share") === "1"){
+    if(isShareMode){
       scrollToId("test");
-      if(!leadSubmitted){
-        setResultLockState(true);
-        setTestLockedState(true);
+      setResultLockState(true);
+      setTestLockedState(true);
+      const resultText = document.getElementById("resultText");
+      if(resultText){
+        resultText.textContent = "Para ver tu resultado y usar el test, completa Nombre, Email y Teléfono (1 minuto).";
       }
     }
+
+    const STICKY_STORAGE_KEY = "bn_sticky_hidden";
+    const stickyBar = document.querySelector(".sticky");
+    const stickyToggle = document.getElementById("openStickyWrap");
+    function setStickyVisibility(isVisible){
+      if(stickyBar){ stickyBar.style.display = isVisible ? "" : "none"; }
+      const isMobileSticky = window.matchMedia && window.matchMedia("(max-width: 720px)").matches;
+      if(stickyToggle){ stickyToggle.style.display = !isVisible && isMobileSticky ? "block" : "none"; }
+      document.body.classList.toggle("has-sticky", isVisible);
+      document.body.classList.toggle("sticky-hidden", !isVisible);
+    }
+    try{
+      const stickyHidden = localStorage.getItem(STICKY_STORAGE_KEY) === "1";
+      setStickyVisibility(!stickyHidden);
+      const closeSticky = document.getElementById("closeSticky");
+      const openSticky = document.getElementById("openSticky");
+      if(closeSticky){
+        closeSticky.addEventListener("click", ()=>{
+          localStorage.setItem(STICKY_STORAGE_KEY, "1");
+          setStickyVisibility(false);
+        });
+      }
+      if(openSticky){
+        openSticky.addEventListener("click", ()=>{
+          localStorage.removeItem(STICKY_STORAGE_KEY);
+          setStickyVisibility(true);
+        });
+      }
+    }catch(_){}
 
     (function pulseStickyCTAOnce(){
       if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches){ return; }

@@ -1787,14 +1787,14 @@ a.card.trustTile .pdrBoard{
                     <div>
                       <div style="font-weight:900;font-size:14px;letter-spacing:.2px">Entra por WhatsApp (rápido)</div>
                   <div style="color:rgba(71,85,105,.82);font-size:12px;margin-top:6px;line-height:1.35">
-                    Completa esto y te abre WhatsApp con el mensaje listo: <strong>METABOLISMO</strong>.
+                    Completa esto para guardar tu avance y continuar con el test.
                   </div>
                     </div>
                 <span class="badge">Datos mínimos · Sin estrés</span>
               </div>
                   
 
-              <form id="leadForm" autocomplete="on">
+              <form id="leadForm" autocomplete="on" novalidate>
                 <div style="position:absolute;left:-9999px;opacity:0;pointer-events:none" aria-hidden="true">
                   <label for="website">Sitio web</label>
                   <input id="website" name="website" tabindex="-1" autocomplete="off" />
@@ -1806,7 +1806,7 @@ a.card.trustTile .pdrBoard{
                   </div>
                   <div>
                     <label for="city">Ciudad</label>
-                    <input id="city" name="city" placeholder="Monterrey / San Nicolás / Guadalupe…" required />
+                    <input id="city" name="city" placeholder="Monterrey / San Nicolás / Guadalupe…" />
                   </div>
                   <div>
                     <label for="email">Email</label>
@@ -1814,18 +1814,18 @@ a.card.trustTile .pdrBoard{
                   </div>
                   <div>
                     <label for="phone">Teléfono (WhatsApp)</label>
-                    <input id="phone" name="phone" inputmode="tel" placeholder="+52 81… / +1 787…" required />
+                    <input id="phone" name="phone" inputmode="tel" placeholder="+52 81… / +1 787…" />
                   </div>
                 </div>
 
                 <div class="formActions">
-                  <button class="btn btnSecondary" type="submit"><span>Abrir WhatsApp y enviar “METABOLISMO”</span></button>
+                  <button class="btn btnPrimary" type="submit"><span>Guardar y continuar</span></button>
                 </div>
 
                 <div class="consent">
-                  Al enviar, aceptas que te contactemos por WhatsApp para darte orientación educativa y seguimiento.
+                  Al guardar, aceptas que te contactemos por WhatsApp para darte orientación educativa y seguimiento.
                   <strong>No es diagnóstico médico.</strong>
-                  <br/>Al enviar aceptas que te contactemos por email/WhatsApp. Puedes solicitar baja.
+                  <br/>Al guardar aceptas que te contactemos por email/WhatsApp. Puedes solicitar baja.
                 </div>
 
                 <div class="consent" id="leadStatus" role="status" aria-live="polite" style="display:none"></div>
@@ -2047,6 +2047,10 @@ a.card.trustTile .pdrBoard{
             </div>
           </div>
         </div>
+        </div>
+
+        <div class="formActions" style="margin-top:18px">
+          <button class="btn btnSecondary" type="button" onclick="openWhatsAppSupport()">Soporte por WhatsApp</button>
         </div>
 
       </div>
@@ -2491,6 +2495,17 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       openWhatsApp(CONFIG.DEFAULT_MESSAGE);
     }
 
+    function openWhatsAppSupport(){
+      const data = {
+        name: sanitizeLeadField(document.getElementById("name")?.value, 120),
+        city: sanitizeLeadField(document.getElementById("city")?.value, 120),
+        email: sanitizeLeadField(document.getElementById("email")?.value, 160),
+        phone: sanitizeLeadField(document.getElementById("phone")?.value, 40)
+      };
+      const hasLeadBasics = (data.name || "").trim() && (data.email || "").trim();
+      openWhatsApp(hasLeadBasics ? buildLeadMessage(data) : CONFIG.DEFAULT_MESSAGE);
+    }
+
     function buildLeadMessage(data){
       const lines = [
         CONFIG.DEFAULT_MESSAGE,
@@ -2515,22 +2530,6 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
     }
 
     const formEl = document.getElementById("leadForm");
-    const submitBtn = formEl ? formEl.querySelector('button[type="submit"]') : null;
-    const submitLabel = submitBtn ? submitBtn.querySelector("span") : null;
-    const submitLabelDefault = submitLabel ? submitLabel.textContent : "";
-
-    function setSubmitState(state){
-      if(!submitBtn) return;
-      const isLoading = state === "loading";
-      submitBtn.classList.toggle("is-loading", isLoading);
-      submitBtn.setAttribute("aria-busy", isLoading ? "true" : "false");
-      submitBtn.disabled = isLoading;
-      if(submitLabel){
-        if(state === "loading"){ submitLabel.textContent = "Enviando…"; }
-        else if(state === "success"){ submitLabel.textContent = "Gracias"; }
-        else { submitLabel.textContent = submitLabelDefault; }
-      }
-    }
 
     function markInvalid(fields){
       let firstInvalid = null;
@@ -2572,10 +2571,9 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       return json;
     }
 
-    document.getElementById("leadForm").addEventListener("submit", async (e)=>{
+    document.getElementById("leadForm").addEventListener("submit", (e)=>{
       e.preventDefault();
       setLeadStatus("", false);
-      setSubmitState("idle");
       try{ window.dataLayer.push({event:"lead_submit_attempt"}); }catch(_){}
       try{ window.dataLayer.push({event:"submit_lead"}); }catch(_){}
 
@@ -2588,14 +2586,12 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
 
       markInvalid([
         {el: document.getElementById("name"), invalid: !data.name},
-        {el: document.getElementById("city"), invalid: !data.city},
-        {el: document.getElementById("email"), invalid: !data.email},
-        {el: document.getElementById("phone"), invalid: !data.phone}
+        {el: document.getElementById("email"), invalid: !data.email}
       ]);
 
-      if(!data.name || !data.city || !data.email || !data.phone){
-        setLeadStatus("Completa los campos", true);
-        toast("Completa los campos");
+      if(!data.name || !data.email){
+        setLeadStatus("Falta Nombre y Email", true);
+        toast("Falta Nombre y Email");
         return;
       }
 
@@ -2603,13 +2599,6 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       if(!emailRegex.test(data.email)){
         setLeadStatus("Email inválido", true);
         markInvalid([{el: document.getElementById("email"), invalid:true}]);
-        return;
-      }
-
-      const phoneDigits = (data.phone || "").replace(/\D+/g, "");
-      if(phoneDigits.length < 7 || phoneDigits.length > 20){
-        setLeadStatus("Teléfono inválido", true);
-        markInvalid([{el: document.getElementById("phone"), invalid:true}]);
         return;
       }
 
@@ -2626,46 +2615,8 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       leadSubmitted = true;
       setResultLockState(false);
       setTestLockedState(false);
-
-      setLeadStatus("Guardando…", false);
-      setSubmitState("loading");
-
-      let result;
-      try{
-        result = await postLead(data);
-      }catch(_){
-        result = {ok:false, message:"No se pudo guardar"};
-      }
-
-      if(!result || !result.ok){
-        setLeadStatus("⚠️ No se pudo guardar, intenta de nuevo", true);
-        setSubmitState("idle");
-        toast("⚠️ No se pudo guardar, intenta de nuevo");
-        try{ window.dataLayer.push({event:"lead_submit_error", message: result && result.message ? result.message : "unknown"}); }catch(_){}
-        return;
-      }
-
-      const successMsg = result && result.message ? result.message : "✅ Registro guardado";
-      setLeadStatus(successMsg, false);
-      setSubmitState("success");
-      toast("Gracias, recibido");
-      leadSubmitted = true;
-      setResultLockState(false);
-      try{ window.dataLayer.push({event:"lead_submit_success"}); }catch(_){}
-      try{ window.dataLayer.push({event:"submit_lead"}); }catch(_){}
-
-      if(CONFIG.LEAD_WEBHOOK_URL){
-        try{
-          await fetch(CONFIG.LEAD_WEBHOOK_URL, {
-            method: "POST",
-            headers: {"Content-Type":"application/json"},
-            body: JSON.stringify({source:"landing_bariatrica_natural", ...data, ts: new Date().toISOString(), utm: UTM_QUERY || null})
-          });
-        }catch(_){ /* silencioso */ }
-      }
-
-      openWhatsApp(buildLeadMessage(data));
-      setTimeout(()=> setSubmitState("idle"), 2400);
+      setLeadStatus("Guardado ✅", false);
+      scrollToId("test");
     });
 
     function renderTest(){

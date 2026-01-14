@@ -3273,51 +3273,33 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       return (s || "").replace(/\s+/g, " ").trim().toLowerCase();
     }
 
-    function isTargetTextFromNode(node) {
-      if (!node) return false;
-      var t = norm(node.innerText || node.textContent || "");
-      // Solo estos 2 CTAs
-      return (t.indexOf("comprar el sistema") !== -1 || t.indexOf("comprar ahora") !== -1);
+    function isTargetText(txt) {
+      var t = norm(txt);
+      return (t === "comprar el sistema" || t === "comprar ahora");
     }
 
-    function openBuy(e) {
-      if (e && e.preventDefault) e.preventDefault();
-      if (e && e.stopPropagation) e.stopPropagation();
-      // nueva pestaña, seguro
-      window.open(BUY_URL, "_blank", "noopener");
-    }
-
-    // 1) Actualiza href/onclick si son <a> o <button> (mejor esfuerzo)
-    var all = document.querySelectorAll("a,button,[role='button']");
-    for (var i = 0; i < all.length; i++) {
-      var el = all[i];
-      if (isTargetTextFromNode(el)) {
-        if (el.tagName && el.tagName.toLowerCase() === "a") {
-          el.setAttribute("href", BUY_URL);
-          el.setAttribute("target", "_blank");
-          el.setAttribute("rel", "noopener noreferrer");
-        } else {
-          el.onclick = openBuy;
-          el.style.cursor = "pointer";
-        }
+    // 1) Enlaces <a> (solo los 2 CTAs por texto)
+    var links = document.querySelectorAll("a");
+    for (var i = 0; i < links.length; i++) {
+      var a = links[i];
+      var tA = a.textContent || "";
+      if (isTargetText(tA)) {
+        a.setAttribute("href", BUY_URL);
+        a.setAttribute("target", "_blank");
+        a.setAttribute("rel", "noopener noreferrer");
       }
     }
 
-    // 2) FIX definitivo: captura cualquier click en esos CTAs aunque estén envueltos en DIV/SPAN
-    document.addEventListener("click", function (e) {
-      var t = e && e.target;
-      if (!t) return;
-
-      // sube hasta 6 niveles buscando un contenedor que contenga el texto del CTA
-      var cur = t;
-      for (var k = 0; k < 6 && cur; k++) {
-        if (isTargetTextFromNode(cur)) {
-          openBuy(e);
-          return;
-        }
-        cur = cur.parentElement;
+    // 2) Botones <button> (solo los 2 CTAs por texto)
+    var btns = document.querySelectorAll("button");
+    for (var j = 0; j < btns.length; j++) {
+      var b = btns[j];
+      var tB = b.textContent || "";
+      if (isTargetText(tB)) {
+        b.onclick = function () { window.open(BUY_URL, "_blank", "noopener"); };
+        b.style.cursor = "pointer";
       }
-    }, true); // true = captura (antes que otros handlers)
+    }
   })();
   </script>
   <!-- /BUY-LINK OVERRIDE (MX) -->

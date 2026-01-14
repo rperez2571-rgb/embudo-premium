@@ -3265,26 +3265,37 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
   (function () {
     var BUY_URL = "https://ufeelgreat.com/mex/es/product/feel-great?focus=true&sku=36279";
 
-    function bind(id) {
-      var el = document.getElementById(id);
-      if (!el) return;
+    function norm(s) {
+      return (s || "").replace(/\s+/g, " ").trim().toLowerCase();
+    }
 
-      // Si es <a>, set href. Si no, set onclick.
-      if (el.tagName && el.tagName.toLowerCase() === "a") {
-        el.setAttribute("href", BUY_URL);
-        el.setAttribute("target", "_blank");
-        el.setAttribute("rel", "noopener noreferrer");
-      } else {
-        el.onclick = function (e) {
-          if (e && e.preventDefault) e.preventDefault();
-          window.open(BUY_URL, "_blank", "noopener");
-        };
-        el.style.cursor = "pointer";
+    function isTargetText(txt) {
+      var t = norm(txt);
+      return (t === "comprar el sistema" || t === "comprar ahora");
+    }
+
+    // 1) Enlaces <a> (solo los 2 CTAs por texto)
+    var links = document.querySelectorAll("a");
+    for (var i = 0; i < links.length; i++) {
+      var a = links[i];
+      var tA = a.textContent || "";
+      if (isTargetText(tA)) {
+        a.setAttribute("href", BUY_URL);
+        a.setAttribute("target", "_blank");
+        a.setAttribute("rel", "noopener noreferrer");
       }
     }
 
-    bind("cta-buy-now-mx");
-    bind("cta-buy-system-mx");
+    // 2) Botones <button> (solo los 2 CTAs por texto)
+    var btns = document.querySelectorAll("button");
+    for (var j = 0; j < btns.length; j++) {
+      var b = btns[j];
+      var tB = b.textContent || "";
+      if (isTargetText(tB)) {
+        b.onclick = function () { window.open(BUY_URL, "_blank", "noopener"); };
+        b.style.cursor = "pointer";
+      }
+    }
   })();
   </script>
   <!-- /BUY-LINK OVERRIDE (MX) -->

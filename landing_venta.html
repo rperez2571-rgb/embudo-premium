@@ -2062,10 +2062,6 @@ a.card.trustTile .pdrBoard{
         </div>
         </div>
 
-        <div class="formActions" style="margin-top:18px">
-          <button class="btn btnSecondary" type="button" onclick="openWhatsAppSupport()">Soporte por WhatsApp</button>
-        </div>
-
       </div>
     </section>
 
@@ -2096,7 +2092,7 @@ a.card.trustTile .pdrBoard{
                 <li>Certificaciones evaluadas por terceros (según SKU/mercado).</li>
               </ul>
               <div class="formActions" style="margin-top:14px">
-                <a class="btn btnPrimary btnXL" href="https://ufeelgreat.com/c/LaSaludesRiqueza" target="_blank" rel="noopener noreferrer" onclick="trackPurchase()">Comprar el sistema</a>
+                <a class="btn btnPrimary btnXL" id="cta-buy-system-mx" href="https://ufeelgreat.com/c/LaSaludesRiqueza" target="_blank" rel="noopener noreferrer" onclick="trackPurchase()">Comprar el sistema</a>
               </div>
 </div>
           </div>
@@ -2285,7 +2281,7 @@ a.card.trustTile .pdrBoard{
               </p>
               <p class="fine" style="margin-top:12px">Si prefieres, escríbenos por WhatsApp y te guiamos para escoger la opción correcta.</p>
               <div class="formActions" style="margin-top:14px">
-                <button class="btn btnPrimary btnXL" type="button" onclick="openPurchase()">Comprar ahora</button>
+                <button class="btn btnPrimary btnXL" id="cta-buy-now-mx" type="button" onclick="openPurchase()">Comprar ahora</button>
                 <button class="btn btnSecondary" type="button" onclick="openWhatsAppDefault()">WhatsApp</button>
               </div>
 
@@ -3264,5 +3260,33 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       }
     })();
   </script>
+  <!-- BUY-LINK OVERRIDE (MX) -->
+  <script>
+  (function () {
+    var BUY_URL = "https://ufeelgreat.com/mex/es/product/feel-great?focus=true&sku=36279";
+
+    function bind(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+
+      // Si es <a>, set href. Si no, set onclick.
+      if (el.tagName && el.tagName.toLowerCase() === "a") {
+        el.setAttribute("href", BUY_URL);
+        el.setAttribute("target", "_blank");
+        el.setAttribute("rel", "noopener noreferrer");
+      } else {
+        el.onclick = function (e) {
+          if (e && e.preventDefault) e.preventDefault();
+          window.open(BUY_URL, "_blank", "noopener");
+        };
+        el.style.cursor = "pointer";
+      }
+    }
+
+    bind("cta-buy-now-mx");
+    bind("cta-buy-system-mx");
+  })();
+  </script>
+  <!-- /BUY-LINK OVERRIDE (MX) -->
 </body>
 </html>

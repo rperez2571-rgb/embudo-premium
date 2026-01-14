@@ -3264,5 +3264,44 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       }
     })();
   </script>
+  <!-- BUY-LINK OVERRIDE (MX) -->
+  <script>
+  (function () {
+    var BUY_URL = "https://ufeelgreat.com/mex/es/product/feel-great?focus=true&sku=36279";
+
+    function norm(s) {
+      return (s || "").replace(/\s+/g, " ").trim().toLowerCase();
+    }
+
+    function isTargetText(txt) {
+      var t = norm(txt);
+      return (t === "comprar el sistema" || t === "comprar ahora");
+    }
+
+    // 1) Enlaces <a> (solo los 2 CTAs por texto)
+    var links = document.querySelectorAll("a");
+    for (var i = 0; i < links.length; i++) {
+      var a = links[i];
+      var tA = a.textContent || "";
+      if (isTargetText(tA)) {
+        a.setAttribute("href", BUY_URL);
+        a.setAttribute("target", "_blank");
+        a.setAttribute("rel", "noopener noreferrer");
+      }
+    }
+
+    // 2) Botones <button> (solo los 2 CTAs por texto)
+    var btns = document.querySelectorAll("button");
+    for (var j = 0; j < btns.length; j++) {
+      var b = btns[j];
+      var tB = b.textContent || "";
+      if (isTargetText(tB)) {
+        b.onclick = function () { window.open(BUY_URL, "_blank", "noopener"); };
+        b.style.cursor = "pointer";
+      }
+    }
+  })();
+  </script>
+  <!-- /BUY-LINK OVERRIDE (MX) -->
 </body>
 </html>

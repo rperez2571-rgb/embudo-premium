@@ -706,6 +706,15 @@
       border-radius:999px;
       font-size:14px;
     }
+    .testLockOverlay span{
+      color:rgba(255,255,255,.92);
+      font-weight:600;
+    }
+    .testLockOverlay .btn,
+    .testLockOverlay button,
+    .testLockOverlay a{
+      white-space:nowrap;
+    }
     .testLockOverlay.is-hidden{display:none;}
     @media (max-width: 480px){
       .testLockOverlay{
@@ -716,6 +725,12 @@
         line-height:1.4;
       }
       .testLockOverlay .btn{
+        width:100%;
+        text-align:center;
+      }
+      .testLockOverlay .btn,
+      .testLockOverlay button,
+      .testLockOverlay a{
         width:100%;
         text-align:center;
       }
@@ -1721,6 +1736,36 @@ a.card.trustTile .pdrBoard{
   background: rgba(255,255,255,.09) !important;
   border-color: rgba(127,227,179,.26) !important;
 }
+
+/* FIX LOCK UI — override only (no deletions) */
+.testLockOverlay{
+  display:flex !important;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:14px 16px;
+  border-radius:18px;
+  background:rgba(11,107,58,.20) !important;
+  color:#fff;
+  font-weight:700;
+  line-height:1.45;
+}
+.testLockOverlay span{ color:rgba(255,255,255,.92); font-weight:600; }
+.testLockOverlay .btn, .testLockOverlay button, .testLockOverlay a{ white-space:nowrap; }
+
+@media (max-width:480px){
+  .testLockOverlay{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:10px;
+    font-size:clamp(14px,4.2vw,15px);
+    line-height:1.4;
+  }
+  .testLockOverlay .btn, .testLockOverlay button, .testLockOverlay a{
+    width:100%;
+    text-align:center;
+  }
+}
 </style>
 
 <style id="ui-19-topbar-container">
@@ -2062,10 +2107,6 @@ a.card.trustTile .pdrBoard{
         </div>
         </div>
 
-        <div class="formActions" style="margin-top:18px">
-          <button class="btn btnSecondary" type="button" onclick="openWhatsAppSupport()">Soporte por WhatsApp</button>
-        </div>
-
       </div>
     </section>
 
@@ -2096,7 +2137,7 @@ a.card.trustTile .pdrBoard{
                 <li>Certificaciones evaluadas por terceros (según SKU/mercado).</li>
               </ul>
               <div class="formActions" style="margin-top:14px">
-                <a class="btn btnPrimary btnXL" href="https://ufeelgreat.com/c/LaSaludesRiqueza" target="_blank" rel="noopener noreferrer" onclick="trackPurchase()">Comprar el sistema</a>
+                <a class="btn btnPrimary btnXL" id="cta-buy-system-mx" href="https://ufeelgreat.com/c/LaSaludesRiqueza" target="_blank" rel="noopener noreferrer" onclick="trackPurchase()">Comprar el sistema</a>
               </div>
 </div>
           </div>
@@ -2285,7 +2326,7 @@ a.card.trustTile .pdrBoard{
               </p>
               <p class="fine" style="margin-top:12px">Si prefieres, escríbenos por WhatsApp y te guiamos para escoger la opción correcta.</p>
               <div class="formActions" style="margin-top:14px">
-                <button class="btn btnPrimary btnXL" type="button" onclick="openPurchase()">Comprar ahora</button>
+                <button class="btn btnPrimary btnXL" id="cta-buy-now-mx" type="button" onclick="openPurchase()">Comprar ahora</button>
                 <button class="btn btnSecondary" type="button" onclick="openWhatsAppDefault()">WhatsApp</button>
               </div>
 
@@ -3263,6 +3304,67 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
         stickyBuy.addEventListener("animationend", ()=> stickyBuy.classList.remove("pulse-once"), { once:true });
       }
     })();
+  </script>
+  <script>
+  /* =========================
+     FIX LOCK UI (NO TOUCH OTHER UI)
+     Hace que el overlay se vea bien desde el inicio
+     ========================= */
+  (function(){
+    function fixLockOverlay(){
+      var overlay = document.querySelector(".testLockOverlay");
+      if(!overlay) return;
+
+      // Si el overlay existe, forzamos display flex (sin esperar el click)
+      // No tocamos lógica del test, solo presentación.
+      overlay.style.display = "flex";
+    }
+
+    if(document.readyState === "loading"){
+      document.addEventListener("DOMContentLoaded", fixLockOverlay);
+    } else {
+      fixLockOverlay();
+    }
+  })();
+  </script>
+  <!-- BUY-LINK OVERRIDE (MX) -->
+  <script>
+  (function () {
+    var BUY_URL = "https://ufeelgreat.com/mex/es/product/feel-great?focus=true&sku=36279";
+
+    function bind(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+
+      // Si es <a>, set href. Si no, set onclick.
+      if (el.tagName && el.tagName.toLowerCase() === "a") {
+        el.setAttribute("href", BUY_URL);
+        el.setAttribute("target", "_blank");
+        el.setAttribute("rel", "noopener noreferrer");
+      } else {
+        el.onclick = function (e) {
+          if (e && e.preventDefault) e.preventDefault();
+          window.open(BUY_URL, "_blank", "noopener");
+        };
+        el.style.cursor = "pointer";
+      }
+    }
+
+    bind("cta-buy-now-mx");
+    bind("cta-buy-system-mx");
+  })();
+  </script>
+  <!-- /BUY-LINK OVERRIDE (MX) -->
+  <script>
+  (function(){
+    function fix(){
+      var o = document.querySelector(".testLockOverlay");
+      if(!o) return;
+      o.style.display = "flex";
+    }
+    if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", fix);
+    else fix();
+  })();
   </script>
 </body>
 </html>

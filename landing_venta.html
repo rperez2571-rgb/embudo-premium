@@ -2778,6 +2778,13 @@ a.card.trustTile .pdrBoard{
     function buildTestMessage(score, keys, firstName){
       const safeName = escapeHtml(firstName);
       const greeting = safeName ? `Hola, ${safeName} 👋` : "Hola 👋";
+      const lead = normalizeLead(getBnLead()) || {};
+      const leadName = (lead.name_full || firstName || "").toString().trim();
+      const leadCity = (lead.city || "").toString().trim();
+      const plainHeaderLines = [];
+      if(leadName){ plainHeaderLines.push(`SOY: ${leadName}`); }
+      if(leadCity){ plainHeaderLines.push(`Ciudad: ${leadCity}`); }
+      const plainHeader = plainHeaderLines.join("\n");
 
       const ranges = [
         {
@@ -2903,7 +2910,7 @@ a.card.trustTile .pdrBoard{
         <p><strong>Si quieres guía paso a paso con Unici-Té + Balance, escribe METABOLISMO.</strong></p>
       `;
 
-      const plainText = `${greeting}\n\nNivel: ${range.label}.\n${range.intro}\n\n¿Por qué puede pasar? ${range.why}\n\n3 acciones concretas:\n• ${range.actions.join("\n• ")}\n\n${range.medical}\n${modules.length ? "\nPatrones detectados:\n" + modules.slice(0, 3).map(mod=>`• ${mod.title}: ${mod.text} Acción: ${mod.action}`).join("\n") : ""}\n\nEducativo, no diagnóstico.\n\nSi quieres guía paso a paso con Unici-Té + Balance, escribe METABOLISMO.`;
+      const plainText = `${plainHeader}\n\nNivel: ${range.label}.\n${range.intro}\n\n¿Por qué puede pasar? ${range.why}\n\n3 acciones concretas:\n• ${range.actions.join("\n• ")}\n\n${range.medical}\n${modules.length ? "\nPatrones detectados:\n" + modules.slice(0, 3).map(mod=>`• ${mod.title}: ${mod.text} Acción: ${mod.action}`).join("\n") : ""}\n\nEducativo, no diagnóstico.\n\nSi quieres guía paso a paso con Unici-Té + Balance, escribe METABOLISMO.`;
 
       return { html, plainText };
     }

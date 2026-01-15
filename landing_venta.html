@@ -3327,13 +3327,6 @@ a.card.trustTile .pdrBoard{
     setTestLockedState(!leadSubmitted);
 
     const _testWrap = document.getElementById("testLockWrap");
-    if(_testWrap){
-      _testWrap.addEventListener("click", (e)=>{
-        if(leadSubmitted){ return; }
-        e.preventDefault();
-        openLeadForm();
-      });
-    }
 
     const _unlockBtn = document.getElementById("unlockTestBtn");
     if(_unlockBtn){

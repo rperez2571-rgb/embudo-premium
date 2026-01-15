@@ -707,13 +707,32 @@
       font-size:14px;
     }
     .testLockOverlay.is-hidden{display:none;}
-    @media (max-width: 480px){
+    @media (max-width: 520px){
       .testLockOverlay{
+        position:static;
+        inset:auto;
+        margin:0 0 12px;
+        width:100%;
         flex-direction:column;
         align-items:flex-start;
-        gap:10px;
-        font-size:clamp(14px, 4.2vw, 15px);
-        line-height:1.4;
+        gap:12px;
+        padding:16px;
+        font-size:15px;
+        line-height:1.5;
+      }
+      .testLockOverlay .btn{
+        width:100%;
+        justify-content:center;
+        text-align:center;
+        padding:12px 14px;
+      }
+    }
+    @media (max-width: 480px){
+      .testLockOverlay{
+        gap:12px;
+        padding:14px;
+        font-size:clamp(14px, 4.4vw, 15px);
+        line-height:1.55;
       }
       .testLockOverlay .btn{
         width:100%;

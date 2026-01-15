@@ -2363,7 +2363,7 @@ a.card.trustTile .pdrBoard{
               </p>
               <div class="formActions" style="margin-top:14px">
                 <a class="btn btnGhost" href="https://enrollment.unicity.com/c/LaSaludesRiqueza" target="_blank" rel="noopener" onclick="trackFounder(event)">Aplicar al Equipo Fundador</a>
-                <button class="btn btnSecondary" type="button" onclick="window.open('https://wa.me/17872321516?text=OPORTUNIDAD%20DE%20NEGOCIO%20%E2%80%94%20M%C3%89XICO%0AQuiero%20informaci%C3%B3n%20del%20Equipo%20Fundador.','_blank','noopener')">Info por WhatsApp</button>
+                <button class="btn btnSecondary" type="button" onclick="openFounderWhatsApp()">Info por WhatsApp</button>
               </div>
               <p class="fine" style="margin-top:12px">
                 Nota: esto es una oportunidad de negocio independiente; no se garantizan ingresos. Resultados dependen de esfuerzo, consistencia y mercado.
@@ -2554,6 +2554,22 @@ a.card.trustTile .pdrBoard{
 
     function openWhatsAppDefault(){
       openWhatsApp(CONFIG.DEFAULT_MESSAGE);
+    }
+
+    function openFounderWhatsApp(){
+      const lead = normalizeLead(getBnLead()) || {};
+      const leadName = (lead.name_full || "").toString().trim();
+      const leadCity = (lead.city || "").toString().trim();
+      const lines = [];
+      if(leadName){ lines.push(`SOY: ${leadName}`); }
+      if(leadCity){ lines.push(`Ciudad: ${leadCity}`); }
+      if(lines.length){ lines.push(""); }
+      lines.push(
+        "OPORTUNIDAD DE NEGOCIO — MÉXICO",
+        "Quiero información del Equipo Fundador."
+      );
+      const text = encodeURIComponent(lines.join("\n"));
+      window.open(`https://wa.me/17872321516?text=${text}`, "_blank", "noopener");
     }
 
     function openWhatsAppSupport(){

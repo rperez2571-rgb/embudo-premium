@@ -773,6 +773,13 @@
       height:100%;
       display:flex;flex-direction:column;gap:10px;
     }
+    .resultBox #unlockTestBtn{
+      align-self:flex-end;
+      margin-top:4px;
+    }
+    @media (max-width: 640px){
+      .resultBox #unlockTestBtn{width:100%}
+    }
     .score{
       display:flex;align-items:center;justify-content:space-between;gap:10px;
       padding:16px 16px;border-radius:18px;
@@ -2044,7 +2051,6 @@ a.card.trustTile .pdrBoard{
         <div class="testLockWrap" id="testLockWrap">
           <div class="testLockOverlay" id="testLockOverlay">
             🔒 <span>Para ver tu resultado y usar el test, completa Nombre, Email y Teléfono (1 minuto).</span>
-            <button class="btn btnPrimary" type="button" id="unlockTestBtn">Desbloquear test</button>
           </div>
 
           <div class="testGrid" id="testGrid">
@@ -2082,6 +2088,7 @@ a.card.trustTile .pdrBoard{
               <div style="width:100%;background:var(--surface);border-radius:999px;height:8px;overflow:hidden;margin-top:6px;border:1px solid var(--border)">
                 <div id="scoreBar" style="height:100%;width:0%;background:var(--success);transition:width .18s ease"></div>
               </div>
+              <button class="btn btnPrimary" type="button" id="unlockTestBtn">Desbloquear test</button>
 
               <div class="resultText" id="resultText">
                 Para ver tu resultado y usar el test, completa Nombre, Email y Teléfono (1 minuto).

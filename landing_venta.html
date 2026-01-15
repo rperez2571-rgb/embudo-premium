@@ -840,6 +840,17 @@
       border-color: rgba(11,107,58,.35);
       background: rgba(11,107,58,.18);
     }
+    .resultBox.is-locked{
+      pointer-events:auto;
+    }
+    .resultBox.is-locked #unlockTestBtn{
+      position:relative;
+      z-index:10;
+      pointer-events:auto;
+    }
+    .resultBox.is-locked #resultText{
+      pointer-events:none;
+    }
     .resultBox.is-locked #resultText{
       position:relative;
       padding-left:52px;
@@ -3005,6 +3016,7 @@ a.card.trustTile .pdrBoard{
       if(overlay){ overlay.classList.toggle("is-hidden", !isLocked); }
       checks.forEach(c=>{ c.disabled = isLocked; });
       buttons.forEach(btn=>{
+        if(btn.id === "unlockTestBtn"){ return; }
         btn.disabled = isLocked;
         btn.setAttribute("aria-disabled", isLocked ? "true" : "false");
       });

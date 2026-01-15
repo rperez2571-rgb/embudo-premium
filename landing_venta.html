@@ -2624,7 +2624,13 @@ a.card.trustTile .pdrBoard{
         return;
       }
 
-      const leadPayload = { name: data.name || "", email: data.email || "", ts: new Date().toISOString() };
+      const leadPayload = normalizeLead({
+        name_full: data.name || "",
+        email: data.email || "",
+        phone: data.phone || "",
+        city: data.city || "",
+        ts: new Date().toISOString()
+      });
       if(!isLeadValid(leadPayload)){
         setLeadStatus("Completa nombre y email válidos", true);
         toast("Completa nombre y email válidos");
@@ -2632,6 +2638,15 @@ a.card.trustTile .pdrBoard{
       }
 
       try{
+        const storedLead = normalizeLead(getBnLead());
+        if(storedLead && isLeadValid(storedLead) && leadPayload.email && storedLead.email === leadPayload.email){
+          leadSubmitted = true;
+          setResultLockState(false);
+          setTestLockedState(false);
+          setLeadStatus("✅ Ya estabas registrado.", false);
+          scrollToId("test");
+          return;
+        }
         localStorage.setItem(LEAD_KEY, JSON.stringify(leadPayload));
       }catch(_){}
       leadSubmitted = true;
@@ -2928,24 +2943,52 @@ a.card.trustTile .pdrBoard{
       });
     }
 
+    function normalizeLead(raw){
+      if(!raw) return null;
+      const nameFull = (raw.name_full || raw.name || "").toString().trim();
+      const email = (raw.email || "").toString().trim().toLowerCase();
+      const phone = (raw.phone || "").toString().trim();
+      const city = (raw.city || "").toString().trim();
+      const ts = raw.ts || new Date().toISOString();
+      return {
+        name_full: nameFull,
+        email,
+        phone,
+        city,
+        ts
+      };
+    }
+
+    function prefillLeadFields(lead){
+      if(!lead) return;
+      const nameField = document.getElementById("name");
+      const emailField = document.getElementById("email");
+      const phoneField = document.getElementById("phone");
+      const cityField = document.getElementById("city");
+      if(nameField && !nameField.value){ nameField.value = lead.name_full || ""; }
+      if(emailField && !emailField.value){ emailField.value = lead.email || ""; }
+      if(phoneField && !phoneField.value){ phoneField.value = lead.phone || ""; }
+      if(cityField && !cityField.value){ cityField.value = lead.city || ""; }
+    }
+
     function getBnLead() {
       try{ return JSON.parse(localStorage.getItem(LEAD_KEY) || "null"); }
       catch(_){ return null; }
     }
 
-    function isBnLeadValid() {
-      const lead = getBnLead();
+    function isBnLeadValid(leadInput) {
+      const lead = normalizeLead(leadInput || getBnLead());
       if(!lead) return false;
-      return !!(lead.name_full && lead.email && lead.phone);
+      return !!(lead.name_full && lead.email);
     }
 
-    function isLeadValid(){
-      return isBnLeadValid();
+    function isLeadValid(leadInput){
+      return isBnLeadValid(leadInput);
     }
 
     function getLeadFirstName(){
       try{
-        const raw = (getBnLead()?.name_full || "").trim();
+        const raw = (normalizeLead(getBnLead())?.name_full || "").trim();
         if(!raw){ return ""; }
         return raw.split(/\s+/)[0];
       }catch(_){ return ""; }
@@ -2955,9 +2998,7 @@ a.card.trustTile .pdrBoard{
       if(!lead) return false;
       const nameOk = (lead.name_full || "").trim().length >= 2;
       const emailOk = /@/.test(lead.email || "") && /\./.test(lead.email || "");
-      const phoneDigits = (lead.phone || "").replace(/\D+/g, "");
-      const phoneOk = phoneDigits.length >= 7;
-      return nameOk && emailOk && phoneOk;
+      return nameOk && emailOk;
     }
 
     function tryUnlockLeadFromForm(notify){
@@ -2965,17 +3006,17 @@ a.card.trustTile .pdrBoard{
       const emailField = document.getElementById("email");
       const phoneField = document.getElementById("phone");
       const cityField = document.getElementById("city");
-      const leadPayload = {
+      const leadPayload = normalizeLead({
         name_full: nameField ? nameField.value.trim() : "",
-        email: emailField ? emailField.value.trim().toLowerCase() : "",
+        email: emailField ? emailField.value.trim() : "",
         phone: phoneField ? phoneField.value.trim() : "",
         city: cityField ? cityField.value.trim() : "",
         ts: new Date().toISOString()
-      };
+      });
       if(!isLeadPayloadValid(leadPayload)){
         if(notify){
-          setLeadStatus("Completa nombre, email y teléfono válidos", true);
-          toast("Completa nombre, email y teléfono válidos");
+          setLeadStatus("Completa nombre y email válidos", true);
+          toast("Completa nombre y email válidos");
         }
         return false;
       }
@@ -3002,7 +3043,7 @@ a.card.trustTile .pdrBoard{
       setTestLockedState(true);
       const resultText = document.getElementById("resultText");
       if(resultText){
-        resultText.textContent = "Para ver tu resultado y usar el test, completa Nombre, Email y Teléfono (1 minuto).";
+        resultText.textContent = "Para ver tu resultado y usar el test, completa Nombre y Email (1 minuto).";
       }
       toast("Completa tus datos para ver el resultado");
       openLeadForm();
@@ -3189,6 +3230,14 @@ a.card.trustTile .pdrBoard{
       leadSubmitted = !isShareMode && isBnLeadValid();
     }catch(_){
       leadSubmitted = false;
+    }
+    if(leadSubmitted && !isShareMode){
+      const storedLead = normalizeLead(getBnLead());
+      if(storedLead && isLeadValid(storedLead)){
+        try{ localStorage.setItem(LEAD_KEY, JSON.stringify(storedLead)); }catch(_){}
+        prefillLeadFields(storedLead);
+        setLeadStatus("✅ Email ya registrado. Puedes continuar al test.", false);
+      }
     }
     initHeroVideo();
 

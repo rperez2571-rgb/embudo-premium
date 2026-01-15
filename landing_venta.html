@@ -1408,6 +1408,11 @@
 .btnSecondary{
   margin-right:12px;
 }
+
+/* HOTFIX #comprar: 2 columnas en desktop (solo layout) */
+@media (min-width: 981px){
+  #comprar .grid2{ grid-template-columns: 1fr 1fr !important; }
+}
 </style>
 
 <style id="ui-18-focus">
@@ -2309,7 +2314,7 @@ a.card.trustTile .pdrBoard{
               <h3 style="margin:0 0 8px;font-size:18px">Opción 2: Quiero emprender (Equipo Fundador)</h3>
               <p style="margin:0;color:rgba(71,85,105,.85);font-size:14px;line-height:1.55">
                 Si hoy sientes que trabajas mucho y avanzas poco… no es falta de capacidad: es falta de estructura.
-                Esto nace en Monterrey, pero es un movimiento para todo México: comunidad, entrenamiento y acompañamiento para construir un plan real, paso a paso.
+                Esto nace en Monterrey → todo México: comunidad, entrenamiento y acompañamiento para construir un plan real, paso a paso.
                 No necesitas experiencia. Necesitas decisión, consistencia y un sistema duplicable.
                 Si quieres que 2026 no se parezca a 2025, este es tu momento: aplica o pide la info por WhatsApp y te enviamos el plan de inicio.
               </p>
@@ -2322,7 +2327,6 @@ a.card.trustTile .pdrBoard{
               </p>
             </div>
           </div>
-        </div>
         </div>
 
         <div class="footer">

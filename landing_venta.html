@@ -4,6 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="description" content="Bariátrica Natural — Sistema Metabólico (Unici-Té + Balance) para México. Acompañamiento por WhatsApp. Contenido educativo." />
+  <meta property="og:title" content="Bariátrica Natural | Sistema Metabólico — México" />
+  <meta property="og:description" content="Bariátrica Natural — Sistema Metabólico (Unici-Té + Balance) para México. Acompañamiento por WhatsApp. Contenido educativo." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://bariatricanatural.mx/landing_venta.html" />
   <title>Bariátrica Natural | Sistema Metabólico — México</title>
   <script>
     // GTM placeholder
@@ -707,13 +711,28 @@
       font-size:14px;
     }
     .testLockOverlay.is-hidden{display:none;}
-    @media (max-width: 480px){
+    @media (max-width: 520px){
       .testLockOverlay{
         flex-direction:column;
         align-items:flex-start;
-        gap:10px;
-        font-size:clamp(14px, 4.2vw, 15px);
-        line-height:1.4;
+        gap:12px;
+        padding:16px;
+        font-size:15px;
+        line-height:1.5;
+      }
+      .testLockOverlay .btn{
+        width:100%;
+        justify-content:center;
+        text-align:center;
+        padding:12px 14px;
+      }
+    }
+    @media (max-width: 480px){
+      .testLockOverlay{
+        gap:12px;
+        padding:14px;
+        font-size:clamp(14px, 4.4vw, 15px);
+        line-height:1.55;
       }
       .testLockOverlay .btn{
         width:100%;
@@ -3050,7 +3069,7 @@ a.card.trustTile .pdrBoard{
       return false;
     }
 
-    function openLeadForm(){
+    function openLeadForm(focusFieldId){
       const form = document.getElementById("leadForm");
       if(form){ form.scrollIntoView({behavior:"smooth", block:"center"}); }
       const leadCard = document.getElementById("leadCard");
@@ -3058,9 +3077,10 @@ a.card.trustTile .pdrBoard{
         leadCard.classList.add("is-highlight");
         setTimeout(()=> leadCard.classList.remove("is-highlight"), 2000);
       }
-      const nameField = document.getElementById("name");
-      if(nameField && typeof nameField.focus === "function"){
-        nameField.focus({preventScroll:true});
+      const targetFieldId = focusFieldId || "name";
+      const targetField = document.getElementById(targetFieldId);
+      if(targetField && typeof targetField.focus === "function"){
+        targetField.focus({preventScroll:true});
       }
     }
 
@@ -3220,6 +3240,16 @@ a.card.trustTile .pdrBoard{
     captureUTMs();
     const params = new URLSearchParams(window.location.search);
     const isShareMode = params.get("share") === "1";
+    const isSharePreview = isShareMode || window.location.hash === "#test";
+    if(isSharePreview){
+      const shareTitle = "Test Metabólico Express (60 segundos)";
+      const shareDescription = "Responde el Test Metabólico Express y recibe tu resultado educativo en 60 segundos.";
+      document.title = `${shareTitle} — Bariátrica Natural`;
+      const ogTitle = document.querySelector('meta[property="og:title"]');
+      if(ogTitle){ ogTitle.setAttribute("content", shareTitle); }
+      const ogDescription = document.querySelector('meta[property="og:description"]');
+      if(ogDescription){ ogDescription.setAttribute("content", shareDescription); }
+    }
     if(isShareMode){
       try{
         localStorage.removeItem(LEAD_KEY);
@@ -3263,8 +3293,9 @@ a.card.trustTile .pdrBoard{
         if(leadSubmitted){ return; }
         e.preventDefault();
         e.stopPropagation();
+        openLeadForm("email");
         if(!tryUnlockLeadFromForm(true)){
-          openLeadForm();
+          openLeadForm("email");
         }
       });
     }

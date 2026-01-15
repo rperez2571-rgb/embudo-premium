@@ -753,6 +753,8 @@
       pointer-events:none;
     }
     #testLockWrap.testLocked .testGate{display:none !important;}
+    #testLockWrap.testLocked #testLockOverlay{display:none !important;}
+    #testLockWrap.testLocked .testLockOverlay{display:none !important;}
     .checkList{display:grid;grid-template-columns:1fr 1fr;gap:10px}
     @media (max-width: 640px){.checkList{grid-template-columns:1fr}}
     .check{
@@ -830,6 +832,17 @@
     .resultBox.is-locked .resultText{
       border-color: rgba(11,107,58,.35);
       background: rgba(11,107,58,.18);
+    }
+    .resultBox.is-locked #resultText{
+      position:relative;
+      padding-left:52px;
+    }
+    .resultBox.is-locked #resultText::before{
+      content:"🔒";
+      position:absolute;
+      left:16px;
+      top:16px;
+      font-size:22px;
     }
     .shareCard{
       display:flex;gap:12px;align-items:flex-start;

@@ -806,6 +806,19 @@
         width:100%;
       }
     }
+    @media (min-width: 641px){
+      .testUnlockBar{
+        display:none !important;
+      }
+      .resultBox.is-locked #unlockTestBtn{
+        width:100%;
+        justify-content:center;
+        margin-top:4px;
+      }
+      .resultBox:not(.is-locked) #unlockTestBtn{
+        display:none;
+      }
+    }
     .check{
       display:flex;gap:10px;align-items:flex-start;
       padding:14px 14px;
@@ -3399,6 +3412,15 @@ a.card.trustTile .pdrBoard{
         }
       });
     }
+    (function moveUnlockBtnToResultBox(){
+      if(!window.matchMedia || !window.matchMedia("(min-width: 641px)").matches){ return; }
+      const unlockBtn = document.getElementById("unlockTestBtn");
+      const resultText = document.getElementById("resultText");
+      const resultBox = document.querySelector(".resultBox");
+      if(!unlockBtn || !resultText || !resultBox){ return; }
+      if(resultBox.contains(unlockBtn)){ return; }
+      resultText.insertAdjacentElement("afterend", unlockBtn);
+    })();
 
     if(isShareMode){
       scrollToId("test");

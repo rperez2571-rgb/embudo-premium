@@ -788,6 +788,14 @@
     .testLocked .testUnlockBar{
       display:flex !important;
     }
+    #test:has(.resultBox.is-locked) .testUnlockBar{
+      display:flex !important;
+    }
+    @media (max-width: 520px){
+      #test:has(.resultBox.is-locked) .testUnlockBar{
+        display:flex !important;
+      }
+    }
     @media (max-width: 640px){
       .testUnlockBar{
         flex-direction:column;

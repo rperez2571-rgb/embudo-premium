@@ -899,6 +899,12 @@
       top:16px;
       font-size:22px;
     }
+    @media (max-width: 520px){
+      .resultBox.is-locked #resultText::before{
+        display:none !important;
+        content:none !important;
+      }
+    }
     .shareCard{
       display:flex;gap:12px;align-items:flex-start;
       padding:14px 16px;

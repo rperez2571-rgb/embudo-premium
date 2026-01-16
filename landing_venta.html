@@ -1369,6 +1369,15 @@
       object-fit:contain;
       display:block;
     }
+    #confianza .pdrIcon.has-real-logo{
+      width:80px;height:80px;
+    }
+    #confianza .pdrIcon.has-real-logo img{
+      width:100%;height:100%;
+      object-fit:contain;
+      display:block;
+    }
+    #confianza .pdrIcon.has-real-logo span{display:none;}
     .pdrTxt b{display:block;font-size:20px;letter-spacing:-.2px}
     .pdrTxt span{display:block;margin-top:4px;color:rgba(71,85,105,.9);font-size:14px;line-height:1.35}
     .pdrTxt em{display:block;margin-top:6px;color:rgba(71,85,105,.78);font-size:12.5px;font-style:normal;line-height:1.35}
@@ -1408,6 +1417,16 @@
       object-fit:contain;
       display:block;
     }
+    #confianza .certIcon.has-real-logo{
+      width:52px;height:52px;
+      padding:7px;
+    }
+    #confianza .certIcon.has-real-logo img{
+      width:100%;height:100%;
+      object-fit:contain;
+      display:block;
+    }
+    #confianza .certIcon.has-real-logo span{display:none;}
     .certTxt strong{display:block;font-size:11.5px;line-height:1.05;color:var(--text)}
     .certTxt span{display:block;margin-top:2px;font-size:10.5px;line-height:1.15;color:rgba(71,85,105,.72)}
 
@@ -1450,6 +1469,15 @@
       #confianza .trustBoard.certBoard{padding-inline:16px;}
       #confianza .certGrid{gap:12px;}
       #confianza .certBadge{width:100%;box-sizing:border-box;}
+    }
+    @media (min-width: 768px){
+      #confianza .pdrIcon.has-real-logo{
+        width:88px;height:88px;
+      }
+      #confianza .certIcon.has-real-logo{
+        width:60px;height:60px;
+        padding:8px;
+      }
     }
 
     #incluye .sectionTitle p{
@@ -2297,7 +2325,7 @@ a.card.trustTile .pdrBoard{
                 <div class="trustBoard pdrBoard">
                     <div class="pdrRow">
                       <div class="pdrIcon">
-                        <img src="assets/logos/pdr.svg" alt="PDR" loading="lazy" onerror="this.onerror=null;this.src=&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Crect width='80' height='80' rx='18' fill='%230b6b3a'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' font-family='Segoe UI,Arial' font-size='24' font-weight='700' fill='white'%3EPDR%3C/text%3E%3C/svg%3E&quot;;" />
+                        <img class="pdrLogo" src="assets/logos/pdr.svg" alt="PDR" loading="lazy" onerror="this.onerror=null;this.src=&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Crect width='80' height='80' rx='18' fill='%230b6b3a'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' font-family='Segoe UI,Arial' font-size='24' font-weight='700' fill='white'%3EPDR%3C/text%3E%3C/svg%3E&quot;;" />
                       </div>
                       <div class="pdrTxt">
                       <b>PDR</b>
@@ -2327,42 +2355,42 @@ a.card.trustTile .pdrBoard{
                   <div class="certGrid">
                     <div class="certBadge">
                       <div class="certIcon">
-                        <img src="assets/logos/nsf.svg" alt="NSF" loading="lazy" onerror="this.onerror=null;this.src=&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b6b3a'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' font-family='Segoe UI,Arial' font-size='18' font-weight='700' fill='white'%3ENSF%3C/text%3E%3C/svg%3E&quot;;" />
+                        <img class="certLogo" src="assets/logos/nsf.svg" alt="NSF" loading="lazy" onerror="this.onerror=null;this.src=&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b6b3a'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' font-family='Segoe UI,Arial' font-size='18' font-weight='700' fill='white'%3ENSF%3C/text%3E%3C/svg%3E&quot;;" />
                       </div>
                       <div class="certTxt"><strong>NSF</strong><span>Calidad y seguridad</span></div>
                     </div>
 
                     <div class="certBadge">
                       <div class="certIcon">
-                        <img src="assets/logos/cgmp.svg" alt="cGMP" loading="lazy" onerror="this.onerror=null;this.src=&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b6b3a'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' font-family='Segoe UI,Arial' font-size='16' font-weight='700' fill='white'%3EcGMP%3C/text%3E%3C/svg%3E&quot;;" />
+                        <img class="certLogo" src="assets/logos/cgmp.svg" alt="cGMP" loading="lazy" onerror="this.onerror=null;this.src=&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b6b3a'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' font-family='Segoe UI,Arial' font-size='16' font-weight='700' fill='white'%3EcGMP%3C/text%3E%3C/svg%3E&quot;;" />
                       </div>
                       <div class="certTxt"><strong>cGMP</strong><span>Buenas prácticas</span></div>
                     </div>
 
                     <div class="certBadge">
                       <div class="certIcon">
-                        <img src="assets/logos/iso9001.svg" alt="ISO-9001" loading="lazy" onerror="this.onerror=null;this.src=&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b6b3a'/%3E%3Ctext x='50%25' y='52%25' text-anchor='middle' font-family='Segoe UI,Arial' font-size='12' font-weight='700' fill='white'%3EISO%209001%3C/text%3E%3C/svg%3E&quot;;" />
+                        <img class="certLogo" src="assets/logos/iso9001.svg" alt="ISO-9001" loading="lazy" onerror="this.onerror=null;this.src=&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b6b3a'/%3E%3Ctext x='50%25' y='52%25' text-anchor='middle' font-family='Segoe UI,Arial' font-size='12' font-weight='700' fill='white'%3EISO%209001%3C/text%3E%3C/svg%3E&quot;;" />
                       </div>
                       <div class="certTxt"><strong>ISO‑9001</strong><span>Gestión de calidad</span></div>
                     </div>
 
                     <div class="certBadge">
                       <div class="certIcon">
-                        <img src="assets/logos/halal.svg" alt="Halal" loading="lazy" onerror="this.onerror=null;this.src=&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b6b3a'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' font-family='Segoe UI,Arial' font-size='16' font-weight='700' fill='white'%3EHalal%3C/text%3E%3C/svg%3E&quot;;" />
+                        <img class="certLogo" src="assets/logos/halal.svg" alt="Halal" loading="lazy" onerror="this.onerror=null;this.src=&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b6b3a'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' font-family='Segoe UI,Arial' font-size='16' font-weight='700' fill='white'%3EHalal%3C/text%3E%3C/svg%3E&quot;;" />
                       </div>
                       <div class="certTxt"><strong>Halal</strong><span>Certificación</span></div>
                     </div>
 
                     <div class="certBadge">
                       <div class="certIcon">
-                        <img src="assets/logos/kosher.svg" alt="Kosher" loading="lazy" onerror="this.onerror=null;this.src=&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b6b3a'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' font-family='Segoe UI,Arial' font-size='14' font-weight='700' fill='white'%3EKosher%3C/text%3E%3C/svg%3E&quot;;" />
+                        <img class="certLogo" src="assets/logos/kosher.svg" alt="Kosher" loading="lazy" onerror="this.onerror=null;this.src=&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b6b3a'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' font-family='Segoe UI,Arial' font-size='14' font-weight='700' fill='white'%3EKosher%3C/text%3E%3C/svg%3E&quot;;" />
                       </div>
                       <div class="certTxt"><strong>Kosher</strong><span>Certificación</span></div>
                     </div>
 
                     <div class="certBadge">
                       <div class="certIcon">
-                        <img src="assets/logos/tga.svg" alt="TGA" loading="lazy" onerror="this.onerror=null;this.src=&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b6b3a'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' font-family='Segoe UI,Arial' font-size='18' font-weight='700' fill='white'%3ETGA%3C/text%3E%3C/svg%3E&quot;;" />
+                        <img class="certLogo" src="assets/logos/tga.svg" alt="TGA" loading="lazy" onerror="this.onerror=null;this.src=&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b6b3a'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' font-family='Segoe UI,Arial' font-size='18' font-weight='700' fill='white'%3ETGA%3C/text%3E%3C/svg%3E&quot;;" />
                       </div>
                       <div class="certTxt"><strong>TGA</strong><span>Regulación</span></div>
                     </div>
@@ -2584,6 +2612,28 @@ a.card.trustTile .pdrBoard{
 
       // Si el archivo no existe todavía, dejamos el poster/overlay como fallback (sin romper el diseño).
       vid.addEventListener("error", ()=> {}, { once:true });
+    }
+
+    function updateTrustLogoState(img){
+      const src = (img.getAttribute("src") || "").trim();
+      const isReal = !!src && !src.startsWith("data:image");
+      img.classList.toggle("is-real", isReal);
+      const badge = img.closest(".certIcon, .pdrIcon") || img.parentElement;
+      if(badge){
+        badge.classList.toggle("has-real-logo", isReal);
+      }
+    }
+
+    function initTrustLogos(){
+      const logos = Array.from(document.querySelectorAll("#confianza img.certLogo, #confianza img.pdrLogo"));
+      logos.forEach((img)=>{
+        const run = ()=> setTimeout(()=> updateTrustLogoState(img), 0);
+        if(!img.complete){
+          img.addEventListener("load", run);
+          img.addEventListener("error", run);
+        }
+        run();
+      });
     }
 
 
@@ -3396,6 +3446,7 @@ a.card.trustTile .pdrBoard{
       }
     }
     initHeroVideo();
+    initTrustLogos();
 
     initAnimations();
     initGuaranteeModal();

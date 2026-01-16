@@ -757,6 +757,47 @@
     #testLockWrap.testLocked .testLockOverlay{display:none !important;}
     .checkList{display:grid;grid-template-columns:1fr 1fr;gap:10px}
     @media (max-width: 640px){.checkList{grid-template-columns:1fr}}
+    .testUnlockBar{
+      display:none;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:16px 18px;
+      margin:16px 0 18px;
+      border-radius:18px;
+      border:1px solid rgba(15,23,42,.12);
+      background: linear-gradient(135deg, rgba(15,23,42,.06), rgba(15,23,42,.02));
+      box-shadow: 0 14px 28px rgba(15,23,42,.08);
+    }
+    .testUnlockBar .unlockMsg{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:14.5px;
+      color: var(--muted2);
+      line-height:1.5;
+    }
+    .testUnlockBar .unlockMsg::before{
+      content:"🔒";
+      font-size:18px;
+    }
+    .testUnlockBar #unlockTestBtn{
+      margin:0;
+      align-self:center;
+    }
+    .testLocked .testUnlockBar{
+      display:flex !important;
+    }
+    @media (max-width: 640px){
+      .testUnlockBar{
+        flex-direction:column;
+        align-items:stretch;
+        text-align:left;
+      }
+      .testUnlockBar #unlockTestBtn{
+        width:100%;
+      }
+    }
     .check{
       display:flex;gap:10px;align-items:flex-start;
       padding:14px 14px;
@@ -772,27 +813,6 @@
     .resultBox{
       height:100%;
       display:flex;flex-direction:column;gap:10px;
-    }
-    .resultBox #unlockTestBtn{
-      align-self:flex-end;
-      margin-top:4px;
-    }
-    @media (max-width: 640px){
-      .resultBox #unlockTestBtn{width:100%}
-    }
-    @media (max-width: 520px){
-      #testLockWrap.testLocked{
-        padding-top:72px;
-      }
-      #testLockWrap.testLocked #unlockTestBtn{
-        position:fixed;
-        top:12px;
-        left:16px;
-        right:16px;
-        z-index:9999;
-        margin:0;
-        align-self:stretch;
-      }
     }
     .score{
       display:flex;align-items:center;justify-content:space-between;gap:10px;
@@ -855,11 +875,6 @@
       background: rgba(11,107,58,.18);
     }
     .resultBox.is-locked{
-      pointer-events:auto;
-    }
-    .resultBox.is-locked #unlockTestBtn{
-      position:relative;
-      z-index:10;
       pointer-events:auto;
     }
     .resultBox.is-locked #resultText{
@@ -2073,6 +2088,11 @@ a.card.trustTile .pdrBoard{
           <p>Marca lo que te pasa con frecuencia. No es diagnóstico: es una guía para conversar y decidir tu siguiente paso.</p>
         </div>
 
+        <div class="testUnlockBar">
+          <span class="unlockMsg">Desbloquea el test para ver tu resultado.</span>
+          <button class="btn btnPrimary" type="button" id="unlockTestBtn">Desbloquear test</button>
+        </div>
+
         <div class="testLockWrap" id="testLockWrap">
           <div class="testLockOverlay" id="testLockOverlay">
             🔒 <span>Para ver tu resultado y usar el test, completa Nombre, Email y Teléfono (1 minuto).</span>
@@ -2113,7 +2133,6 @@ a.card.trustTile .pdrBoard{
               <div style="width:100%;background:var(--surface);border-radius:999px;height:8px;overflow:hidden;margin-top:6px;border:1px solid var(--border)">
                 <div id="scoreBar" style="height:100%;width:0%;background:var(--success);transition:width .18s ease"></div>
               </div>
-              <button class="btn btnPrimary" type="button" id="unlockTestBtn">Desbloquear test</button>
 
               <div class="resultText" id="resultText">
                 Para ver tu resultado y usar el test, completa Nombre, Email y Teléfono (1 minuto).

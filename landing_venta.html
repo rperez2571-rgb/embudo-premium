@@ -723,6 +723,15 @@
       border-radius:999px;
       font-size:14px;
     }
+    .testLockOverlay span{
+      color:rgba(255,255,255,.92);
+      font-weight:600;
+    }
+    .testLockOverlay .btn,
+    .testLockOverlay button,
+    .testLockOverlay a{
+      white-space:nowrap;
+    }
     .testLockOverlay.is-hidden{display:none;}
     @media (max-width: 520px){
       .testLockOverlay{
@@ -752,6 +761,12 @@
         line-height:1.55;
       }
       .testLockOverlay .btn{
+        width:100%;
+        text-align:center;
+      }
+      .testLockOverlay .btn,
+      .testLockOverlay button,
+      .testLockOverlay a{
         width:100%;
         text-align:center;
       }
@@ -1903,6 +1918,36 @@ a.card.trustTile .trustBoard.pdrBoard,
 a.card.trustTile .pdrBoard{
   background: rgba(255,255,255,.09) !important;
   border-color: rgba(127,227,179,.26) !important;
+}
+
+/* FIX LOCK UI — override only (no deletions) */
+.testLockOverlay{
+  display:flex !important;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:14px 16px;
+  border-radius:18px;
+  background:rgba(11,107,58,.20) !important;
+  color:#fff;
+  font-weight:700;
+  line-height:1.45;
+}
+.testLockOverlay span{ color:rgba(255,255,255,.92); font-weight:600; }
+.testLockOverlay .btn, .testLockOverlay button, .testLockOverlay a{ white-space:nowrap; }
+
+@media (max-width:480px){
+  .testLockOverlay{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:10px;
+    font-size:clamp(14px,4.2vw,15px);
+    line-height:1.4;
+  }
+  .testLockOverlay .btn, .testLockOverlay button, .testLockOverlay a{
+    width:100%;
+    text-align:center;
+  }
 }
 </style>
 

@@ -1054,7 +1054,6 @@
     }
 
     /* PDR legible (el tile usa b/span, no h3/p) */
-    #confianza .pdrTxt b{color:#0B1220 !important;font-size:20px !important;letter-spacing:-.2px !important;}
     #confianza .pdrTxt span{color:#0F172A !important; opacity:1 !important;font-size:15px !important;line-height:1.4 !important;font-weight:600 !important;}
     #confianza .pdrTxt em{color:#0F172A !important; opacity:1 !important;font-size:13.5px !important;line-height:1.4 !important;font-weight:600 !important;}
     #confianza .trustBoard .hintLine{color:#1F2937 !important; opacity:1 !important;font-size:13px !important;}
@@ -1094,13 +1093,20 @@
       display: block !important;
     }
 
+    #confianza .pdrIcon img{
+      width:100% !important;
+      height:100% !important;
+      object-fit:contain !important;
+      display:block !important;
+    }
+
     #confianza .certBadge {
       overflow: hidden !important;
     }
 
     /* PDR */
     .pdrBoard{justify-content:center; gap:10px;}
-    .pdrRow{display:flex;align-items:center;gap:10px}
+    .pdrRow{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
     .pdrIcon{
       width:64px;height:64px;border-radius:18px;
       background: rgba(22,163,74,.18);
@@ -1108,6 +1114,7 @@
       display:flex;align-items:center;justify-content:center;
       box-shadow: 0 14px 26px rgba(15,23,42,.12);
       flex:0 0 auto;
+      overflow:hidden;
     }
     #confianza .pdrIcon{
       background: rgba(22,163,74,.24);
@@ -1117,8 +1124,7 @@
         0 16px 28px rgba(15,23,42,.18);
     }
     .pdrIcon svg{width:34px;height:34px;fill:none;stroke:rgba(22,163,74,.98);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-    .pdrTxt b{display:block;font-size:20px;letter-spacing:-.2px}
-    .pdrTxt span{display:block;margin-top:4px;color:rgba(71,85,105,.9);font-size:14px;line-height:1.35}
+    .pdrTxt span{display:block;color:rgba(71,85,105,.9);font-size:14px;line-height:1.35}
     .pdrTxt em{display:block;margin-top:6px;color:rgba(71,85,105,.78);font-size:12.5px;font-style:normal;line-height:1.35}
 
     /* Certificaciones */
@@ -2050,16 +2056,9 @@ a.card.trustTile .pdrBoard{
                 <div class="trustBoard pdrBoard">
                   <div class="pdrRow">
                     <div class="pdrIcon" aria-hidden="true">
-                      <svg viewBox="0 0 24 24">
-                        <path d="M6 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 0-2 0V4z"/>
-                        <path d="M6 4v16"/>
-                        <path d="M9 8h7"/>
-                        <path d="M9 12h7"/>
-                        <path d="M9 16h5"/>
-                      </svg>
+                      <img src="assets/pdr.png" alt="" />
                     </div>
                     <div class="pdrTxt">
-                      <b>PDR</b>
                       <span>Prescribers’ Digital Reference</span>
                                           </div>
                   </div>
@@ -2067,8 +2066,7 @@ a.card.trustTile .pdrBoard{
                 </div>
               </div>
                           <div class="trustCap">
-                <strong>PDR</strong>
-                <span>Referencia consultada por profesionales (material informativo).</span>
+                <span>Referencia consultada por profesionales de la salud.</span>
               </div>
 </a>
 

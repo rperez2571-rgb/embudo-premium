@@ -1154,6 +1154,16 @@
       #confianza .certTxt{min-width:0;}
     }
 
+    @media (max-width: 420px){
+      #confianza .certGrid{grid-template-columns:1fr;}
+      #confianza .certBadge,
+      #confianza .certBadge *,
+      #confianza .certTxt{
+        min-width:0;
+        box-sizing:border-box;
+      }
+    }
+
     @media (max-width: 980px){
       /* HOTFIX MÓVIL (WA/Safari): evitar desktop comprimido */
       #confianza{overflow-x:hidden;overflow-y:visible;}

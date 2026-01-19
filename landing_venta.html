@@ -1084,6 +1084,20 @@
       opacity:1 !important;
     }
 
+    /* PDR logo fit fix */
+    #confianza .certBadge img,
+    #confianza .certBadge .badgeImg,
+    #confianza .certBadge .logoImg {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: contain !important;   /* evita recorte, respeta proporción */
+      display: block !important;
+    }
+
+    #confianza .certBadge {
+      overflow: hidden !important;
+    }
+
     /* PDR */
     .pdrBoard{justify-content:center; gap:10px;}
     .pdrRow{display:flex;align-items:center;gap:10px}

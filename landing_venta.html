@@ -1790,7 +1790,25 @@ a.card.trustTile .pdrBoard{
               const cityEl = document.getElementById("city");
               const emailEl = document.getElementById("email");
               const phoneEl = document.getElementById("phone");
-              const testSection = document.getElementById("test");
+              const findTestTarget = () => {
+                const headings = Array.from(document.querySelectorAll("h1,h2,h3,h4,h5,h6"));
+                const metabHeading = headings.find((heading) =>
+                  heading.textContent?.toLowerCase().includes("test metabólico")
+                );
+                if (metabHeading) {
+                  return (
+                    metabHeading.closest("section") ||
+                    metabHeading.closest("div") ||
+                    metabHeading
+                  );
+                }
+
+                return (
+                  document.getElementById("metabTest") ||
+                  document.getElementById("testMetabolico") ||
+                  document.getElementById("test")
+                );
+              };
 
               const sanitize = (value, limit) => {
                 const v = (value || "").toString().trim();
@@ -1850,7 +1868,14 @@ a.card.trustTile .pdrBoard{
                   );
                 } catch (_) {}
 
-                setMsg("✅ Guardado. Bajando al test…", false);
+                let storedLead = "";
+                try {
+                  storedLead = localStorage.getItem("bn_lead") || "";
+                } catch (_) {}
+
+                if (storedLead) {
+                  setMsg("✅ Guardado. Bajando al test…", false);
+                }
 
                 try {
                   const body = {
@@ -1869,9 +1894,15 @@ a.card.trustTile .pdrBoard{
                   await resp.json().catch(() => null);
                 } catch (_) {}
 
-                if (testSection) {
-                  testSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                const testTarget = findTestTarget();
+                if (testTarget) {
+                  testTarget.scrollIntoView({ behavior: "smooth", block: "start" });
+                  return;
                 }
+
+                const fallbackScroll = Math.round(document.documentElement.scrollHeight * 0.4);
+                window.scrollTo({ top: fallbackScroll, behavior: "smooth" });
+                setMsg("✅ Guardado. Baja un poco para ver el test.", false);
               };
 
               btn.addEventListener("click", (e) => {

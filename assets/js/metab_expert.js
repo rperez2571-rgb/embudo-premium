@@ -67,6 +67,56 @@
     return normalizeName(fullName);
   }
 
+  function countryGuessFromPhone(phoneDigits) {
+    const digits = cleanValue(phoneDigits).replace(/\D/g, "");
+    if (!digits) {
+      return "País no identificado";
+    }
+    if (digits.startsWith("52")) {
+      return "México (+52)";
+    }
+    if (digits.startsWith("1")) {
+      return "USA/PR (+1)";
+    }
+    if (digits.startsWith("57")) {
+      return "Colombia (+57)";
+    }
+    if (digits.startsWith("34")) {
+      return "España (+34)";
+    }
+    if (digits.startsWith("54")) {
+      return "Argentina (+54)";
+    }
+    if (digits.startsWith("56")) {
+      return "Chile (+56)";
+    }
+    if (digits.startsWith("51")) {
+      return "Perú (+51)";
+    }
+    if (digits.startsWith("58")) {
+      return "Venezuela (+58)";
+    }
+    return "LatAm";
+  }
+
+  function buildWhatsAppLeadHeader(lead) {
+    const safeLead = lead && typeof lead === "object" ? lead : {};
+    const fullName = buildFullNameFromLead(safeLead) || "Sin nombre";
+    const city =
+      cleanValue(
+        safeLead.city ||
+          safeLead.ciudad ||
+          safeLead.area ||
+          safeLead.region ||
+          safeLead.location
+      ) || "Sin ciudad";
+    const phone = cleanValue(
+      safeLead.phone || safeLead.telefono || safeLead.phoneNumber || safeLead.phone_number
+    );
+    const country = countryGuessFromPhone(phone);
+    return `METABOLISMO | ${fullName} | ${city} | ${country}`;
+  }
+
   function getLeadFresh() {
     const { lead, keyUsed } = getStoredLead();
     let fullName = buildFullNameFromLead(lead);
@@ -326,6 +376,7 @@
       (event) => {
         event.preventDefault();
         event.stopImmediatePropagation();
+        const { lead: storedLead } = getStoredLead();
         const lead = getLeadFresh();
         maybeRenderDebugInfo(lead);
         if (lead.missing.length) {
@@ -334,7 +385,11 @@
           return;
         }
         const text = applyExpertResult() || buildResultText();
-        const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
+        const headerLine = buildWhatsAppLeadHeader(
+          storedLead || { fullName: lead.fullName }
+        );
+        const message = `${headerLine}\n\n${text}`;
+        const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
         window.open(url, "_blank", "noopener");
       },
       true

@@ -2,7 +2,6 @@
   window.__metabExpertFinal = "v11";
 
   const NAME_MIN_WORDS = 2;
-  const RESULT_REFRESH_DELAY_MS = 9000;
   const MAX_SYMPTOMS = 4;
   const WA_NUMBER = "17872321516";
 
@@ -30,44 +29,68 @@
     const fullNameInput = $("#nombreCompleto") || $("#fullName") || $("input[name=nombreCompleto]") || $("input[name=fullName]");
     const nombreInput = $("#nombre") || $("input[name=nombre]");
     const apellidoInput = $("#apellido") || $("input[name=apellido]");
-    const emailInput = $("#email") || $("input[name=email]");
-    const phoneInput =
-      $("#phone") ||
-      $("input[name=phone]") ||
-      $("input[name=tel]") ||
-      $("input[name=telefono]") ||
-      $("input[type=tel]");
-
-    return { fullNameInput, nombreInput, apellidoInput, emailInput, phoneInput };
+    return { fullNameInput, nombreInput, apellidoInput };
   }
 
-  function getLeadData() {
-    const { fullNameInput, nombreInput, apellidoInput, emailInput, phoneInput } = getLeadInputs();
-    let fullName = normalizeName(fullNameInput && fullNameInput.value);
-
-    if (!nameHasSurname(fullName)) {
-      const nombre = normalizeName(nombreInput && nombreInput.value);
-      const apellido = normalizeName(apellidoInput && apellidoInput.value);
-      if (nombre && apellido) {
-        fullName = normalizeName(`${nombre} ${apellido}`);
+  function getStoredLead() {
+    const keys = ["bn_lead", "bnLead", "lead"];
+    for (const key of keys) {
+      let stored = "";
+      try {
+        stored = localStorage.getItem(key) || "";
+      } catch (_) {
+        stored = "";
+      }
+      if (!stored) {
+        continue;
+      }
+      try {
+        const parsed = JSON.parse(stored);
+        if (parsed && typeof parsed === "object") {
+          return { lead: parsed, keyUsed: key };
+        }
+      } catch (_) {
+        continue;
       }
     }
+    return { lead: null, keyUsed: "" };
+  }
 
-    const email = cleanValue(emailInput && emailInput.value);
-    const phone = cleanValue(phoneInput && phoneInput.value);
+  function buildFullNameFromLead(lead) {
+    if (!lead || typeof lead !== "object") {
+      return "";
+    }
+    let fullName = lead.fullName || lead.name || lead.nombreCompleto || lead.full_name || "";
+    if (!nameHasSurname(fullName) && lead.nombre && lead.apellido) {
+      fullName = `${lead.nombre} ${lead.apellido}`;
+    }
+    return normalizeName(fullName);
+  }
+
+  function getLeadFresh() {
+    const { lead, keyUsed } = getStoredLead();
+    let fullName = buildFullNameFromLead(lead);
+
+    if (!nameHasSurname(fullName)) {
+      const { fullNameInput, nombreInput, apellidoInput } = getLeadInputs();
+      const inputFullName = normalizeName(fullNameInput && fullNameInput.value);
+      if (nameHasSurname(inputFullName)) {
+        fullName = inputFullName;
+      } else {
+        const nombre = normalizeName(nombreInput && nombreInput.value);
+        const apellido = normalizeName(apellidoInput && apellidoInput.value);
+        if (nombre && apellido) {
+          fullName = normalizeName(`${nombre} ${apellido}`);
+        }
+      }
+    }
 
     const missing = [];
     if (!nameHasSurname(fullName)) {
       missing.push("Nombre y apellido");
     }
-    if (!email) {
-      missing.push("Email");
-    }
-    if (!phone) {
-      missing.push("Teléfono");
-    }
 
-    return { fullName, email, phone, missing };
+    return { fullName, missing, keyUsed };
   }
 
   function getScore() {
@@ -131,7 +154,7 @@
   }
 
   function buildResultText() {
-    const { fullName } = getLeadData();
+    const { fullName } = getLeadFresh();
     const score = getScore();
     const level = levelForScore(score);
     const symptoms = getSymptoms();
@@ -185,11 +208,10 @@
   function showGatingMessage(missing) {
     const message = `Para darte tu resultado necesitas completar: ${missing.join(", ")}.`;
     setResultText(message);
-    window.lastResultText = "";
   }
 
   function applyExpertResult() {
-    const lead = getLeadData();
+    const lead = getLeadFresh();
     if (lead.missing.length) {
       showGatingMessage(lead.missing);
       return "";
@@ -200,9 +222,36 @@
     return text;
   }
 
-  function ensureResultOverride() {
-    applyExpertResult();
-    setTimeout(() => applyExpertResult(), RESULT_REFRESH_DELAY_MS);
+  function getResultPanel() {
+    const resultTarget = $("#lastResultText") || $("#resultText");
+    if (resultTarget) {
+      return resultTarget.parentElement || resultTarget;
+    }
+    return $(".resultBox") || $("#resultBox");
+  }
+
+  function maybeRenderDebugInfo(lead) {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("debug") !== "1") {
+      return;
+    }
+    const panel = getResultPanel();
+    if (!panel) {
+      return;
+    }
+    let debugEl = panel.querySelector(".metab-debug-lead");
+    if (!debugEl) {
+      debugEl = document.createElement("div");
+      debugEl.className = "metab-debug-lead";
+      debugEl.style.marginBottom = "8px";
+      debugEl.style.fontSize = "13px";
+      debugEl.style.opacity = "0.8";
+      panel.insertBefore(debugEl, panel.firstChild);
+    }
+    const marker = window.__metabExpertFinal || "unknown";
+    const nameForDebug = lead.fullName || "N/A";
+    const keyUsed = lead.keyUsed || "none";
+    debugEl.textContent = `Lead detectado: ${nameForDebug} | key usada: ${keyUsed} | v: ${marker}`;
   }
 
   function interceptResultButton() {
@@ -214,14 +263,15 @@
     button.addEventListener(
       "click",
       (event) => {
-        const lead = getLeadData();
+        const lead = getLeadFresh();
+        maybeRenderDebugInfo(lead);
         if (lead.missing.length) {
           event.preventDefault();
           event.stopImmediatePropagation();
           showGatingMessage(lead.missing);
           return;
         }
-        setTimeout(() => ensureResultOverride(), 150);
+        applyExpertResult();
       },
       true
     );
@@ -238,7 +288,8 @@
       (event) => {
         event.preventDefault();
         event.stopImmediatePropagation();
-        const lead = getLeadData();
+        const lead = getLeadFresh();
+        maybeRenderDebugInfo(lead);
         if (lead.missing.length) {
           alert(`Falta completar: ${lead.missing.join(", ")}.`);
           showGatingMessage(lead.missing);
@@ -259,7 +310,8 @@
     }
 
     const observer = new MutationObserver(() => {
-      const lead = getLeadData();
+      const lead = getLeadFresh();
+      maybeRenderDebugInfo(lead);
       if (lead.missing.length) {
         return;
       }

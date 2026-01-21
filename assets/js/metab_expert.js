@@ -123,34 +123,64 @@
 
   function levelForScore(score) {
     if (score <= 2) {
-      return { label: "Leve", descriptor: "señales leves" };
+      return {
+        label: "Nivel Bajo",
+        meaning:
+          "Tus señales actuales sugieren que tu metabolismo está respondiendo bastante bien. Aun así, pequeños hábitos diarios pueden sumar o restar energía, apetito y claridad mental.",
+        risk:
+          "Si se ignora, podrías normalizar molestias sutiles (antojos, bajones de energía) que con el tiempo impactan en peso, sueño y rendimiento.",
+        plan: [
+          "Hidrátate temprano y suma 20-30 g de proteína en el desayuno.",
+          "Camina 10-15 min después de la comida principal.",
+          "Reduce azúcar líquida 72h (jugos, refrescos, café con azúcar).",
+        ],
+      };
     }
-    if (score <= 5) {
-      return { label: "Moderado", descriptor: "señales moderadas" };
+    if (score <= 6) {
+      return {
+        label: "Nivel Intermedio",
+        meaning:
+          "Hay señales de que tu metabolismo podría estar trabajando de más para mantener el equilibrio. Con ajustes simples, suele mejorar cómo te sientes día a día.",
+        risk:
+          "Si se ignora, los picos de hambre, fatiga o inflamación pueden volverse más frecuentes y afectar tu composición corporal.",
+        plan: [
+          "Ordena tus comidas: primero proteína/vegetales, luego carbohidratos.",
+          "Suma 1 porción extra de fibra/día (legumbres o verduras).",
+          "Mueve el cuerpo 20 min diarios (caminar rápido o fuerza ligera).",
+        ],
+      };
     }
-    if (score <= 7) {
-      return { label: "Alto", descriptor: "señales altas" };
-    }
-    return { label: "Muy alto", descriptor: "señales muy altas" };
+    return {
+      label: "Nivel Alto",
+      meaning:
+        "Tus respuestas sugieren señales claras de desbalance metabólico. Esto no es diagnóstico, pero sí una alerta útil para priorizar hábitos y seguimiento.",
+      risk:
+        "Si se ignora, podría aumentar el riesgo de resistencia a la insulina, aumento de grasa abdominal y cansancio persistente.",
+      plan: [
+        "Prioriza proteína magra + verduras en cada comida por 72h.",
+        "Corta ultraprocesados y harinas refinadas por 3 días.",
+        "Duerme 7-8 h y evita pantallas 60 min antes de dormir.",
+      ],
+    };
   }
 
   function buildMediterraneanBullets() {
     return [
-      "Base vegetal: verduras en cada comida, legumbres 3-4 veces/semana y fruta entera diaria.",
-      "Grasas saludables: aceite de oliva extra virgen, aguacate, nueces y semillas.",
-      "Proteína limpia: pescado 2-3 veces/semana, huevo y yogur natural; limitar carnes procesadas.",
-      "Carbohidrato inteligente: integrales y porciones moderadas, priorizando fibra y saciedad.",
+      "Vegetales en cada comida y fruta entera diaria.",
+      "Legumbres 3-4 veces por semana.",
+      "Granos integrales (avena, quinoa, arroz integral).",
+      "Aceite de oliva extra virgen y nueces como grasas principales.",
+      "Limitar ultraprocesados y azúcares añadidos.",
     ];
   }
 
-  function buildClinicalSuggestions(score) {
-    const tests = ["Glucosa en ayunas", "Insulina en ayunas", "HbA1c"];
-    if (score >= 6) {
-      tests.push("HOMA-IR (si aplica)");
-    } else {
-      tests.push("HOMA-IR (si aplica)");
-    }
-    return tests;
+  function buildClinicalSuggestions() {
+    return [
+      "HbA1c (A1C)",
+      "Glucosa en ayunas",
+      "Curva de tolerancia a la glucosa 2h (OGTT)",
+      "Lípidos (opcional)",
+    ];
   }
 
   function buildResultText() {
@@ -159,7 +189,7 @@
     const level = levelForScore(score);
     const symptoms = getSymptoms();
     const mediterranean = buildMediterraneanBullets();
-    const clinical = buildClinicalSuggestions(score);
+    const clinical = buildClinicalSuggestions();
 
     const symptomsText = symptoms.length
       ? symptoms.map((s) => `- ${s}`).join("\n")
@@ -171,20 +201,28 @@
     return [
       `Hola ${fullName},`,
       "",
-      `Nivel: ${level.label} (${level.descriptor}). Puntuación: ${score}. (Educativo, no diagnóstico).`,
+      `${level.label}. Puntuación: ${score}. (Educativo, no diagnóstico).`,
       "",
       "Lo que marcaste:",
       symptomsText,
       "",
-      "Recomendación estilo Mediterráneo (Harvard):",
+      "Qué significa:",
+      level.meaning,
+      "",
+      "Riesgo si se ignora:",
+      level.risk,
+      "",
+      "Plan práctico 72h:",
+      level.plan.map((item) => `- ${item}`).join("\n"),
+      "",
+      "Mediterráneo (Harvard):",
       mediterraneanText,
       "",
-      "Sugerencia clínica (educativo):",
+      "Habla con tu médico sobre labs:",
       clinicalText,
       "",
-      "Responde METABOLISMO",
-      "",
       "Educativo, no diagnóstico, no sustituye evaluación médica personalizada.",
+      "Compártelo con 2 personas que quieran mejorar su salud metabólica.",
     ].join("\n");
   }
 

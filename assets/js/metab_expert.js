@@ -67,39 +67,32 @@
     return normalizeName(fullName);
   }
 
-  function countryGuessFromPhone(phoneDigits) {
+  function getPhonePrefix(phoneDigits) {
     const digits = cleanValue(phoneDigits).replace(/\D/g, "");
     if (!digits) {
-      return "País no identificado";
+      return "N/D";
     }
     if (digits.startsWith("52")) {
-      return "México (+52)";
+      return "+52";
     }
     if (digits.startsWith("1")) {
-      return "USA/PR (+1)";
+      return "+1";
     }
-    if (digits.startsWith("57")) {
-      return "Colombia (+57)";
-    }
-    if (digits.startsWith("34")) {
-      return "España (+34)";
-    }
-    if (digits.startsWith("54")) {
-      return "Argentina (+54)";
-    }
-    if (digits.startsWith("56")) {
-      return "Chile (+56)";
-    }
-    if (digits.startsWith("51")) {
-      return "Perú (+51)";
-    }
-    if (digits.startsWith("58")) {
-      return "Venezuela (+58)";
-    }
-    return "LatAm";
+    return "N/D";
   }
 
-  function buildWhatsAppLeadHeader(lead) {
+  function countryGuessFromPhone(phoneDigits) {
+    const prefix = getPhonePrefix(phoneDigits);
+    if (prefix === "+52") {
+      return { country: "MX", prefix };
+    }
+    if (prefix === "+1") {
+      return { country: "PR/USA", prefix };
+    }
+    return { country: "N/D", prefix: "N/D" };
+  }
+
+  function buildWhatsAppLeadHeader(lead, levelLabel, score) {
     const safeLead = lead && typeof lead === "object" ? lead : {};
     const fullName = buildFullNameFromLead(safeLead) || "Sin nombre";
     const city =
@@ -113,8 +106,11 @@
     const phone = cleanValue(
       safeLead.phone || safeLead.telefono || safeLead.phoneNumber || safeLead.phone_number
     );
-    const country = countryGuessFromPhone(phone);
-    return `METABOLISMO | ${fullName} | ${city} | ${country}`;
+    const email = cleanValue(safeLead.email || safeLead.correo || safeLead.mail);
+    const countryInfo = countryGuessFromPhone(phone);
+    return `LEAD | ${fullName} | ${city} | ${countryInfo.country} (${countryInfo.prefix}) | ${
+      phone || "Sin teléfono"
+    } | ${email || "Sin email"} | ${levelLabel} (${score}/10)`;
   }
 
   function getLeadFresh() {
@@ -276,6 +272,50 @@
     ].join("\n");
   }
 
+  function buildWhatsAppBody() {
+    const score = getScore();
+    const level = levelForScore(score);
+    const symptoms = getSymptoms();
+    const mediterranean = buildMediterraneanBullets();
+    const clinical = buildClinicalSuggestions();
+
+    const symptomsText = symptoms.length
+      ? symptoms.map((s) => `- ${s}`).join("\n")
+      : "- No marcaste síntomas en esta pasada.";
+
+    const mediterraneanText = mediterranean.map((b) => `• ${b}`).join("\n");
+    const clinicalText = clinical.map((t) => `- ${t}`).join("\n");
+
+    return {
+      score,
+      levelLabel: level.label,
+      text: [
+        `${level.label}. Puntuación: ${score}/10. (Educativo, no diagnóstico).`,
+        "",
+        "Lo que marcaste:",
+        symptomsText,
+        "",
+        "Qué significa:",
+        level.meaning,
+        "",
+        "Riesgo si se ignora:",
+        level.risk,
+        "",
+        "Plan práctico 72h:",
+        level.plan.map((item) => `- ${item}`).join("\n"),
+        "",
+        "Mediterráneo (Harvard):",
+        mediterraneanText,
+        "",
+        "Habla con tu médico sobre labs:",
+        clinicalText,
+        "",
+        "Educativo, no diagnóstico, no sustituye evaluación médica personalizada.",
+        "Compártelo con 2 personas que quieran mejorar su salud metabólica.",
+      ].join("\n"),
+    };
+  }
+
   function setResultText(text) {
     const resultTarget = $("#lastResultText") || $("#resultText");
     if (resultTarget) {
@@ -384,10 +424,10 @@
           showGatingMessage(lead.missing);
           return;
         }
-        const text = applyExpertResult() || buildResultText();
-        const headerLine = buildWhatsAppLeadHeader(
-          storedLead || { fullName: lead.fullName }
-        );
+        applyExpertResult();
+        const { text, score, levelLabel } = buildWhatsAppBody();
+        const headerLead = { ...(storedLead || {}), fullName: lead.fullName };
+        const headerLine = buildWhatsAppLeadHeader(headerLead, levelLabel, score);
         const message = `${headerLine}\n\n${text}`;
         const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
         window.open(url, "_blank", "noopener");

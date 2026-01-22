@@ -1,0 +1,297 @@
+{
+  "generated_at_utc": "2026-01-22T15:39:53.126731+00:00",
+  "sources": {
+    "server_audit_tar": "bn_audit_20260122T143424Z.tar.gz",
+    "github_audit_tar": "embudo_github_audit_20260122T143529Z.tar.gz",
+    "chat_validated_json": "embudo_venta_resumen.json"
+  },
+  "server_private": {
+    "hostname": "vmi2602631.contaboserver.net",
+    "timestamp_utc": "2026-01-22T14:34:24Z",
+    "os_release": "PRETTY_NAME=\"Ubuntu 22.04.5 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"22.04\"\nVERSION=\"22.04.5 LTS (Jammy Jellyfish)\"\nVERSION_CODENAME=jammy\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=jammy",
+    "base_path": "/var/www/bariatrica_natural",
+    "domains_found_in_nginx_refs": [],
+    "key_files_by_type": {
+      "htaccess": [
+        "/var/www/bariatrica_natural/.htaccess",
+        "/var/www/bariatrica_natural/data/.htaccess",
+        "/var/www/bariatrica_natural/embudo-premium/.htaccess",
+        "/var/www/bariatrica_natural/embudo-premium/data/.htaccess"
+      ],
+      "docs": [
+        "/var/www/bariatrica_natural/README_DEPLOY.md",
+        "/var/www/bariatrica_natural/embudo-premium/README_DEPLOY.md"
+      ],
+      "php": [
+        "/var/www/bariatrica_natural/api/lead.php",
+        "/var/www/bariatrica_natural/embudo-premium/api/lead.php"
+      ],
+      "html": [
+        "/var/www/bariatrica_natural/embudo-premium/index.html",
+        "/var/www/bariatrica_natural/embudo-premium/landing_corporativa.html",
+        "/var/www/bariatrica_natural/embudo-premium/landing_venta.html",
+        "/var/www/bariatrica_natural/index.html",
+        "/var/www/bariatrica_natural/landing_corporativa.html",
+        "/var/www/bariatrica_natural/landing_venta.html"
+      ],
+      "js": [
+        "/var/www/bariatrica_natural/assets/js/metab_expert.js"
+      ]
+    },
+    "hashes_sha256": {
+      "/var/www/bariatrica_natural/.htaccess": "abfd4044cee525888679febe09e5d1aca91706df5d1de73c5417c0b00d8e8ec8",
+      "/var/www/bariatrica_natural/README_DEPLOY.md": "d2d695c4b0be8f75f43f18684040986d09dcdff6b2a9947bbccba381b2d12876",
+      "/var/www/bariatrica_natural/api/lead.php": "c9275e16e61d118aa76f69147d9ac0dd0dcb7f33c177a4de2f1cee1ab0a57afc",
+      "/var/www/bariatrica_natural/data/.htaccess": "47a9fdf520220e86fb5ce68c7a0f1b21e560b82f6ced90715c5b242149d7df9c",
+      "/var/www/bariatrica_natural/embudo-premium/.htaccess": "abfd4044cee525888679febe09e5d1aca91706df5d1de73c5417c0b00d8e8ec8",
+      "/var/www/bariatrica_natural/embudo-premium/README_DEPLOY.md": "d2d695c4b0be8f75f43f18684040986d09dcdff6b2a9947bbccba381b2d12876",
+      "/var/www/bariatrica_natural/embudo-premium/api/lead.php": "c9275e16e61d118aa76f69147d9ac0dd0dcb7f33c177a4de2f1cee1ab0a57afc",
+      "/var/www/bariatrica_natural/embudo-premium/data/.htaccess": "47a9fdf520220e86fb5ce68c7a0f1b21e560b82f6ced90715c5b242149d7df9c",
+      "/var/www/bariatrica_natural/embudo-premium/index.html": "4bfb052e59f93d63802183a8e2371146bae5493a8fcf6cd7d19ce61fe94099f4",
+      "/var/www/bariatrica_natural/embudo-premium/landing_corporativa.html": "4bfb052e59f93d63802183a8e2371146bae5493a8fcf6cd7d19ce61fe94099f4",
+      "/var/www/bariatrica_natural/embudo-premium/landing_venta.html": "9468b9dd41b9e84305ffda80caaa7300acdc5469a9a98211ca05a78b037a300b",
+      "/var/www/bariatrica_natural/index.html": "4bfb052e59f93d63802183a8e2371146bae5493a8fcf6cd7d19ce61fe94099f4",
+      "/var/www/bariatrica_natural/landing_corporativa.html": "4bfb052e59f93d63802183a8e2371146bae5493a8fcf6cd7d19ce61fe94099f4",
+      "/var/www/bariatrica_natural/landing_venta.html": "2aa960d7d57b915175620ddfea459fd7e02a392cbca94c00d8695cfba38403f9",
+      "/var/www/bariatrica_natural/assets/js/metab_expert.js": "655ec6e5253d1660e0295a678dc5a8842b69a550649d4f95853d94a39363c302"
+    },
+    "leads_csv_metadata": {},
+    "raw_files": {
+      "nginx_refs_txt_present": false,
+      "meta_txt_present": true,
+      "tree_maxdepth4_present": true
+    }
+  },
+  "github_repo_local_snapshot": {
+    "timestamp_utc": "",
+    "pwd": "",
+    "branch": "main",
+    "head": "aded3e2790429207b1fc6c27a95b13e4c04e61d1",
+    "remote": "origin\thttps://github.com/rperez2571-rgb/embudo-premium.git (fetch)\norigin\thttps://github.com/rperez2571-rgb/embudo-premium.git (push)",
+    "status": "## main...origin/main\n?? embudo-premium/\n?? landing_venta.html.bak_ui26_1767370913\n?? landing_venta.html.bak_ui27_1767371889",
+    "log_50": "aded3e2 Merge pull request #22 from rperez2571-rgb/ui-27-restore-unicity-borders\n282ea4d UI-27: restaurar bordes teal tabs Unicity (solo borde)\n82347a0 Merge pull request #21 from rperez2571-rgb/ui-26-remove-video-pill\n03a0ee9 UI-26: eliminar texto 'Testimonio en video más abajo' (mínimo)\n25b69eb Merge pull request #20 from rperez2571-rgb/ui-24-fix-kit-card\n68687c7 UI-24: fix definitivo SOLO cuadro 1 (kit) sin tocar los demás\n0d6585e Merge pull request #19 from rperez2571-rgb/ui-23-header-mexico\n5b86ad8 UI-23: header México + subtítulo más legible (mínimo)\nc5a84ec Merge pull request #18 from rperez2571-rgb/ui-18v2-focus-tabs-cards\n095c34e UI-18/19: foco tabs/cards + PDR legible + topbar centrada (CSS-only)\ne4d055c UI-18: foco tabs (btnGhost) + cards (trustTile) CSS-only\n2681664 Merge pull request #17 from rperez2571-rgb/ui-17-cta-mobile\n950b11c UI-17: fix spacing bullets + aire CTA (mobile) + favicon\n9c86616 Merge pull request #16 from rperez2571-rgb/hotfix-revert-pr8\naf60a2e Revert \"Ajustar bordes de botones en confianza (#8)\"\n742bf5e Ajustar bordes de botones en confianza (#8)\n641afb3 UI: tabs aro color premium siempre visible (#15)\n7069c24 UI: hotfix tabs bordes visibles (#14)\nb93af37 UI: bordes premium tabs (Ciencia/Historia/Oportunidad) (#13)\n52013aa UI: fix legibilidad residual + limpiar header video (#12)\na0f373a Merge pull request #11 from rperez2571-rgb/codex/update-typography-and-contrast-for-readability\n22a2a2a Improve landing typography and contrast\n4dfd7af Improve mobile readability and image handling (#9)\n89e3f3e VENTA: botón WhatsApp (texto corto) (#10)\n21fb604 VENTA: motion premium + tabs confianza + PDR legible (CSS-only (#7)\n021672c Add landing variants: venta + corporativa (robot intacto)\n6a84414 Resolve merge: keep landing version (ours)\n9351c3e Landing final: video + confianza legible 40+; WhatsApp verde; CTA naranja; robot intacto\n14401fc Subo index.html\ncd21cd1 Subo assets\n76399de Create .gitkeep",
+    "branches": "hotfix-revert-pr8             af60a2e [origin/hotfix-revert-pr8] Revert \"Ajustar bordes de botones en confianza (#8)\"\n* main                          aded3e2 [origin/main] Merge pull request #22 from rperez2571-rgb/ui-27-restore-unicity-borders\n  ui-17-cta-mobile              950b11c [origin/ui-17-cta-mobile] UI-17: fix spacing bullets + aire CTA (mobile) + favicon\n  ui-18-tabs-cards-modern       2681664 Merge pull request #17 from rperez2571-rgb/ui-17-cta-mobile\n  ui-20-bullets-contrast        c5a84ec Merge pull request #18 from rperez2571-rgb/ui-18v2-focus-tabs-cards\n  ui-21-bullet-vertical-center  c5a84ec Merge pull request #18 from rperez2571-rgb/ui-18v2-focus-tabs-cards\n  ui-24-fix-kit-card            68687c7 [origin/ui-24-fix-kit-card] UI-24: fix definitivo SOLO cuadro 1 (kit) sin tocar los demás\n  ui-25-tabs-teal-borders       a4a9965 [origin/ui-25-tabs-teal-borders] UI-25: bordes teal en tabs Unicity (solo borde)\n  ui-25-unicity-tab-borders     25b69eb Merge pull request #20 from rperez2571-rgb/ui-24-fix-kit-card\n  ui-25v2-unicity-tab-borders   25b69eb Merge pull request #20 from rperez2571-rgb/ui-24-fix-kit-card\n  ui-25v3-tab-borders-synergy   25b69eb Merge pull request #20 from rperez2571-rgb/ui-24-fix-kit-card\n  ui-27-restore-unicity-borders 282ea4d [origin/ui-27-restore-unicity-borders] UI-27: restaurar bordes teal tabs Unicity (solo borde)\n  work                          6c18843 [origin/work: gone] VENTA: motion stack product_stack + contraste #confianza (CSS-only, robot intacto)"
+  },
+  "chat_validated_work": {
+    "project": {
+      "name": "Embudo de Venta (embudo-premium)",
+      "repo_owner": "rperez2571-rgb",
+      "repo_name": "embudo-premium",
+      "repo_url": "https://github.com/rperez2571-rgb/embudo-premium",
+      "default_branch": "main",
+      "generated_at_utc": "2026-01-22T13:49:01.241212+00:00",
+      "scope_note": "Este JSON resume lo confirmado en este chat (PRs/commits vistos en screenshots y outputs). Para el estado actual exacto, verificar en GitHub."
+    },
+    "governance": {
+      "branch_protection_main": {
+        "require_pull_request_before_merging": true,
+        "required_approvals": 1,
+        "require_conversation_resolution": true,
+        "notes": [
+          "Se configuró para que cada cambio a main pase por PR y requiera 1 aprobación.",
+          "Se utilizó un aprobador separado (enrique9469-spec) para cumplir el requisito de aprobación."
+        ]
+      },
+      "workflow": {
+        "pattern": "Codex task -> PR -> Approver review (enrique9469-spec) -> Merge to main -> git pull local -> QA visual",
+        "local_preview": {
+          "command": "python3 -m http.server 8080 --bind 127.0.0.1",
+          "url": "http://127.0.0.1:8080/landing_venta.html",
+          "cache_bust_tip": "Cmd+Shift+R (hard refresh) o añadir ?v=1234 al final del URL"
+        }
+      }
+    },
+    "collaborators": {
+      "owner": {
+        "username": "rperez2571-rgb",
+        "role": "owner"
+      },
+      "approver": {
+        "username": "enrique9469-spec",
+        "purpose": "Aprobador de PRs (required approvals=1)",
+        "permissions_expected": "write",
+        "email_used_for_invite": "enrique.9469@gmail.com",
+        "notes": [
+          "Se inició invitación por email que quedó 'Pending' y se resolvió invitando por username.",
+          "La cuenta aprobadora confirmó acceso (push access) y pudo emitir 'Approve' en PRs."
+        ]
+      }
+    },
+    "merged_pull_requests": [
+      {
+        "pr": 10,
+        "title": "VENTA: botón WhatsApp (texto corto)",
+        "status": "merged",
+        "merge_commit_sha": "89e3f3e",
+        "files_changed": [
+          "landing_venta.html"
+        ],
+        "change_summary": "Cambió texto del botón de 'Prefiero WhatsApp' a 'WhatsApp'.",
+        "diff_stats": {
+          "insertions": 1,
+          "deletions": 1
+        },
+        "merged_by": "rperez2571-rgb (según pantalla de PR/terminal en el chat)"
+      },
+      {
+        "pr": 9,
+        "title": "UI: legibilidad + imágenes mobile (CSS-only)",
+        "status": "merged",
+        "merge_commit_sha": "4dfd7af",
+        "files_changed": [
+          "landing_venta.html"
+        ],
+        "change_summary": "Mejoras móviles: manejo de imágenes responsive + ajustes de focus-visible y legibilidad en pantallas pequeñas.",
+        "diff_stats": {
+          "insertions": 67,
+          "deletions": 9
+        },
+        "merged_by": "no capturado con certeza en el chat (merge confirmado por commit en main)"
+      },
+      {
+        "pr": 11,
+        "title": "UI: tipografía 40+ + contraste (lectura fácil)",
+        "status": "merged",
+        "merge_commit_sha": "a0f373a",
+        "files_changed": [
+          "landing_venta.html"
+        ],
+        "change_summary": "Sube tipografía base/line-height y mejora contraste en secciones clave (Incluye/Respaldo/PDR/microcopy WhatsApp), manteniendo estética dark premium.",
+        "diff_stats": {
+          "insertions": 96,
+          "deletions": 45
+        },
+        "merged_by": "enrique9469-spec (según pantalla de PR; luego pull local lo trajo)"
+      },
+      {
+        "pr": 12,
+        "title": "UI: fix legibilidad residual + limpiar header video",
+        "status": "merged",
+        "merge_commit_sha": "52013aa",
+        "files_changed": [
+          "landing_venta.html"
+        ],
+        "change_summary": "Remueve texto redundante del header del video (deja botón 'Subir mi video'); mejora legibilidad PDR y textos de Opción 1/2 y Garantía.",
+        "diff_stats": {
+          "insertions": 28,
+          "deletions": 3
+        },
+        "merged_by": "rperez2571-rgb (según pantalla de PR/terminal en el chat)"
+      },
+      {
+        "pr": 13,
+        "title": "UI: bordes premium tabs (Ciencia/Historia/Oportunidad)",
+        "status": "merged",
+        "merge_commit_sha": "b93af37",
+        "files_changed": [
+          "landing_venta.html"
+        ],
+        "change_summary": "Introduce bordes/acentos premium para tabs de Confianza (Ciencia/Historia/Oportunidad) usando colores de marca.",
+        "diff_stats": {
+          "insertions": 21,
+          "deletions": 6
+        },
+        "merged_by": "no capturado con certeza en el chat (merge confirmado por commit en main)"
+      },
+      {
+        "pr": 14,
+        "title": "UI: hotfix tabs — bordes color visibles (Ciencia/Historia/Oportunidad)",
+        "status": "merged",
+        "merge_commit_sha": "7069c24",
+        "files_changed": [
+          "landing_venta.html"
+        ],
+        "change_summary": "Hotfix de selector/orden: aplica borde 2px visible en tabs usando nth-of-type y fallback, con glow sutil.",
+        "diff_stats": {
+          "insertions": 14,
+          "deletions": 11
+        },
+        "merged_by": "rperez2571-rgb (según pantalla de PR en el chat)"
+      },
+      {
+        "pr": 15,
+        "title": "UI: tabs — aro color premium SIEMPRE visible (Ciencia/Historia/Oportunidad)",
+        "status": "merged",
+        "merge_commit_sha": "641afb3",
+        "files_changed": [
+          "landing_venta.html"
+        ],
+        "change_summary": "Refuerza el aro/borde premium para que sea visible en reposo (no depender de hover), manteniendo estética dark.",
+        "diff_stats": {
+          "insertions": 28,
+          "deletions": 22
+        },
+        "merged_by": "rperez2571-rgb (según pantalla de PR en el chat)"
+      }
+    ],
+    "known_open_pull_requests_snapshot": {
+      "note": "Snapshot visto en la lista de PRs durante el chat; puede haber cambiado. Verificar en GitHub (/pulls).",
+      "items": [
+        {
+          "pr": 8,
+          "title": "UI: bordes premium botones (Historia/Oportunidad/etc)",
+          "status_at_snapshot": "open"
+        },
+        {
+          "pr": 5,
+          "title": "Add subtle float, controlled glow and scoped hover for #incluye system image",
+          "status_at_snapshot": "open"
+        },
+        {
+          "pr": 4,
+          "title": "Hide duplicate trust chips in #confianza and add backup/logging docs",
+          "status_at_snapshot": "open"
+        },
+        {
+          "pr": 3,
+          "title": "Add lead capture endpoint, GTM tracking, CRM placeholders and UI micro-improvements",
+          "status_at_snapshot": "open"
+        },
+        {
+          "pr": 2,
+          "title": "Add lead capture flow and deployment package",
+          "status_at_snapshot": "open"
+        },
+        {
+          "pr": 1,
+          "title": "Improve landing responsiveness, SEO, and accessibility",
+          "status_at_snapshot": "open"
+        }
+      ]
+    },
+    "pending_next": [
+      {
+        "id": "NEXT-1",
+        "title": "Header superior: spacing/alineación (izquierda y CTA 'Empezar')",
+        "details": "Texto a la izquierda muy pegado y CTA 'Empezar' muy pegado al borde; ajustar padding/márgenes/alineación sin tocar motor.",
+        "scope": "landing_venta.html (CSS-only si posible)"
+      },
+      {
+        "id": "NEXT-2",
+        "title": "Test Metabólico: respuestas humano-científicas (sin diagnóstico)",
+        "details": "Outputs con lenguaje humano + recomendaciones de exámenes (glucosa/A1c/insulina/OGTT según caso) y asociaciones comunes (DM2, TG altos, hígado graso, etc.) con disclaimer educativo.",
+        "scope": "UI + copy (probable JS/HTML en landing_venta.html; PR separado)"
+      },
+      {
+        "id": "NEXT-3",
+        "title": "Compartir Test + Captura de lead (referidos)",
+        "details": "Permitir compartir el test; el referido deja nombre/apellido/teléfono/email; guardar para email marketing/WhatsApp con consentimiento.",
+        "scope": "Probable cambios en api/data y/o endpoint; PRs separados; requiere revisión de privacidad/consentimiento."
+      },
+      {
+        "id": "NEXT-4",
+        "title": "Link público para socios (sin GitHub/127.0.0.1)",
+        "details": "Habilitar GitHub Pages o deployment para compartir una URL pública por WhatsApp.",
+        "scope": "Settings/Deploy; sin tocar motor."
+      }
+    ],
+    "rules_of_engagement": {
+      "do_not_touch": [
+        "No tocar el 'motor' (lógica) sin ticket/PR separado y aprobación.",
+        "No tocar api/data a menos que el ticket sea explícitamente de captura/CRM."
+      ],
+      "one_thing_at_a_time": true,
+      "review_gate": "Files changed debe ser 1 archivo (landing_venta.html) para UI/CSS-only; si toca api/data requiere revisión extra."
+    }
+  }
+}

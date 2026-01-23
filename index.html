@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="description" content="Bariátrica Natural — Sistema Metabólico (Unici-Té + Balance) para Monterrey. Acompañamiento por WhatsApp. Contenido educativo." />
-  <title>Bariátrica Natural | Sistema Metabólico — Monterrey</title>
+  <meta name="description" content="Bariátrica Natural — Sistema Metabólico (Unici-Té + Balance) para México. Acompañamiento por WhatsApp. Contenido educativo." />
+  <title>Bariátrica Natural | Sistema Metabólico — México</title>
   <script>
     // GTM placeholder
     (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -52,6 +52,8 @@
       margin:0;
       font-family: var(--font-base);
       color: var(--text);
+      font-size:17px;
+      line-height:1.6;
       background-color: var(--bg);
       background:
         radial-gradient(1200px 620px at 18% 12%, rgba(249,115,22,.14), transparent 55%),
@@ -60,6 +62,12 @@
       overflow-x:hidden;
     }
     a{color:var(--link)}
+    a:focus-visible{
+      outline:2px solid rgba(96,165,250,.95);
+      outline-offset:2px;
+      border-radius:8px;
+    }
+    img{max-width:100%;height:auto;display:block}
     .nav a{color:var(--text);text-decoration:none;}
     .wrap{max-width:1160px;margin:0 auto;padding:0 18px}
     .nav{
@@ -118,7 +126,8 @@
     }
     .btn:active{transform: translateY(0);}
     .btn:focus-visible{
-      outline:none;
+      outline:2px solid rgba(248,250,252,.95);
+      outline-offset:2px;
       box-shadow:0 0 0 4px rgba(37,99,235,.18);
     }
     .btn:disabled,
@@ -132,7 +141,11 @@
       box-shadow: 0 14px 32px rgba(249,115,22,.18);
     }
     .btnPrimary:hover{background: var(--cta-hover);border-color: var(--cta-hover);}
-    .btnPrimary:focus-visible{box-shadow:0 0 0 4px rgba(249,115,22,.22);}
+    .btnPrimary:focus-visible{
+      outline:2px solid rgba(255,255,255,.95);
+      outline-offset:2px;
+      box-shadow:0 0 0 4px rgba(249,115,22,.22);
+    }
 
     .btnSecondary{
       background: #25D366;
@@ -141,7 +154,11 @@
       box-shadow: 0 10px 24px rgba(37,211,102,.16);
     }
     .btnSecondary:hover{background: #1EBE5D;border-color:#1EBE5D;}
-    .btnSecondary:focus-visible{box-shadow:0 0 0 4px rgba(37,211,102,.22);}
+    .btnSecondary:focus-visible{
+      outline:2px solid rgba(255,255,255,.95);
+      outline-offset:2px;
+      box-shadow:0 0 0 4px rgba(37,211,102,.22);
+    }
 
     .btnGhost{
       background: var(--surface);
@@ -195,8 +212,8 @@
     .sub{
       margin:0 0 16px;
       color: var(--muted);
-      font-size: 16px;
-      line-height:1.55;
+      font-size: 17px;
+      line-height:1.6;
       max-width: 62ch;
     }
     .kicker{
@@ -224,22 +241,58 @@
       border:1px solid var(--border);
       background: var(--surface);
       color: var(--muted);
-      font-size: 13px;
-      line-height:1.35;
+      font-size: 15px;
+      line-height:1.5;
     }
     .ctaRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
     .fine{
       margin-top:12px;
       color: var(--muted2);
-      font-size: 12px;
-      line-height:1.45;
+      font-size: 13.5px;
+      line-height:1.55;
     }
     @media (max-width: 640px){
-      body{font-size:15px;line-height:1.6;}
-      .sub{line-height:1.65;font-size:15.5px;}
-      .sectionTitle p{line-height:1.6;font-size:14px;}
-      .bullet{line-height:1.45;font-size:13.5px;}
-      .fine{line-height:1.55;font-size:12.5px;}
+      body{font-size:17px;line-height:1.65;}
+      .sub{line-height:1.65;font-size:17px;}
+      .sectionTitle p{line-height:1.6;font-size:16px;}
+      .bullet{line-height:1.55;font-size:15.5px;}
+      .fine{line-height:1.6;font-size:14px;}
+    }
+    @media (max-width: 430px){
+      body{font-size:17.5px;line-height:1.7;}
+      .btn,
+      .btnSm,
+      .btnXL,
+      .trustActionsRow .btn{
+        font-size:18px;
+        line-height:1.3;
+      }
+      .btn{padding:14px 16px;}
+      .btnSm{padding:12px 14px;}
+      .sub{font-size:17.5px;line-height:1.7;}
+      .sectionTitle p,
+      .list,
+      .checkBullets,
+      .trustText,
+      .resultText,
+      .hint,
+      .videoShell .hint,
+      .videoShell .hint p,
+      .gText,
+      .gList{
+        font-size:16.5px;
+        line-height:1.65;
+      }
+      .bullet,
+      .callout,
+      .subcopyLead,
+      .fine,
+      .trustPoints li,
+      .check span{
+        font-size:16px;
+        line-height:1.6;
+      }
+      .pill{font-size:13px;line-height:1.3;}
     }
 
     /* Video card */
@@ -261,6 +314,9 @@
       margin:0 16px 0;
       border:1px solid rgba(255,255,255,.10);
       box-shadow: 0 8px 18px rgba(0,0,0,.18);
+    }
+    .videoShell .videoTop{
+      justify-content:flex-end;
     }
     .videoActions{display:flex;align-items:center;gap:10px}
     .btnSm{padding:10px 12px;border-radius:12px;font-size:13px}
@@ -414,10 +470,10 @@
     }
     .sectionTitle p{
       margin:0;
-      color: rgba(71,85,105,.8);
-      font-size: 13px;
+      color: rgba(226,232,240,.92);
+      font-size: 15.5px;
       max-width: 62ch;
-      line-height:1.5;
+      line-height:1.6;
     }
     .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
     .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
@@ -452,6 +508,7 @@
       display:flex;
       align-items:center;
       justify-content:center;
+      overflow:hidden;
       padding:18px;
     }
     .productMedia img{
@@ -470,6 +527,7 @@
       display:flex;
       align-items:center;
       justify-content:center;
+      overflow:hidden;
       padding:14px;
     }
     .systemMedia img{
@@ -492,6 +550,8 @@
       display:block;
       width:100%;
       height:auto;
+      object-fit:contain;
+      object-position:center;
       aspect-ratio: 1670 / 1206;
     }
 
@@ -518,9 +578,9 @@
     .list{
       margin:10px 0 0;
       padding:0 0 0 18px;
-      color: var(--muted2);
-      line-height:1.55;
-      font-size: 14px;
+      color: var(--muted);
+      line-height:1.6;
+      font-size: 15.5px;
     }
     .callout{
       margin-top:14px;
@@ -529,8 +589,8 @@
       border:1px solid rgba(22,163,74,.20);
       background: rgba(22,163,74,.08);
       color: var(--text);
-      font-size: 13px;
-      line-height:1.45;
+      font-size: 14.5px;
+      line-height:1.55;
     }
 
     /* Extra blocks for product descriptions (premium, sin alterar colores) */
@@ -542,8 +602,8 @@
     .subcopyLead{
       margin:0;
       color: var(--muted);
-      font-size: 13px;
-      line-height:1.55;
+      font-size: 14.5px;
+      line-height:1.6;
     }
     .subcopyNote{
       margin:10px 0 0;
@@ -556,8 +616,8 @@
       padding:0;
       margin:10px 0 0;
       color: var(--muted2);
-      line-height:1.45;
-      font-size: 14px;
+      line-height:1.55;
+      font-size: 15px;
     }
     .checkBullets li{
       display:flex;
@@ -598,11 +658,12 @@
       border: 1px solid var(--border);
       background: var(--surface);
       color: var(--text);
-      outline:none;
+      outline:2px solid transparent;
+      outline-offset:2px;
     }
     input:focus{border-color: var(--cta); box-shadow: 0 0 0 4px rgba(22,163,74,.14)}
     .formActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-    .consent{font-size:12px;color: var(--muted2);line-height:1.4;margin-top:10px}
+    .consent{font-size:13.5px;color: rgba(203,213,225,.95);line-height:1.55;margin-top:10px}
 
     /* Test */
     .testGrid{
@@ -616,20 +677,24 @@
     @media (max-width: 640px){.checkList{grid-template-columns:1fr}}
     .check{
       display:flex;gap:10px;align-items:flex-start;
-      padding:12px 12px;
-      border-radius: 14px;
+      padding:18px 16px;
+      min-height:130px;
+      border-radius: 16px;
       border:1px solid var(--border);
       background: var(--surface);
       cursor:pointer;
       user-select:none;
     }
-    .check input{width:18px;height:18px;margin-top:2px}
-    .check strong{display:block;font-size:13px}
-    .check span{display:block;color: var(--muted2); font-size:12px; line-height:1.35; margin-top:2px}
+    .check input{width:18px;height:18px;margin-top:3px}
+    .check strong{display:block;font-size:14px}
+    .check span{display:block;color: var(--muted2); font-size:13px; line-height:1.5; margin-top:4px}
     .resultBox{
       height:100%;
+      min-height:480px;
       display:flex;flex-direction:column;gap:10px;
     }
+    @media (max-width: 980px){.resultBox{min-height:460px}}
+    @media (max-width: 640px){.resultBox{min-height:420px}}
     .score{
       display:flex;align-items:center;justify-content:space-between;gap:10px;
       padding:14px 14px;border-radius:16px;
@@ -643,8 +708,21 @@
       border:1px solid rgba(22,163,74,.22);
       background: rgba(22,163,74,.08);
       color: var(--text);
-      font-size:13px;line-height:1.45;
+      font-size:14px;line-height:1.6;
       flex:1;
+    }
+    .resultText p{margin:0 0 10px}
+    .resultText p:last-child{margin-bottom:0}
+    .resultText ul{margin:6px 0 12px; padding-left:18px}
+    .resultText li{margin:6px 0}
+    .resultText .resultTitle{font-size:16px;font-weight:800;margin-bottom:8px}
+    .resultText .resultAlert{
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background: rgba(11,43,52,.08);
+      font-size:13px;
+      line-height:1.5;
     }
     .miniBtns{display:flex;gap:10px;flex-wrap:wrap}
     .toast{
@@ -743,14 +821,14 @@
       border:1px solid var(--border);
       background:var(--surface);
       color:var(--muted);
-      font-size:12px;
+      font-size:13px;
       position:relative;
       z-index:1;
     }
-    .trustTitle{margin:10px 0 8px;font-size:18px;letter-spacing:-.2px;position:relative;z-index:1}
-    .trustText{margin:0;color:rgba(71,85,105,.85);font-size:14px;line-height:1.55;position:relative;z-index:1}
+    .trustTitle{margin:10px 0 8px;font-size:20px;letter-spacing:-.2px;position:relative;z-index:1}
+    .trustText{margin:0;color:rgba(71,85,105,.85);font-size:15.5px;line-height:1.6;position:relative;z-index:1}
     .trustPoints{margin:14px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;position:relative;z-index:1}
-    .trustPoints li{display:flex;gap:10px;align-items:flex-start;color:rgba(71,85,105,.88);font-size:13px;line-height:1.45}
+    .trustPoints li{display:flex;gap:10px;align-items:flex-start;color:rgba(71,85,105,.88);font-size:14.5px;line-height:1.55}
     .trustDot{
       width:22px;height:22px;border-radius:8px;
       background: rgba(22,163,74,.14);
@@ -764,13 +842,13 @@
     .trustActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;position:relative;z-index:1;justify-content:center}
     .trustActionsRow{grid-column:1 / -1; justify-content:center; margin-top:6px;}
     .trustActionsRow .btn{min-width:200px; text-align:center; padding:12px 16px;}
-    .trustFine{margin-top:10px;color:rgba(71,85,105,.65);font-size:12px;line-height:1.4;position:relative;z-index:1}
+    .trustFine{margin-top:10px;color:rgba(71,85,105,.65);font-size:13.5px;line-height:1.5;position:relative;z-index:1}
     .trustChipRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;position:relative;z-index:1}
     .trustChip{
       padding:6px 10px;border-radius:999px;
       border:1px solid var(--border);
       background:var(--surface);
-      font-size:12px;color:var(--muted);
+      font-size:13px;color:var(--muted);
       transition: transform var(--anim-fast) ease, box-shadow var(--anim-fast) ease, background var(--anim-fast) ease, border-color var(--anim-fast) ease, color var(--anim-fast) ease;
     }
 
@@ -783,11 +861,13 @@
       background:var(--surface);
       border-bottom:1px solid var(--border);
       padding:12px;
+      overflow:hidden;
     }
     .trustMedia img{
       width:100%;
       height:220px;
       object-fit:contain;
+      object-position:center;
       display:block;
       background:var(--surface);
       border-radius:12px;
@@ -828,6 +908,9 @@
       font-size:18px !important;
       line-height:1.55 !important;
     }
+    #confianza .sectionTitle{align-items:center;}
+    #confianza .sectionTitle p{color:rgba(226,232,240,.95) !important;font-size:16px !important;line-height:1.6 !important;}
+    #confianza .sectionTitle h2{font-size: clamp(20px, 2.4vw, 30px);}
     #confianza .trustTile,
     #confianza .trustCard,
     #confianza .trustItem{
@@ -933,6 +1016,69 @@
     }
     #confianza .trustChip:hover{transform:translateY(-1px);box-shadow: var(--shadow-soft);}
 
+    /* CONFIAZA: tabs con borde de color + PDR legible + sin stretch raro */
+    #confianza .trustGallery{align-items:start;}
+    #confianza .trustTile{align-self:start;}
+
+    #confianza .trustActionsRow .btn{
+      border-radius:999px !important;
+      font-weight:900 !important;
+      letter-spacing:.2px !important;
+    }
+    #confianza .trustActionsRow button:nth-of-type(1){--tab-accent: rgb(37,99,235);}  /* azul */
+    #confianza .trustActionsRow button:nth-of-type(2){--tab-accent: rgb(11,107,58);}  /* verde */
+    #confianza .trustActionsRow button:nth-of-type(3){--tab-accent: rgb(242,140,40);} /* naranja */
+    #confianza .trustActionsRow .btn:nth-of-type(1){--tab-accent: rgb(37,99,235);}  /* azul */
+    #confianza .trustActionsRow .btn:nth-of-type(2){--tab-accent: rgb(11,107,58);}  /* verde */
+    #confianza .trustActionsRow .btn:nth-of-type(3){--tab-accent: rgb(242,140,40);} /* naranja */
+
+    #confianza .trustActionsRow button,
+    #confianza .trustActionsRow .btn{
+      border:2px solid transparent !important;
+      box-shadow:
+        0 0 0 2px var(--tab-accent, #64748b),
+        0 10px 24px rgba(15,23,42,.16) !important;
+    }
+    #confianza .trustActionsRow .btnGhost{
+      background: rgba(11,18,32,.92) !important;
+      color:#F8FAFC !important;
+    }
+    @media (hover:hover){
+      #confianza .trustActionsRow button:hover,
+      #confianza .trustActionsRow .btn:hover{
+        transform: translateY(-2px) !important;
+        box-shadow:
+          0 0 0 3px var(--tab-accent, #64748b),
+          0 0 10px color-mix(in srgb, var(--tab-accent, #64748b) 45%, transparent),
+          0 16px 30px rgba(15,23,42,.2) !important;
+      }
+    }
+    #confianza .trustActionsRow button:active,
+    #confianza .trustActionsRow .btn:active{
+      box-shadow:
+        0 0 0 3px var(--tab-accent, #64748b),
+        0 0 8px color-mix(in srgb, var(--tab-accent, #64748b) 35%, transparent),
+        0 12px 26px rgba(15,23,42,.18) !important;
+    }
+    #confianza .trustActionsRow button:focus-visible,
+    #confianza .trustActionsRow .btn:focus-visible{
+      outline:2px solid rgba(255,255,255,.95);
+      outline-offset:2px;
+      box-shadow:
+        0 0 0 3px var(--tab-accent, #64748b),
+        0 0 10px color-mix(in srgb, var(--tab-accent, #64748b) 45%, transparent),
+        0 14px 28px rgba(15,23,42,.2) !important;
+    }
+
+    /* PDR legible (el tile usa b/span, no h3/p) */
+    #confianza .pdrTxt span{color:#0F172A !important; opacity:1 !important;font-size:15px !important;line-height:1.4 !important;font-weight:600 !important;}
+    #confianza .pdrTxt em{color:#0F172A !important; opacity:1 !important;font-size:13.5px !important;line-height:1.4 !important;font-weight:600 !important;}
+    #confianza .trustBoard .hintLine{color:#1F2937 !important; opacity:1 !important;font-size:13px !important;}
+    #confianza .trustBoard .hintLine{
+      color:#0B1220 !important;
+      font-weight:700 !important;
+    }
+
     #confianza .certTxt strong{
       color:#FFFFFF !important;
       font-size:17px !important;
@@ -954,21 +1100,49 @@
       opacity:1 !important;
     }
 
+    /* PDR logo fit fix */
+    #confianza .certBadge img,
+    #confianza .certBadge .badgeImg,
+    #confianza .certBadge .logoImg {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: contain !important;   /* evita recorte, respeta proporción */
+      display: block !important;
+    }
+
+    #confianza .pdrIcon img{
+      width:100% !important;
+      height:100% !important;
+      object-fit:contain !important;
+      display:block !important;
+    }
+
+    #confianza .certBadge {
+      overflow: hidden !important;
+    }
+
     /* PDR */
     .pdrBoard{justify-content:center; gap:10px;}
-    .pdrRow{display:flex;align-items:center;gap:10px}
+    .pdrRow{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
     .pdrIcon{
-      width:58px;height:58px;border-radius:16px;
-      background: rgba(22,163,74,.14);
-      border:1px solid rgba(22,163,74,.35);
+      width:64px;height:64px;border-radius:18px;
+      background: rgba(22,163,74,.18);
+      border:1px solid rgba(22,163,74,.45);
       display:flex;align-items:center;justify-content:center;
       box-shadow: 0 14px 26px rgba(15,23,42,.12);
       flex:0 0 auto;
+      overflow:hidden;
     }
-    .pdrIcon svg{width:30px;height:30px;fill:none;stroke:rgba(22,163,74,.95);stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-    .pdrTxt b{display:block;font-size:18px;letter-spacing:-.2px}
-    .pdrTxt span{display:block;margin-top:3px;color:rgba(71,85,105,.86);font-size:12px;line-height:1.25}
-    .pdrTxt em{display:block;margin-top:6px;color:rgba(71,85,105,.72);font-size:11px;font-style:normal;line-height:1.25}
+    #confianza .pdrIcon{
+      background: rgba(22,163,74,.24);
+      border-color: rgba(22,163,74,.72);
+      box-shadow:
+        0 0 0 1px rgba(11,18,32,.25),
+        0 16px 28px rgba(15,23,42,.18);
+    }
+    .pdrIcon svg{width:34px;height:34px;fill:none;stroke:rgba(22,163,74,.98);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .pdrTxt span{display:block;color:rgba(71,85,105,.9);font-size:14px;line-height:1.35}
+    .pdrTxt em{display:block;margin-top:6px;color:rgba(71,85,105,.78);font-size:12.5px;font-style:normal;line-height:1.35}
 
     /* Certificaciones */
     .certBoard{gap:10px}
@@ -1001,9 +1175,108 @@
     .certTxt strong{display:block;font-size:11.5px;line-height:1.05;color:var(--text)}
     .certTxt span{display:block;margin-top:2px;font-size:10.5px;line-height:1.15;color:rgba(71,85,105,.72)}
 
+    @media (max-width: 640px){
+      #confianza .wrap{padding-left:16px;padding-right:16px;}
+      #confianza{overflow:visible;}
+      #confianza .trustBrief{overflow:visible;}
+      #confianza .trustGallery{grid-template-columns:minmax(0,1fr) minmax(0,1fr);}
+      #confianza .trustGallery > *{min-width:0;}
+      #confianza .certGrid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);}
+      #confianza .certGrid > *{min-width:0;}
+      #confianza .certBadge,
+      #confianza .certBadge *{
+        max-width:100%;
+        box-sizing:border-box;
+      }
+      #confianza .certTxt{min-width:0;}
+    }
+
+    @media (max-width: 420px){
+      #confianza .certGrid{grid-template-columns:1fr;}
+      #confianza .certBadge,
+      #confianza .certBadge *,
+      #confianza .certTxt{
+        min-width:0;
+        box-sizing:border-box;
+      }
+    }
+
+    @media (max-width: 980px){
+      /* HOTFIX MÓVIL (WA/Safari): evitar desktop comprimido */
+      #confianza{overflow-x:hidden;overflow-y:visible;}
+
+      /* Forzar 1 columna en el grid principal de confianza */
+      #confianza .trustGrid{
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+      }
+
+      /* Asegurar que cada card no exceda el viewport */
+      #confianza .trustCard,
+      #confianza .trustBrief{
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+
+      /* Grid interno de certificaciones: 2 columnas fluidas sin recorte */
+      #confianza .certGrid{
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      }
+      #confianza .certBadge,
+      #confianza .certTxt{
+        min-width: 0 !important;
+      }
+    }
+
     .trustCap{padding:14px 16px}
     .trustCap strong{display:block;font-size:14px}
     .trustCap span{display:block;margin-top:4px;color:rgba(71,85,105,.78);font-size:12.5px;line-height:1.35}
+    #confianza .trustCap strong{font-size:18px !important;line-height:1.4 !important;}
+    #confianza .trustCap span{font-size:15px !important;line-height:1.5 !important;color:#E2E8F0 !important;}
+
+    #confianza .trustBrief{
+      background: linear-gradient(180deg, rgba(11,18,32,.92), rgba(11,18,32,.8));
+      border-color: rgba(148,163,184,.28);
+    }
+    #confianza .trustBrief .trustKicker{
+      background: rgba(15,23,42,.75);
+      border-color: rgba(148,163,184,.35);
+      color:#E2E8F0 !important;
+    }
+    #confianza .trustBrief .trustTitle,
+    #confianza .trustBrief .trustText,
+    #confianza .trustBrief .trustPoints li,
+    #confianza .trustBrief .trustFine{
+      color:#E2E8F0 !important;
+    }
+    #confianza .trustBrief .trustText{font-size:16px !important;line-height:1.6 !important;}
+    #confianza .trustBrief .trustChip{
+      background: rgba(15,23,42,.75) !important;
+      border-color: rgba(148,163,184,.35) !important;
+      color:#E2E8F0 !important;
+    }
+    #confianza .trustBrief .trustActionsRow .btnGhost{
+      background: rgba(15,23,42,.98) !important;
+      border-color: rgba(226,232,240,.3) !important;
+      color:#F8FAFC !important;
+      box-shadow: 0 12px 30px rgba(0,0,0,.35) !important;
+    }
+
+    #incluye .sectionTitle p{
+      color:rgba(226,232,240,.95);
+      font-size:16px;
+      line-height:1.6;
+    }
+    #incluye .sectionTitle h2{font-size: clamp(20px, 2.4vw, 30px);}
+
+    .hero .card .cardPad > div > div > div:nth-child(2){
+      color: rgba(226,232,240,.95) !important;
+      font-size: 14.5px !important;
+      line-height:1.55 !important;
+    }
+    .hero .card .cardPad > div > div > div:nth-child(2) strong{
+      color:#F8FAFC;
+    }
 
     /* Garantía */
     .guaranteeCard{
@@ -1017,6 +1290,18 @@
     @media (max-width:640px){
       .guaranteePad{align-items:flex-start}
       .guaranteeTitle{font-size:17px}
+    }
+    #comprar .cardPad > p[style*="rgba(71,85,105"]{
+      color: rgba(226,232,240,.88) !important;
+    }
+    #comprar .cardPad > p[style*="rgba(71,85,105"] strong{
+      color: rgba(248,250,252,.96);
+    }
+    .guaranteeCard .guaranteeSub{
+      color: rgba(226,232,240,.86);
+    }
+    .guaranteeCard .fine{
+      color: rgba(226,232,240,.7);
     }
     /* Garantía modal */
     .gOverlay{
@@ -1053,7 +1338,368 @@
     .gActions{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
     .gActions .btn{border-radius:14px;padding:10px 14px}
 
-  </style>
+  
+/* UI-17: spacing (izquierda) + aire al CTA (derecha) */
+.bullet{
+  display:inline-flex;
+  align-items:center;
+  margin:0 10px 8px 0;   /* separa “palabras” */
+}
+
+.bullet:last-child{ margin-right:0; }
+
+/* evita que el área de botones quede pegada al borde derecho */
+.gActions{
+  padding-right:14px;
+  box-sizing:border-box;
+}
+
+/* respaldo: por si el botón es el que está pegado */
+.btnSecondary{
+  margin-right:12px;
+}
+</style>
+
+<style id="ui-18-focus">
+/* UI-18: foco visual en tabs + cards (CSS-only, sin tocar copy/estructura) */
+
+/* 1) Tabs tipo “píldora”: borde/halo para que la vista vaya ahí */
+:where(.segmented,.tabsRow,.topTabs,.tabs,.pillRow,.sectionTabs){
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+:where(.segmented,.tabsRow,.topTabs,.tabs,.pillRow,.sectionTabs) :where(button,a){
+  position:relative;
+  border-radius:999px;
+  border:1px solid rgba(120,160,255,.28);
+  background: rgba(10,18,28,.55);
+  color: rgba(245,250,255,.92);
+  padding:12px 18px;
+  box-shadow: 0 10px 28px rgba(0,0,0,.28);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+:where(.segmented,.tabsRow,.topTabs,.tabs,.pillRow,.sectionTabs) :where(button,a):hover{
+  transform: translateY(-1px);
+  border-color: rgba(120,200,255,.55);
+  box-shadow: 0 14px 34px rgba(0,0,0,.34);
+}
+
+/* Estado activo (soporta varias implementaciones comunes) */
+:where(.segmented,.tabsRow,.topTabs,.tabs,.pillRow,.sectionTabs) :where(.active,[aria-selected="true"],[data-active="true"]){
+  border-color: rgba(120,240,255,.75);
+  box-shadow: 0 0 0 3px rgba(70,200,255,.16), 0 16px 40px rgba(0,0,0,.38);
+}
+
+/* 2) Cards (PDR / Certificaciones): más “premium” sin perder seriedad */
+:where(.card,.tile,.panel){
+  border-radius:18px;
+  border:1px solid rgba(120,160,255,.22);
+  background: radial-gradient(120% 120% at 20% 0%, rgba(90,170,255,.10), rgba(0,0,0,0)) , rgba(10,18,28,.50);
+  box-shadow: 0 14px 40px rgba(0,0,0,.32);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+:where(.card,.tile,.panel):hover{
+  transform: translateY(-2px);
+  border-color: rgba(120,240,255,.42);
+  box-shadow: 0 18px 54px rgba(0,0,0,.38);
+}
+
+/* 3) Aire interno en móvil para que nada toque bordes */
+ (max-width: 560px){
+  :where(.cardPad,.panelPad){
+    padding-left:18px;
+    padding-right:18px;
+    box-sizing:border-box;
+  }
+}
+</style>
+
+<style id="motion-stack-venta">
+/* MOTION STACK (VENTA) — v2 (más visible, Fortune 500) */
+@keyframes floatStackVenta{
+  0%,100%{transform:translate3d(0,0,0) rotate(0deg) scale(1)}
+  50%{transform:translate3d(0,-16px,0) rotate(-0.7deg) scale(1.012)}
+}
+@keyframes glowVenta{
+  0%,100%{box-shadow:0 18px 58px rgba(0,0,0,.22)}
+  50%{box-shadow:0 26px 78px rgba(0,0,0,.30)}
+}
+@keyframes sheenVenta{
+  0%{transform:translate3d(-55%,0,0) rotate(10deg); opacity:0}
+  20%{opacity:.38}
+  50%{opacity:.20}
+  80%{opacity:.34}
+  100%{transform:translate3d(55%,0,0) rotate(10deg); opacity:0}
+}
+
+/* Banner del sistema (solo #incluye) */
+#incluye .systemBanner{position:relative; overflow:hidden; animation: glowVenta 4.6s ease-in-out infinite;}
+#incluye .systemBanner::after{
+  content:"";
+  position:absolute;
+  inset:-35% -60%;
+  background: linear-gradient(120deg,
+    transparent 0%,
+    rgba(242,140,40,.18) 35%,
+    rgba(11,107,58,.14) 52%,
+    transparent 68%);
+  filter: blur(8px);
+  pointer-events:none;
+  transform:translate3d(-55%,0,0) rotate(10deg);
+  opacity:0;
+  animation: sheenVenta 6.2s ease-in-out infinite;
+}
+
+/* Imagen product_stack: animación visible */
+#incluye img[src$="product_stack.png"],
+#incluye .systemBanner img[src$="product_stack.png"],
+#incluye .systemMedia img[src$="product_stack.png"]{
+  animation: floatStackVenta 4.6s cubic-bezier(.45,0,.25,1) infinite !important;
+  will-change: transform;
+  transform: translate3d(0,0,0);
+  filter: drop-shadow(0 28px 82px rgba(0,0,0,.46));
+}
+
+/* Hover premium (solo desktop) */
+@media (hover:hover){
+  #incluye .systemBanner:hover img[src$="product_stack.png"]{
+    animation-play-state: paused !important;
+    transform: translate3d(0,-22px,0) rotate(-0.9deg) scale(1.016) !important;
+    filter: drop-shadow(0 34px 96px rgba(0,0,0,.55));
+  }
+}
+
+/* Accesibilidad: si reduce motion, se apaga TODO lo animado */
+@media (prefers-reduced-motion: reduce){
+  #incluye .systemBanner{animation:none !important;}
+  #incluye .systemBanner::after{animation:none !important; opacity:0 !important;}
+  #incluye img[src$="product_stack.png"],
+  #incluye .systemBanner img[src$="product_stack.png"],
+  #incluye .systemMedia img[src$="product_stack.png"]{
+    animation:none !important;
+    transform:none !important;
+  }
+}
+</style>
+
+
+<style id="ui-18-focus-v3">
+/* UI-18 v3: foco real en tabs + cards (CSS-only, sin tocar copy/estructura) */
+
+/* ====== Tabs superiores: a.btn.btnGhost ====== */
+a.btn.btnGhost{
+  border:1px solid rgba(120,240,255,.62) !important;
+  background: rgba(10,18,28,.50) !important;
+  border-radius: 999px !important;
+  padding: 14px 22px !important;
+  box-shadow: 0 0 0 2px rgba(70,200,255,.12), 0 14px 34px rgba(0,0,0,.38) !important;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease !important;
+}
+
+a.btn.btnGhost:hover{
+  transform: translateY(-1px) !important;
+  border-color: rgba(120,240,255,.92) !important;
+  background: rgba(10,18,28,.58) !important;
+  box-shadow: 0 0 0 3px rgba(70,200,255,.18), 0 18px 44px rgba(0,0,0,.44) !important;
+}
+
+a.btn.btnGhost:focus-visible{
+  outline: none !important;
+  box-shadow: 0 0 0 4px rgba(70,200,255,.26), 0 18px 44px rgba(0,0,0,.44) !important;
+}
+
+/* ====== Cards documentación: a.card.trustTile ====== */
+a.card.trustTile{
+  border-radius: 22px !important;
+  border: 1px solid rgba(120,240,255,.22) !important;
+  background:
+    radial-gradient(120% 120% at 18% 0%, rgba(90,170,255,.16), rgba(0,0,0,0)),
+    rgba(10,18,28,.52) !important;
+  box-shadow: 0 18px 56px rgba(0,0,0,.42) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease !important;
+}
+
+a.card.trustTile:hover{
+  transform: translateY(-2px) !important;
+  border-color: rgba(120,240,255,.45) !important;
+  box-shadow: 0 22px 70px rgba(0,0,0,.48) !important;
+}
+
+/* Panel interno dentro del card (donde dice “Click para abrir”) */
+a.card.trustTile .trustBoard{
+  border-radius: 18px !important;
+  border: 1px solid rgba(120,240,255,.14) !important;
+  background: rgba(255,255,255,.03) !important;
+}
+
+/* Título más visible sin perder seriedad */
+a.card.trustTile .pdrTxt b,
+a.card.trustTile h3,
+a.card.trustTile h4{
+  text-shadow: 0 1px 0 rgba(0,0,0,.35);
+}
+
+/* Aire en móvil: evita bordes pegados */
+@media (max-width: 560px){
+  .cardPad.cardPad{
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+    box-sizing: border-box !important;
+  }
+}
+</style>
+
+<style id="ui-18-hotfix-contrast">
+/* UI-18 HOTFIX: legibilidad PDR dentro de trustTile (CSS-only) */
+
+a.card.trustTile .trustBoard{
+  background: rgba(255,255,255,.06) !important;
+  border-color: rgba(160,230,255,.22) !important;
+}
+
+/* Texto principal del bloque PDR (lo que ahora no se lee) */
+a.card.trustTile .pdrTxt,
+a.card.trustTile .pdrTxt *{
+  color: rgba(245,250,255,.92) !important;
+  text-shadow: 0 1px 0 rgba(0,0,0,.35) !important;
+}
+
+/* “Click para abrir” y texto tenue dentro del cuadro */
+a.card.trustTile .trustBoard,
+a.card.trustTile .trustBoard *{
+  color: rgba(235,245,255,.82) !important;
+}
+
+/* Línea divisoria más visible (si aplica) */
+a.card.trustTile hr,
+a.card.trustTile .divider,
+a.card.trustTile .line{
+  border-color: rgba(160,230,255,.18) !important;
+  opacity: 1 !important;
+}
+</style>
+
+<style id="ui-18-hotfix-pdr-contrast-v2">
+/* UI-18 HOTFIX v2: PDR legible (forzar color/opacidad dentro del cuadro) */
+
+a.card.trustTile .trustBoard.pdrBoard,
+a.card.trustTile .pdrBoard{
+  background: rgba(255,255,255,.08) !important;
+  border-color: rgba(160,230,255,.26) !important;
+  opacity: 1 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+/* Forzar legibilidad de TODO lo que esté dentro del cuadro */
+a.card.trustTile .trustBoard.pdrBoard *,
+a.card.trustTile .pdrBoard *{
+  color: rgba(245,250,255,.94) !important;
+  opacity: 1 !important;
+  filter: none !important;
+  text-shadow: 0 1px 0 rgba(0,0,0,.45) !important;
+}
+
+/* Refuerzo específico de los textos principales */
+a.card.trustTile .pdrTxt,
+a.card.trustTile .pdrTxt *{
+  color: rgba(255,255,255,.96) !important;
+  opacity: 1 !important;
+}
+
+/* Línea punteada visible */
+a.card.trustTile .trustBoard.pdrBoard .dash,
+a.card.trustTile .pdrBoard .dash,
+a.card.trustTile .trustBoard.pdrBoard hr,
+a.card.trustTile .pdrBoard hr{
+  border-color: rgba(160,230,255,.22) !important;
+  opacity: 1 !important;
+}
+</style>
+
+<style id="ui-18-hotfix-pdr-contrast-v3">
+/* UI-18 HOTFIX v3: el problema es opacidad en PADRE + overlays. Forzamos legibilidad. */
+
+/* 1) Quitar “dimming” del tile completo (si estaba en .trustTile) */
+a.card.trustTile{
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+/* 2) Quitar dimming/filters en contenedores internos */
+a.card.trustTile .trustMedia,
+a.card.trustTile .trustBoard,
+a.card.trustTile .trustBoard.pdrBoard,
+a.card.trustTile .pdrBoard{
+  opacity: 1 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+/* 3) Si hay capas que oscurecen por pseudo-elementos, las apagamos */
+a.card.trustTile .trustBoard::before,
+a.card.trustTile .trustBoard::after,
+a.card.trustTile .pdrBoard::before,
+a.card.trustTile .pdrBoard::after{
+  content: none !important;
+  display: none !important;
+}
+
+/* 4) Forzar texto legible (incluye -webkit-text-fill-color) */
+a.card.trustTile .pdrTxt,
+a.card.trustTile .pdrTxt *{
+  color: rgba(255,255,255,.96) !important;
+  -webkit-text-fill-color: rgba(255,255,255,.96) !important;
+  opacity: 1 !important;
+  text-shadow: 0 1px 0 rgba(0,0,0,.55) !important;
+  position: relative;
+  z-index: 2;
+}
+
+/* 5) “Click para abrir” y texto dentro del cuadro */
+a.card.trustTile .trustBoard,
+a.card.trustTile .trustBoard *{
+  color: rgba(235,245,255,.88) !important;
+  -webkit-text-fill-color: rgba(235,245,255,.88) !important;
+  opacity: 1 !important;
+}
+
+/* 6) Ajuste sutil del panel para contraste */
+a.card.trustTile .trustBoard.pdrBoard,
+a.card.trustTile .pdrBoard{
+  background: rgba(255,255,255,.09) !important;
+  border-color: rgba(160,230,255,.26) !important;
+}
+</style>
+
+<style id="ui-19-topbar-container">
+/* UI-19: franja superior más centrada (CSS-only, sin tocar estructura) */
+
+/* Intenta capturar barras/header comunes sin romper otras secciones */
+:where(header,.header,.topbar,.topBar,.nav,.navbar,.heroTop,.heroHeader,.masthead){
+  padding-left: clamp(14px, 3vw, 28px) !important;
+  padding-right: clamp(14px, 3vw, 28px) !important;
+}
+
+/* Si dentro hay un contenedor flex principal, lo limitamos a un ancho cómodo */
+:where(header,.header,.topbar,.topBar,.nav,.navbar,.heroTop,.heroHeader,.masthead) > :where(.wrap,.container,.inner,.row,.bar,.topRow){
+  max-width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Respaldo: si no hay wrapper, centramos el contenido directo */
+:where(header,.header,.topbar,.topBar,.nav,.navbar,.heroTop,.heroHeader,.masthead){
+  box-sizing: border-box;
+}
+</style>
+<style id="ui-24-bulletKit-final2">/* UI-24 FINAL2: SOLO cuadro 1 (kit), imposible de partir */ .bullet.bulletKit{display:block!important;} .bullet.bulletKit .kitOneLine{line-height:1.35!important;} .bullet.bulletKit .kitOneLine strong{white-space:nowrap!important;} </style>
 </head>
 
 <body>
@@ -1063,7 +1709,7 @@
       <div class="brand">
         <div style="display:flex;flex-direction:column;line-height:1.05">
           <span style="font-size:14px;opacity:.9">Bariátrica Natural</span>
-          <span style="font-size:12px;color:rgba(71,85,105,.78);font-weight:700">Sistema Metabólico — Monterrey</span>
+          <span style="font-size:12px;color:rgba(235,245,255,.86);font-weight:700">Sistema Metabólico — México</span>
         </div>
         <span class="badge">WhatsApp · Paso a paso</span>
       </div>
@@ -1095,7 +1741,9 @@
           </p>
 
           <div class="bullets">
-            <div class="bullet">Sistema Feel Great (Bariátrica Natural): <strong>Unici-Té</strong> + <strong>Balance</strong> (con guía paso a paso).</div>
+            <div class="bullet bulletKit">
+  <div class="kitOneLine">Sistema Feel Great (Bariátrica Natural):<br><strong>Unici-Té + Balance</strong><br>(con guía paso a paso).</div>
+</div>
             <div class="bullet">Acompañamiento real por WhatsApp (no “tips sueltos”).</div>
             <div class="bullet">Enfoque en hábitos y consistencia (no “soluciones mágicas”).</div>
             <div class="bullet">Contenido educativo para que entiendas tu metabolismo.</div>
@@ -1105,14 +1753,14 @@
                 <div class="cardPad">
                   <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap">
                     <div>
-                      <div style="font-weight:900;font-size:14px;letter-spacing:.2px">Entra por WhatsApp (rápido)</div>
+                      <div style="font-weight:900;font-size:14px;letter-spacing:.2px">Guarda tus datos y continúa al test</div>
                   <div style="color:rgba(71,85,105,.82);font-size:12px;margin-top:6px;line-height:1.35">
-                    Completa esto y te abre WhatsApp con el mensaje listo: <strong>METABOLISMO</strong>.
+                    Completa esto para guardar tus datos y avanzar directo al test.
                   </div>
                     </div>
                 <span class="badge">Datos mínimos · Sin estrés</span>
               </div>
-                  <div class="badge" style="margin-top:8px">Testimonio en video más abajo</div>
+                  
 
               <form id="leadForm" autocomplete="on">
                 <div style="position:absolute;left:-9999px;opacity:0;pointer-events:none" aria-hidden="true">
@@ -1139,19 +1787,154 @@
                 </div>
 
                 <div class="formActions">
-                  <button class="btn btnSecondary" type="submit"><span>Abrir WhatsApp y enviar “METABOLISMO”</span></button>
+                  <button class="btn btnSecondary" type="button" id="saveContinueBtn"><span>Guardar y seguir</span></button>
                 </div>
 
-                <div class="consent">
-                  Al enviar, aceptas que te contactemos por WhatsApp para darte orientación educativa y seguimiento.
-                  <strong>No es diagnóstico médico.</strong>
-                  <br/>Al enviar aceptas que te contactemos por email/WhatsApp. Puedes solicitar baja.
-                </div>
-
-                <div class="consent" id="leadStatus" role="status" aria-live="polite" style="display:none"></div>
+                <div class="consent" id="saveContinueMsg" role="status" aria-live="polite" style="display:none"></div>
               </form>
             </div>
           </div>
+          <script id="save-continue-handler-v1">
+            (() => {
+              const formEl = document.getElementById("leadForm");
+              const btn = document.getElementById("saveContinueBtn");
+              const msgEl = document.getElementById("saveContinueMsg");
+              if (!formEl || !btn || !msgEl) {
+                return;
+              }
+
+              const nameEl = document.getElementById("name");
+              const cityEl = document.getElementById("city");
+              const emailEl = document.getElementById("email");
+              const phoneEl = document.getElementById("phone");
+              const findTestTarget = () => {
+                const headings = Array.from(document.querySelectorAll("h1,h2,h3,h4,h5,h6"));
+                const metabHeading = headings.find((heading) =>
+                  heading.textContent?.toLowerCase().includes("test metabólico")
+                );
+                if (metabHeading) {
+                  return (
+                    metabHeading.closest("section") ||
+                    metabHeading.closest("div") ||
+                    metabHeading
+                  );
+                }
+
+                return (
+                  document.getElementById("metabTest") ||
+                  document.getElementById("testMetabolico") ||
+                  document.getElementById("test")
+                );
+              };
+
+              const sanitize = (value, limit) => {
+                const v = (value || "").toString().trim();
+                if (!limit) return v;
+                return v.slice(0, limit);
+              };
+
+              const setMsg = (text, isError) => {
+                msgEl.style.display = text ? "block" : "none";
+                msgEl.style.color = isError ? "rgba(239,68,68,.95)" : "rgba(34,197,94,.95)";
+                msgEl.textContent = text || "";
+              };
+
+              const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+              const getMissingFields = (data) => {
+                const missing = [];
+                const nameParts = data.name.split(/\s+/).filter(Boolean);
+                if (nameParts.length < 2) {
+                  missing.push("Nombre y apellido");
+                }
+                if (!emailRegex.test(data.email)) {
+                  missing.push("Email");
+                }
+                const phoneDigits = data.phone.replace(/\D+/g, "");
+                if (phoneDigits.length < 10) {
+                  missing.push("Teléfono");
+                }
+                return missing;
+              };
+
+              const handleSave = async () => {
+                const data = {
+                  name: sanitize(nameEl?.value, 120),
+                  city: sanitize(cityEl?.value, 120),
+                  email: sanitize(emailEl?.value, 160),
+                  phone: sanitize(phoneEl?.value, 40),
+                  ts: new Date().toISOString()
+                };
+
+                const missing = getMissingFields(data);
+                if (missing.length) {
+                  setMsg(`Falta: ${missing.join(" / ")}`, true);
+                  return;
+                }
+
+                try {
+                  localStorage.setItem(
+                    "bn_lead",
+                    JSON.stringify({
+                      fullName: data.name,
+                      name: data.name,
+                      city: data.city,
+                      email: data.email,
+                      phone: data.phone,
+                      ts: data.ts
+                    })
+                  );
+                } catch (_) {}
+
+                let storedLead = "";
+                try {
+                  storedLead = localStorage.getItem("bn_lead") || "";
+                } catch (_) {}
+
+                if (storedLead) {
+                  setMsg("✅ Guardado. Bajando al test…", false);
+                }
+
+                try {
+                  const body = {
+                    name: data.name,
+                    city: data.city,
+                    email: data.email,
+                    phone: data.phone,
+                    ts: data.ts,
+                    hp: document.getElementById("website")?.value || ""
+                  };
+                  const resp = await fetch("api/lead.php", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body)
+                  });
+                  await resp.json().catch(() => null);
+                } catch (_) {}
+
+                const testTarget = findTestTarget();
+                if (testTarget) {
+                  testTarget.scrollIntoView({ behavior: "smooth", block: "start" });
+                  return;
+                }
+
+                const fallbackScroll = Math.round(document.documentElement.scrollHeight * 0.4);
+                window.scrollTo({ top: fallbackScroll, behavior: "smooth" });
+                setMsg("✅ Guardado. Baja un poco para ver el test.", false);
+              };
+
+              btn.addEventListener("click", (e) => {
+                e.preventDefault();
+                handleSave();
+              });
+
+              formEl.addEventListener("submit", (e) => {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                handleSave();
+              });
+            })();
+          </script>
 
           <p class="fine">
             Nota: Este contenido es educativo y no sustituye una evaluación médica. Si tienes diabetes, embarazo/lactancia,
@@ -1162,7 +1945,6 @@
 
       <div class="panel videoShell">
         <div class="videoTop">
-          <div class="videoTitle"><span class="pulse"></span> Video de Rafael (abre con intención)</div>
           <div class="videoActions">
             <span class="badge">Cinemático · premium</span>
             <button class="btn btnGhost btnSm" type="button" id="openVideoTools">Subir mi video</button>
@@ -1333,8 +2115,8 @@
               </div>
 
               <div class="resultText" id="resultText">
-                Marca tus señales y dale a “Ver mi resultado”.
-                Te diré qué significa a nivel educativo y el siguiente paso recomendado.
+                <p>Marca tus señales y dale a “Ver mi resultado”.</p>
+                <p>Te diré qué significa a nivel educativo y el siguiente paso recomendado.</p>
               </div>
 
               <div class="miniBtns">
@@ -1416,9 +2198,9 @@
             </a>
 
             <div class="trustActions trustActionsRow">
-              <a class="btn btnGhost" href="https://www.unicityscience.org/clinical-validation-studies/?lang=es" target="_blank" rel="noopener noreferrer">Ciencia de Unicity</a>
-              <a class="btn btnGhost" href="https://www.unicity.com/mex/es/learn/history" target="_blank" rel="noopener noreferrer">Historia de Unicity</a>
-              <a class="btn btnGhost" href="https://www.unicity.com/usa/es/opportunity" target="_blank" rel="noopener noreferrer">Oportunidad de negocio</a>
+              <a class="btn btnGhost" href="https://www.unicityscience.org/clinical-validation-studies/?lang=es" target="_blank" rel="noopener noreferrer" style="border:2px solid #2DD4BF !important;">Ciencia de Unicity</a>
+              <a class="btn btnGhost" href="https://www.unicity.com/mex/es/learn/history" target="_blank" rel="noopener noreferrer" style="border:2px solid #2DD4BF !important;">Historia de Unicity</a>
+              <a class="btn btnGhost" href="https://www.unicity.com/usa/es/opportunity" target="_blank" rel="noopener noreferrer" style="border:2px solid #2DD4BF !important;">Oportunidad de negocio</a>
             </div>
 
               <a class="card trustTile" href="https://www.pdr.net/full-prescribing-information/hl/?druglabelid=24170" target="_blank" rel="noopener" aria-label="Abrir evidencia PDR">
@@ -1426,16 +2208,9 @@
                 <div class="trustBoard pdrBoard">
                   <div class="pdrRow">
                     <div class="pdrIcon" aria-hidden="true">
-                      <svg viewBox="0 0 24 24">
-                        <path d="M6 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 0-2 0V4z"/>
-                        <path d="M6 4v16"/>
-                        <path d="M9 8h7"/>
-                        <path d="M9 12h7"/>
-                        <path d="M9 16h5"/>
-                      </svg>
+                      <img src="assets/pdr.png" alt="" />
                     </div>
                     <div class="pdrTxt">
-                      <b>PDR</b>
                       <span>Prescribers’ Digital Reference</span>
                                           </div>
                   </div>
@@ -1443,8 +2218,7 @@
                 </div>
               </div>
                           <div class="trustCap">
-                <strong>PDR</strong>
-                <span>Referencia consultada por profesionales (material informativo).</span>
+                <span>Referencia consultada por profesionales de la salud.</span>
               </div>
 </a>
 
@@ -1569,7 +2343,7 @@
               <p class="fine" style="margin-top:12px">Si prefieres, escríbenos por WhatsApp y te guiamos para escoger la opción correcta.</p>
               <div class="formActions" style="margin-top:14px">
                 <button class="btn btnPrimary btnXL" type="button" onclick="openPurchase()">Comprar ahora</button>
-                <button class="btn btnSecondary" type="button" onclick="openWhatsAppDefault()">Prefiero WhatsApp</button>
+                <button class="btn btnSecondary" type="button" onclick="openWhatsAppDefault()">WhatsApp</button>
               </div>
 
               <div class="card guaranteeCard" style="margin-top:14px">
@@ -1752,6 +2526,7 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
     ];
 
     let lastResultText = "";
+    let lastResultWhatsApp = "";
     let lastScore = 0;
 
     function toast(msg){
@@ -1953,6 +2728,113 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       });
     }
 
+    function getFirstName(){
+      const input = document.getElementById("name");
+      const raw = (input && input.value ? input.value : "").trim();
+      if(!raw) return "";
+      return raw.split(/\s+/)[0];
+    }
+
+    function getCheckedSymptoms(limit){
+      const checks = Array.from(document.querySelectorAll('#checkList input[type="checkbox"]'));
+      return checks
+        .filter(c=>c.checked)
+        .map((input)=>{
+          const label = input.closest("label");
+          const strong = label ? label.querySelector("strong") : null;
+          return (strong ? strong.textContent : label.textContent).trim();
+        })
+        .filter(Boolean)
+        .slice(0, limit);
+    }
+
+    function getMetabTier(score){
+      if(score <= 2){
+        return {
+          title: "Balance metabólico en rango bajo",
+          summary: "Las señales son leves y eso es buena base para fortalecer hábitos sin presión.",
+          educational: "Pequeñas variaciones en apetito, energía o sueño pueden aparecer cuando el ritmo del día está desordenado.",
+          next72h: [
+            "Agua al despertar + proteína en el primer alimento",
+            "Camina 10-15 min después de la comida principal",
+            "Reduce azúcar líquida (jugos, refrescos, café endulzado)"
+          ],
+          nextStepShort: "Agua al despertar + proteína temprano, camina 10-15 min post comida y baja azúcar líquida 72h."
+        };
+      }
+      if(score <= 5){
+        return {
+          title: "Señales metabólicas intermedias",
+          summary: "Tu cuerpo está haciendo esfuerzo extra para mantener equilibrio; es común y suele mejorar con estructura.",
+          educational: "Picos de hambre, sueño post‑comida o inflamación pueden indicar sensibilidad a carbohidratos y estrés.",
+          next72h: [
+            "Ordena platos: primero proteína/verduras, después carbohidratos",
+            "Incluye 1 porción extra de fibra al día (legumbres o verduras)",
+            "Movimiento diario 20 min (caminar rápido o fuerza ligera)"
+          ],
+          nextStepShort: "Ordena comidas (proteína/verduras primero), suma fibra diaria y muévete 20 min al día."
+        };
+      }
+      if(score <= 7){
+        return {
+          title: "Señales metabólicas claras",
+          summary: "Hay señales más consistentes; vale la pena actuar pronto para recuperar energía y control del apetito.",
+          educational: "Cuando la respuesta a la insulina se vuelve menos eficiente, aparecen antojos, cansancio y cintura inflamada.",
+          next72h: [
+            "Proteína + verduras en cada comida por 72h",
+            "Pausa ultraprocesados y harinas refinadas por 3 días",
+            "Duerme 7-8 h y baja pantallas 60 min antes de dormir"
+          ],
+          nextStepShort: "Proteína+verduras cada comida, pausa ultraprocesados 72h y prioriza sueño 7-8 h."
+        };
+      }
+      return {
+        title: "Señales metabólicas altas",
+        summary: "Las señales son altas y merecen atención cercana para cuidarte con claridad.",
+        educational: "Puede haber resistencia a la insulina o inflamación metabólica; no es diagnóstico, pero sí una alerta útil.",
+        next72h: [
+          "Comidas simples: proteína magra + verduras + grasa saludable",
+          "Evita azúcar y bebidas endulzadas por 72h",
+          "Hidratación constante y caminatas suaves post‑comida"
+        ],
+        nextStepShort: "Comidas simples (proteína+verduras), evita azúcar 72h e hidrátate con caminatas suaves."
+      };
+    }
+
+    function buildMediterraneanHabitText(){
+      return "Vegetales en cada comida, legumbres 3-4 veces/semana, aceite de oliva, pescado 2 veces/semana y menos ultraprocesados (muy respaldado por evidencia Harvard/PubMed).";
+    }
+
+    function buildResultPayload(score, firstName, symptomsForPanel, symptomsForCompact){
+      const tier = getMetabTier(score);
+      const greeting = firstName ? `Hola ${firstName}` : "Hola";
+      const symptomLine = symptomsForPanel.length ? symptomsForPanel.join(", ") : "No marcaste señales en esta pasada.";
+      const compactSymptoms = symptomsForCompact.length ? symptomsForCompact.join(", ") : "sin señales marcadas en esta pasada";
+      const alertBlock = score >= 8
+        ? `<p class="resultAlert">Si hay signos de alarma (sed intensa, orinas muy frecuentes, visión borrosa, debilidad marcada, confusión, vómitos) → evaluación urgente.</p>`
+        : "";
+
+      const html = `
+        <div class="resultTitle">${tier.title}</div>
+        <p>${greeting}. Gracias por completar el test.</p>
+        <p>Registraste ${score} señal(es). ${tier.summary}</p>
+        <p><strong>Señales marcadas:</strong> ${symptomLine}</p>
+        <ul>
+          <li><strong>Qué puede estar pasando (educativo):</strong> ${tier.educational}</li>
+          <li><strong>Siguiente paso 72h:</strong> ${tier.next72h.join(" · ")}</li>
+          <li><strong>Qué pedirle al médico:</strong> glucosa en ayunas, HbA1c, lípidos, presión.</li>
+          <li><strong>Hábitos Mediterráneo:</strong> ${buildMediterraneanHabitText()}</li>
+        </ul>
+        ${alertBlock}
+        <p>Educativo, no diagnóstico ni tratamiento; no sustituye asesoría médica personalizada.</p>
+      `;
+
+      const shareText = `Test Metabólico Express — Puntuación: ${score}/10. Señales: ${compactSymptoms}. Siguiente paso 72h: ${tier.nextStepShort} Educativo, no diagnóstico ni tratamiento; no sustituye asesoría médica personalizada.`;
+      const whatsappText = `${greeting}. Puntuación: ${score}/10. Señales: ${compactSymptoms}. Siguiente paso 72h: ${tier.nextStepShort} Educativo, no diagnóstico ni tratamiento; no sustituye asesoría médica personalizada.`;
+
+      return { html, shareText, whatsappText };
+    }
+
     function computeTest(){
       const checks = Array.from(document.querySelectorAll('#checkList input[type="checkbox"]'));
       const score = checks.filter(c=>c.checked).length;
@@ -1963,42 +2845,32 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       const bar = document.getElementById("scoreBar");
       if(bar){ bar.style.width = `${pct}%`; }
 
-      let level = "";
-      let msg = "";
+      const firstName = getFirstName();
+      const symptomsForPanel = getCheckedSymptoms(6);
+      const symptomsForCompact = getCheckedSymptoms(3);
+      const resultPayload = buildResultPayload(score, firstName, symptomsForPanel, symptomsForCompact);
 
-      if(score <= 2){
-        level = "Señales leves";
-        msg = `Tienes ${score} señal(es). Esto sugiere que tu punto de partida podría ser leve. Buen momento para crear estructura y sostener hábitos.`;
-      } else {
-        level = "Posible resistencia a la insulina";
-        msg = `Tienes ${score} señales. Con 3 o más señales, es posible que haya resistencia a la insulina (educativo, no diagnóstico).`;
-        msg += `\n\nResistencia a la insulina = tu cuerpo necesita más insulina para manejar la misma glucosa, porque las células no responden igual.`;
-        msg += `\n\nPuede contribuir a: antojos/hambre frecuente, sueño o bajón después de comer y aumento de cintura.`;
-        msg += `\n\nCon el tiempo puede aumentar el riesgo de prediabetes/diabetes tipo 2 y otros problemas metabólicos.`;
-        msg += `\n\nSugerencia: consulta a tu médico general y pregunta por evaluación con glucosa e insulina en ayunas (y HbA1c; HOMA‑IR si aplica), según tu caso.`;
-      }
+      lastResultText = resultPayload.shareText;
+      lastResultWhatsApp = resultPayload.whatsappText;
 
-      msg += "\n\nSi quieres guía paso a paso con Unici-Té + Balance, escribe METABOLISMO y te acompañamos.";
-      lastResultText = `Resultado: ${level}. Puntuación: ${score}.\n${msg}`;
-
-      document.getElementById("resultText").textContent = msg.replace(/\n\n/g, "\n");
+      document.getElementById("resultText").innerHTML = resultPayload.html;
       toast("Resultado listo");
       try{ window.dataLayer.push({event:"complete_test", score: score}); }catch(_){}
     }
 
     function resetTest(){
       Array.from(document.querySelectorAll('#checkList input[type="checkbox"]')).forEach(c=>c.checked=false);
-      lastScore = 0; lastResultText = "";
+      lastScore = 0; lastResultText = ""; lastResultWhatsApp = "";
       document.getElementById("scoreNum").textContent = "0";
-      document.getElementById("resultText").textContent = "Marca tus señales y dale a “Ver mi resultado”. Te diré qué significa a nivel educativo y el siguiente paso recomendado.";
+      document.getElementById("resultText").innerHTML = "<p>Marca tus señales y dale a “Ver mi resultado”.</p><p>Te diré qué significa a nivel educativo y el siguiente paso recomendado.</p>";
       toast("Listo");
     }
 
     function sendResultToWhatsApp(){
-      if(!lastResultText){
+      if(!lastResultWhatsApp){
         computeTest();
       }
-      openWhatsApp(lastResultText || CONFIG.DEFAULT_MESSAGE);
+      openWhatsApp(lastResultWhatsApp || CONFIG.DEFAULT_MESSAGE);
     }
 
     async function shareResult(){
@@ -2189,5 +3061,6 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       }
     })();
   </script>
+  <script id="metab-test-personalization-v1" src="assets/js/metab_expert.js?v=METAB_V11"></script>
 </body>
 </html>

@@ -677,20 +677,24 @@
     @media (max-width: 640px){.checkList{grid-template-columns:1fr}}
     .check{
       display:flex;gap:10px;align-items:flex-start;
-      padding:12px 12px;
-      border-radius: 14px;
+      padding:18px 16px;
+      min-height:130px;
+      border-radius: 16px;
       border:1px solid var(--border);
       background: var(--surface);
       cursor:pointer;
       user-select:none;
     }
-    .check input{width:18px;height:18px;margin-top:2px}
-    .check strong{display:block;font-size:13px}
-    .check span{display:block;color: var(--muted2); font-size:12px; line-height:1.35; margin-top:2px}
+    .check input{width:18px;height:18px;margin-top:3px}
+    .check strong{display:block;font-size:14px}
+    .check span{display:block;color: var(--muted2); font-size:13px; line-height:1.5; margin-top:4px}
     .resultBox{
       height:100%;
+      min-height:480px;
       display:flex;flex-direction:column;gap:10px;
     }
+    @media (max-width: 980px){.resultBox{min-height:460px}}
+    @media (max-width: 640px){.resultBox{min-height:420px}}
     .score{
       display:flex;align-items:center;justify-content:space-between;gap:10px;
       padding:14px 14px;border-radius:16px;
@@ -704,8 +708,21 @@
       border:1px solid rgba(22,163,74,.22);
       background: rgba(22,163,74,.08);
       color: var(--text);
-      font-size:13px;line-height:1.45;
+      font-size:14px;line-height:1.6;
       flex:1;
+    }
+    .resultText p{margin:0 0 10px}
+    .resultText p:last-child{margin-bottom:0}
+    .resultText ul{margin:6px 0 12px; padding-left:18px}
+    .resultText li{margin:6px 0}
+    .resultText .resultTitle{font-size:16px;font-weight:800;margin-bottom:8px}
+    .resultText .resultAlert{
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background: rgba(11,43,52,.08);
+      font-size:13px;
+      line-height:1.5;
     }
     .miniBtns{display:flex;gap:10px;flex-wrap:wrap}
     .toast{
@@ -2098,8 +2115,8 @@ a.card.trustTile .pdrBoard{
               </div>
 
               <div class="resultText" id="resultText">
-                Marca tus señales y dale a “Ver mi resultado”.
-                Te diré qué significa a nivel educativo y el siguiente paso recomendado.
+                <p>Marca tus señales y dale a “Ver mi resultado”.</p>
+                <p>Te diré qué significa a nivel educativo y el siguiente paso recomendado.</p>
               </div>
 
               <div class="miniBtns">
@@ -2509,6 +2526,7 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
     ];
 
     let lastResultText = "";
+    let lastResultWhatsApp = "";
     let lastScore = 0;
 
     function toast(msg){
@@ -2710,6 +2728,113 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       });
     }
 
+    function getFirstName(){
+      const input = document.getElementById("name");
+      const raw = (input && input.value ? input.value : "").trim();
+      if(!raw) return "";
+      return raw.split(/\s+/)[0];
+    }
+
+    function getCheckedSymptoms(limit){
+      const checks = Array.from(document.querySelectorAll('#checkList input[type="checkbox"]'));
+      return checks
+        .filter(c=>c.checked)
+        .map((input)=>{
+          const label = input.closest("label");
+          const strong = label ? label.querySelector("strong") : null;
+          return (strong ? strong.textContent : label.textContent).trim();
+        })
+        .filter(Boolean)
+        .slice(0, limit);
+    }
+
+    function getMetabTier(score){
+      if(score <= 2){
+        return {
+          title: "Balance metabólico en rango bajo",
+          summary: "Las señales son leves y eso es buena base para fortalecer hábitos sin presión.",
+          educational: "Pequeñas variaciones en apetito, energía o sueño pueden aparecer cuando el ritmo del día está desordenado.",
+          next72h: [
+            "Agua al despertar + proteína en el primer alimento",
+            "Camina 10-15 min después de la comida principal",
+            "Reduce azúcar líquida (jugos, refrescos, café endulzado)"
+          ],
+          nextStepShort: "Agua al despertar + proteína temprano, camina 10-15 min post comida y baja azúcar líquida 72h."
+        };
+      }
+      if(score <= 5){
+        return {
+          title: "Señales metabólicas intermedias",
+          summary: "Tu cuerpo está haciendo esfuerzo extra para mantener equilibrio; es común y suele mejorar con estructura.",
+          educational: "Picos de hambre, sueño post‑comida o inflamación pueden indicar sensibilidad a carbohidratos y estrés.",
+          next72h: [
+            "Ordena platos: primero proteína/verduras, después carbohidratos",
+            "Incluye 1 porción extra de fibra al día (legumbres o verduras)",
+            "Movimiento diario 20 min (caminar rápido o fuerza ligera)"
+          ],
+          nextStepShort: "Ordena comidas (proteína/verduras primero), suma fibra diaria y muévete 20 min al día."
+        };
+      }
+      if(score <= 7){
+        return {
+          title: "Señales metabólicas claras",
+          summary: "Hay señales más consistentes; vale la pena actuar pronto para recuperar energía y control del apetito.",
+          educational: "Cuando la respuesta a la insulina se vuelve menos eficiente, aparecen antojos, cansancio y cintura inflamada.",
+          next72h: [
+            "Proteína + verduras en cada comida por 72h",
+            "Pausa ultraprocesados y harinas refinadas por 3 días",
+            "Duerme 7-8 h y baja pantallas 60 min antes de dormir"
+          ],
+          nextStepShort: "Proteína+verduras cada comida, pausa ultraprocesados 72h y prioriza sueño 7-8 h."
+        };
+      }
+      return {
+        title: "Señales metabólicas altas",
+        summary: "Las señales son altas y merecen atención cercana para cuidarte con claridad.",
+        educational: "Puede haber resistencia a la insulina o inflamación metabólica; no es diagnóstico, pero sí una alerta útil.",
+        next72h: [
+          "Comidas simples: proteína magra + verduras + grasa saludable",
+          "Evita azúcar y bebidas endulzadas por 72h",
+          "Hidratación constante y caminatas suaves post‑comida"
+        ],
+        nextStepShort: "Comidas simples (proteína+verduras), evita azúcar 72h e hidrátate con caminatas suaves."
+      };
+    }
+
+    function buildMediterraneanHabitText(){
+      return "Vegetales en cada comida, legumbres 3-4 veces/semana, aceite de oliva, pescado 2 veces/semana y menos ultraprocesados (muy respaldado por evidencia Harvard/PubMed).";
+    }
+
+    function buildResultPayload(score, firstName, symptomsForPanel, symptomsForCompact){
+      const tier = getMetabTier(score);
+      const greeting = firstName ? `Hola ${firstName}` : "Hola";
+      const symptomLine = symptomsForPanel.length ? symptomsForPanel.join(", ") : "No marcaste señales en esta pasada.";
+      const compactSymptoms = symptomsForCompact.length ? symptomsForCompact.join(", ") : "sin señales marcadas en esta pasada";
+      const alertBlock = score >= 8
+        ? `<p class="resultAlert">Si hay signos de alarma (sed intensa, orinas muy frecuentes, visión borrosa, debilidad marcada, confusión, vómitos) → evaluación urgente.</p>`
+        : "";
+
+      const html = `
+        <div class="resultTitle">${tier.title}</div>
+        <p>${greeting}. Gracias por completar el test.</p>
+        <p>Registraste ${score} señal(es). ${tier.summary}</p>
+        <p><strong>Señales marcadas:</strong> ${symptomLine}</p>
+        <ul>
+          <li><strong>Qué puede estar pasando (educativo):</strong> ${tier.educational}</li>
+          <li><strong>Siguiente paso 72h:</strong> ${tier.next72h.join(" · ")}</li>
+          <li><strong>Qué pedirle al médico:</strong> glucosa en ayunas, HbA1c, lípidos, presión.</li>
+          <li><strong>Hábitos Mediterráneo:</strong> ${buildMediterraneanHabitText()}</li>
+        </ul>
+        ${alertBlock}
+        <p>Educativo, no diagnóstico ni tratamiento; no sustituye asesoría médica personalizada.</p>
+      `;
+
+      const shareText = `Test Metabólico Express — Puntuación: ${score}/10. Señales: ${compactSymptoms}. Siguiente paso 72h: ${tier.nextStepShort} Educativo, no diagnóstico ni tratamiento; no sustituye asesoría médica personalizada.`;
+      const whatsappText = `${greeting}. Puntuación: ${score}/10. Señales: ${compactSymptoms}. Siguiente paso 72h: ${tier.nextStepShort} Educativo, no diagnóstico ni tratamiento; no sustituye asesoría médica personalizada.`;
+
+      return { html, shareText, whatsappText };
+    }
+
     function computeTest(){
       const checks = Array.from(document.querySelectorAll('#checkList input[type="checkbox"]'));
       const score = checks.filter(c=>c.checked).length;
@@ -2720,42 +2845,32 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       const bar = document.getElementById("scoreBar");
       if(bar){ bar.style.width = `${pct}%`; }
 
-      let level = "";
-      let msg = "";
+      const firstName = getFirstName();
+      const symptomsForPanel = getCheckedSymptoms(6);
+      const symptomsForCompact = getCheckedSymptoms(3);
+      const resultPayload = buildResultPayload(score, firstName, symptomsForPanel, symptomsForCompact);
 
-      if(score <= 2){
-        level = "Señales leves";
-        msg = `Tienes ${score} señal(es). Esto sugiere que tu punto de partida podría ser leve. Buen momento para crear estructura y sostener hábitos.`;
-      } else {
-        level = "Posible resistencia a la insulina";
-        msg = `Tienes ${score} señales. Con 3 o más señales, es posible que haya resistencia a la insulina (educativo, no diagnóstico).`;
-        msg += `\n\nResistencia a la insulina = tu cuerpo necesita más insulina para manejar la misma glucosa, porque las células no responden igual.`;
-        msg += `\n\nPuede contribuir a: antojos/hambre frecuente, sueño o bajón después de comer y aumento de cintura.`;
-        msg += `\n\nCon el tiempo puede aumentar el riesgo de prediabetes/diabetes tipo 2 y otros problemas metabólicos.`;
-        msg += `\n\nSugerencia: consulta a tu médico general y pregunta por evaluación con glucosa e insulina en ayunas (y HbA1c; HOMA‑IR si aplica), según tu caso.`;
-      }
+      lastResultText = resultPayload.shareText;
+      lastResultWhatsApp = resultPayload.whatsappText;
 
-      msg += "\n\nSi quieres guía paso a paso con Unici-Té + Balance, escribe METABOLISMO y te acompañamos.";
-      lastResultText = `Resultado: ${level}. Puntuación: ${score}.\n${msg}`;
-
-      document.getElementById("resultText").textContent = msg.replace(/\n\n/g, "\n");
+      document.getElementById("resultText").innerHTML = resultPayload.html;
       toast("Resultado listo");
       try{ window.dataLayer.push({event:"complete_test", score: score}); }catch(_){}
     }
 
     function resetTest(){
       Array.from(document.querySelectorAll('#checkList input[type="checkbox"]')).forEach(c=>c.checked=false);
-      lastScore = 0; lastResultText = "";
+      lastScore = 0; lastResultText = ""; lastResultWhatsApp = "";
       document.getElementById("scoreNum").textContent = "0";
-      document.getElementById("resultText").textContent = "Marca tus señales y dale a “Ver mi resultado”. Te diré qué significa a nivel educativo y el siguiente paso recomendado.";
+      document.getElementById("resultText").innerHTML = "<p>Marca tus señales y dale a “Ver mi resultado”.</p><p>Te diré qué significa a nivel educativo y el siguiente paso recomendado.</p>";
       toast("Listo");
     }
 
     function sendResultToWhatsApp(){
-      if(!lastResultText){
+      if(!lastResultWhatsApp){
         computeTest();
       }
-      openWhatsApp(lastResultText || CONFIG.DEFAULT_MESSAGE);
+      openWhatsApp(lastResultWhatsApp || CONFIG.DEFAULT_MESSAGE);
     }
 
     async function shareResult(){

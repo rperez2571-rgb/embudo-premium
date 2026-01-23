@@ -1,7 +1,6 @@
 (function () {
   window.__metabExpertFinal = "v11";
 
-  const NAME_MIN_WORDS = 2;
   const MAX_SYMPTOMS = 4;
   const WA_NUMBER = "17872321516";
 
@@ -21,12 +20,18 @@
     return cleanValue(name).replace(/\s+/g, " ");
   }
 
-  function nameHasSurname(name) {
-    return normalizeName(name).split(" ").filter(Boolean).length >= NAME_MIN_WORDS;
+  function extractFirstName(name) {
+    return normalizeName(name).split(" ").filter(Boolean)[0] || "";
   }
 
   function getLeadInputs() {
-    const fullNameInput = $("#nombreCompleto") || $("#fullName") || $("input[name=nombreCompleto]") || $("input[name=fullName]");
+    const fullNameInput =
+      $("#nombreCompleto") ||
+      $("#fullName") ||
+      $("#name") ||
+      $("input[name=nombreCompleto]") ||
+      $("input[name=fullName]") ||
+      $("input[name=name]");
     const nombreInput = $("#nombre") || $("input[name=nombre]");
     const apellidoInput = $("#apellido") || $("input[name=apellido]");
     return { fullNameInput, nombreInput, apellidoInput };
@@ -61,7 +66,7 @@
       return "";
     }
     let fullName = lead.fullName || lead.name || lead.nombreCompleto || lead.full_name || "";
-    if (!nameHasSurname(fullName) && lead.nombre && lead.apellido) {
+    if (!fullName && lead.nombre && lead.apellido) {
       fullName = `${lead.nombre} ${lead.apellido}`;
     }
     return normalizeName(fullName);
@@ -117,26 +122,24 @@
     const { lead, keyUsed } = getStoredLead();
     let fullName = buildFullNameFromLead(lead);
 
-    if (!nameHasSurname(fullName)) {
+    if (!fullName) {
       const { fullNameInput, nombreInput, apellidoInput } = getLeadInputs();
       const inputFullName = normalizeName(fullNameInput && fullNameInput.value);
-      if (nameHasSurname(inputFullName)) {
+      if (inputFullName) {
         fullName = inputFullName;
       } else {
         const nombre = normalizeName(nombreInput && nombreInput.value);
         const apellido = normalizeName(apellidoInput && apellidoInput.value);
         if (nombre && apellido) {
           fullName = normalizeName(`${nombre} ${apellido}`);
+        } else {
+          fullName = nombre || "";
         }
       }
     }
 
-    const missing = [];
-    if (!nameHasSurname(fullName)) {
-      missing.push("Nombre y apellido");
-    }
-
-    return { fullName, missing, keyUsed };
+    const firstName = extractFirstName(fullName);
+    return { fullName, firstName, keyUsed };
   }
 
   function getScore() {
@@ -151,7 +154,7 @@
     return checks.filter((c) => c.checked).length;
   }
 
-  function getSymptoms() {
+  function getSymptoms(limit = MAX_SYMPTOMS) {
     const checks = $all('#checkList input[type="checkbox"]');
     const checked = checks.filter((c) => c.checked);
     const labels = checked
@@ -164,162 +167,121 @@
         return cleanValue(strong ? strong.textContent : label.textContent);
       })
       .filter(Boolean);
-    return labels.slice(0, MAX_SYMPTOMS);
+    return labels.slice(0, limit);
   }
 
-  function levelForScore(score) {
+  function tierForScore(score) {
     if (score <= 2) {
       return {
-        label: "Nivel Bajo",
-        meaning:
-          "Tus señales actuales sugieren que tu metabolismo está respondiendo bastante bien. Aun así, pequeños hábitos diarios pueden sumar o restar energía, apetito y claridad mental.",
-        risk:
-          "Si se ignora, podrías normalizar molestias sutiles (antojos, bajones de energía) que con el tiempo impactan en peso, sueño y rendimiento.",
-        plan: [
-          "Hidrátate temprano y suma 20-30 g de proteína en el desayuno.",
-          "Camina 10-15 min después de la comida principal.",
-          "Reduce azúcar líquida 72h (jugos, refrescos, café con azúcar).",
+        title: "Balance metabólico en rango bajo",
+        summary:
+          "Las señales son leves y eso es una buena base para fortalecer hábitos sin presión.",
+        educational:
+          "Pequeñas variaciones en apetito, energía o sueño pueden aparecer cuando el ritmo del día está desordenado.",
+        next72h: [
+          "Agua al despertar + proteína en el primer alimento",
+          "Camina 10-15 min después de la comida principal",
+          "Reduce azúcar líquida (jugos, refrescos, café endulzado)",
         ],
+        nextStepShort:
+          "Agua al despertar + proteína temprano, camina 10-15 min post comida y baja azúcar líquida 72h.",
       };
     }
-    if (score <= 6) {
+    if (score <= 5) {
       return {
-        label: "Nivel Intermedio",
-        meaning:
-          "Hay señales de que tu metabolismo podría estar trabajando de más para mantener el equilibrio. Con ajustes simples, suele mejorar cómo te sientes día a día.",
-        risk:
-          "Si se ignora, los picos de hambre, fatiga o inflamación pueden volverse más frecuentes y afectar tu composición corporal.",
-        plan: [
-          "Ordena tus comidas: primero proteína/vegetales, luego carbohidratos.",
-          "Suma 1 porción extra de fibra/día (legumbres o verduras).",
-          "Mueve el cuerpo 20 min diarios (caminar rápido o fuerza ligera).",
+        title: "Señales metabólicas intermedias",
+        summary:
+          "Tu cuerpo está haciendo esfuerzo extra para mantener equilibrio; es común y suele mejorar con estructura.",
+        educational:
+          "Picos de hambre, sueño post-comida o inflamación pueden indicar sensibilidad a carbohidratos y estrés.",
+        next72h: [
+          "Ordena platos: primero proteína/verduras, después carbohidratos",
+          "Incluye 1 porción extra de fibra al día (legumbres o verduras)",
+          "Movimiento diario 20 min (caminar rápido o fuerza ligera)",
         ],
+        nextStepShort:
+          "Ordena comidas (proteína/verduras primero), suma fibra diaria y muévete 20 min al día.",
+      };
+    }
+    if (score <= 7) {
+      return {
+        title: "Señales metabólicas claras",
+        summary:
+          "Hay señales más consistentes; vale la pena actuar pronto para recuperar energía y control del apetito.",
+        educational:
+          "Cuando la respuesta a la insulina se vuelve menos eficiente, aparecen antojos, cansancio y cintura inflamada.",
+        next72h: [
+          "Proteína + verduras en cada comida por 72h",
+          "Pausa ultraprocesados y harinas refinadas por 3 días",
+          "Duerme 7-8 h y baja pantallas 60 min antes de dormir",
+        ],
+        nextStepShort:
+          "Proteína+verduras cada comida, pausa ultraprocesados 72h y prioriza sueño 7-8 h.",
       };
     }
     return {
-      label: "Nivel Alto",
-      meaning:
-        "Tus respuestas sugieren señales claras de desbalance metabólico. Esto no es diagnóstico, pero sí una alerta útil para priorizar hábitos y seguimiento.",
-      risk:
-        "Si se ignora, podría aumentar el riesgo de resistencia a la insulina, aumento de grasa abdominal y cansancio persistente.",
-      plan: [
-        "Prioriza proteína magra + verduras en cada comida por 72h.",
-        "Corta ultraprocesados y harinas refinadas por 3 días.",
-        "Duerme 7-8 h y evita pantallas 60 min antes de dormir.",
+      title: "Señales metabólicas altas",
+      summary:
+        "Las señales son altas y merecen atención cercana para cuidarte con claridad.",
+      educational:
+        "Puede haber resistencia a la insulina o inflamación metabólica; no es diagnóstico, pero sí una alerta útil.",
+      next72h: [
+        "Comidas simples: proteína magra + verduras + grasa saludable",
+        "Evita azúcar y bebidas endulzadas por 72h",
+        "Hidratación constante y caminatas suaves post-comida",
       ],
+      nextStepShort:
+        "Comidas simples (proteína+verduras), evita azúcar 72h e hidrátate con caminatas suaves.",
     };
   }
 
-  function buildMediterraneanBullets() {
-    return [
-      "Vegetales en cada comida y fruta entera diaria.",
-      "Legumbres 3-4 veces por semana.",
-      "Granos integrales (avena, quinoa, arroz integral).",
-      "Aceite de oliva extra virgen y nueces como grasas principales.",
-      "Limitar ultraprocesados y azúcares añadidos.",
-    ];
+  function buildMediterraneanHabitText() {
+    return "Vegetales en cada comida, legumbres 3-4 veces/semana, aceite de oliva, pescado 2 veces/semana y menos ultraprocesados (muy respaldado por evidencia Harvard/PubMed).";
   }
 
-  function buildClinicalSuggestions() {
-    return [
-      "HbA1c (A1C)",
-      "Glucosa en ayunas",
-      "Curva de tolerancia a la glucosa 2h (OGTT)",
-      "Lípidos (opcional)",
-    ];
-  }
-
-  function buildResultText() {
-    const { fullName } = getLeadFresh();
+  function buildResultPayload() {
+    const { firstName } = getLeadFresh();
     const score = getScore();
-    const level = levelForScore(score);
-    const symptoms = getSymptoms();
-    const mediterranean = buildMediterraneanBullets();
-    const clinical = buildClinicalSuggestions();
+    const tier = tierForScore(score);
+    const symptomsForPanel = getSymptoms(6);
+    const symptomsForCompact = getSymptoms(3);
+    const greeting = firstName ? `Hola ${firstName}` : "Hola";
+    const symptomLine = symptomsForPanel.length
+      ? symptomsForPanel.join(", ")
+      : "No marcaste señales en esta pasada.";
+    const compactSymptoms = symptomsForCompact.length
+      ? symptomsForCompact.join(", ")
+      : "sin señales marcadas en esta pasada";
+    const alertBlock =
+      score >= 8
+        ? `<p class="resultAlert">Si hay signos de alarma (sed intensa, orinas muy frecuentes, visión borrosa, debilidad marcada, confusión, vómitos) → evaluación urgente.</p>`
+        : "";
 
-    const symptomsText = symptoms.length
-      ? symptoms.map((s) => `- ${s}`).join("\n")
-      : "- No marcaste síntomas en esta pasada.";
+    const html = `
+      <div class="resultTitle">${tier.title}</div>
+      <p>${greeting}. Gracias por completar el test.</p>
+      <p>Registraste ${score} señal(es). ${tier.summary}</p>
+      <p><strong>Señales marcadas:</strong> ${symptomLine}</p>
+      <ul>
+        <li><strong>Qué puede estar pasando (educativo):</strong> ${tier.educational}</li>
+        <li><strong>Siguiente paso 72h:</strong> ${tier.next72h.join(" · ")}</li>
+        <li><strong>Qué pedirle al médico:</strong> glucosa en ayunas, HbA1c, lípidos, presión.</li>
+        <li><strong>Hábitos Mediterráneo:</strong> ${buildMediterraneanHabitText()}</li>
+      </ul>
+      ${alertBlock}
+      <p>Educativo, no diagnóstico ni tratamiento; no sustituye asesoría médica personalizada.</p>
+    `;
 
-    const mediterraneanText = mediterranean.map((b) => `• ${b}`).join("\n");
-    const clinicalText = clinical.map((t) => `- ${t}`).join("\n");
+    const shareText = `Test Metabólico Express — Puntuación: ${score}/10. Señales: ${compactSymptoms}. Siguiente paso 72h: ${tier.nextStepShort} Educativo, no diagnóstico ni tratamiento; no sustituye asesoría médica personalizada.`;
+    const whatsappText = `${greeting}. Puntuación: ${score}/10. Señales: ${compactSymptoms}. Siguiente paso 72h: ${tier.nextStepShort} Educativo, no diagnóstico ni tratamiento; no sustituye asesoría médica personalizada.`;
 
-    return [
-      `Hola ${fullName},`,
-      "",
-      `${level.label}. Puntuación: ${score}. (Educativo, no diagnóstico).`,
-      "",
-      "Lo que marcaste:",
-      symptomsText,
-      "",
-      "Qué significa:",
-      level.meaning,
-      "",
-      "Riesgo si se ignora:",
-      level.risk,
-      "",
-      "Plan práctico 72h:",
-      level.plan.map((item) => `- ${item}`).join("\n"),
-      "",
-      "Mediterráneo (Harvard):",
-      mediterraneanText,
-      "",
-      "Habla con tu médico sobre labs:",
-      clinicalText,
-      "",
-      "Educativo, no diagnóstico, no sustituye evaluación médica personalizada.",
-      "Compártelo con 2 personas que quieran mejorar su salud metabólica.",
-    ].join("\n");
-  }
-
-  function buildWhatsAppBody() {
-    const score = getScore();
-    const level = levelForScore(score);
-    const symptoms = getSymptoms();
-    const mediterranean = buildMediterraneanBullets();
-    const clinical = buildClinicalSuggestions();
-
-    const symptomsText = symptoms.length
-      ? symptoms.map((s) => `- ${s}`).join("\n")
-      : "- No marcaste síntomas en esta pasada.";
-
-    const mediterraneanText = mediterranean.map((b) => `• ${b}`).join("\n");
-    const clinicalText = clinical.map((t) => `- ${t}`).join("\n");
-
-    return {
-      score,
-      levelLabel: level.label,
-      text: [
-        `${level.label}. Puntuación: ${score}/10. (Educativo, no diagnóstico).`,
-        "",
-        "Lo que marcaste:",
-        symptomsText,
-        "",
-        "Qué significa:",
-        level.meaning,
-        "",
-        "Riesgo si se ignora:",
-        level.risk,
-        "",
-        "Plan práctico 72h:",
-        level.plan.map((item) => `- ${item}`).join("\n"),
-        "",
-        "Mediterráneo (Harvard):",
-        mediterraneanText,
-        "",
-        "Habla con tu médico sobre labs:",
-        clinicalText,
-        "",
-        "Educativo, no diagnóstico, no sustituye evaluación médica personalizada.",
-        "Compártelo con 2 personas que quieran mejorar su salud metabólica.",
-      ].join("\n"),
-    };
+    return { html, shareText, whatsappText, score };
   }
 
   function setResultText(text) {
     const resultTarget = $("#lastResultText") || $("#resultText");
     if (resultTarget) {
-      resultTarget.textContent = text;
+      resultTarget.innerHTML = text;
       return;
     }
     const resultBox = $(".resultBox") || $("#resultBox");
@@ -329,25 +291,16 @@
     const paragraphs = $all("p", resultBox);
     const longParagraph = paragraphs.find((p) => cleanValue(p.textContent).length > 80);
     if (longParagraph) {
-      longParagraph.textContent = text;
+      longParagraph.innerHTML = text;
     }
-  }
-
-  function showGatingMessage(missing) {
-    const message = `Para darte tu resultado necesitas completar: ${missing.join(", ")}.`;
-    setResultText(message);
   }
 
   function applyExpertResult() {
-    const lead = getLeadFresh();
-    if (lead.missing.length) {
-      showGatingMessage(lead.missing);
-      return "";
-    }
-    const text = buildResultText();
-    setResultText(text);
-    window.lastResultText = text;
-    return text;
+    const payload = buildResultPayload();
+    setResultText(payload.html);
+    window.lastResultText = payload.shareText;
+    window.lastResultWhatsApp = payload.whatsappText;
+    return payload.html;
   }
 
   function getResultPanel() {
@@ -393,12 +346,6 @@
       (event) => {
         const lead = getLeadFresh();
         maybeRenderDebugInfo(lead);
-        if (lead.missing.length) {
-          event.preventDefault();
-          event.stopImmediatePropagation();
-          showGatingMessage(lead.missing);
-          return;
-        }
         applyExpertResult();
       },
       true
@@ -416,19 +363,11 @@
       (event) => {
         event.preventDefault();
         event.stopImmediatePropagation();
-        const { lead: storedLead } = getStoredLead();
         const lead = getLeadFresh();
         maybeRenderDebugInfo(lead);
-        if (lead.missing.length) {
-          alert(`Falta completar: ${lead.missing.join(", ")}.`);
-          showGatingMessage(lead.missing);
-          return;
-        }
         applyExpertResult();
-        const { text, score, levelLabel } = buildWhatsAppBody();
-        const headerLead = { ...(storedLead || {}), fullName: lead.fullName };
-        const headerLine = buildWhatsAppLeadHeader(headerLead, levelLabel, score);
-        const message = `${headerLine}\n\n${text}`;
+        const payload = buildResultPayload();
+        const message = payload.whatsappText;
         const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
         window.open(url, "_blank", "noopener");
       },
@@ -445,9 +384,6 @@
     const observer = new MutationObserver(() => {
       const lead = getLeadFresh();
       maybeRenderDebugInfo(lead);
-      if (lead.missing.length) {
-        return;
-      }
       applyExpertResult();
     });
 

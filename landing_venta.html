@@ -1769,14 +1769,22 @@ a.card.trustTile .pdrBoard{
                 </div>
 
                 <div id="leadWelcome" style="display:none;margin-top:14px">
-                  <div style="font-weight:700;margin-bottom:10px">✅ Bienvenido de vuelta. Tu email ya está registrado.</div>
+                  <div style="font-weight:700;margin-bottom:10px">✅ Bienvenido de vuelta. Solo confirma tu email para continuar.</div>
                   <div class="formActions">
                     <button class="btn btnSecondary" type="button" id="leadContinueBtn"><span>Continuar al test</span></button>
                     <a class="btn btnGhost" href="#" id="leadChangeEmail">Cambiar email</a>
                   </div>
                 </div>
 
-                <form id="leadEmailForm" autocomplete="on" style="margin-top:14px">
+                <div id="leadSelector" style="display:none;margin-top:14px">
+                  <div style="font-weight:700;margin-bottom:10px">¿Es tu primera vez con nosotros?</div>
+                  <div class="formActions">
+                    <button class="btn btnSecondary" type="button" id="leadFirstBtn"><span>Es mi primera vez</span></button>
+                    <button class="btn btnGhost" type="button" id="leadReturningBtn"><span>Ya estoy registrado</span></button>
+                  </div>
+                </div>
+
+                <form id="leadEmailForm" autocomplete="on" style="display:none;margin-top:14px">
                   <div class="formGrid">
                     <div>
                       <label for="leadEmail">Email</label>
@@ -1799,6 +1807,10 @@ a.card.trustTile .pdrBoard{
                       <input id="apellido" name="apellido" placeholder="Tu apellido" required />
                     </div>
                     <div>
+                      <label for="leadFullEmail">Email</label>
+                      <input id="leadFullEmail" name="email" type="email" placeholder="tucorreo@email.com" required />
+                    </div>
+                    <div>
                       <label for="phone">Teléfono (WhatsApp)</label>
                       <input id="phone" name="phone" inputmode="tel" placeholder="+52 81… / +1 787…" required />
                     </div>
@@ -1807,7 +1819,6 @@ a.card.trustTile .pdrBoard{
                       <input id="city" name="city" placeholder="Monterrey / San Nicolás / Guadalupe…" required />
                     </div>
                   </div>
-                  <input id="leadEmailHidden" name="email" type="hidden" />
                   <div class="formActions">
                     <button class="btn btnSecondary" type="submit" id="leadFullBtn"><span>Guardar y seguir</span></button>
                   </div>
@@ -1821,16 +1832,19 @@ a.card.trustTile .pdrBoard{
             (() => {
               const gateEl = document.getElementById("leadGate");
               const welcomeEl = document.getElementById("leadWelcome");
+              const selectorEl = document.getElementById("leadSelector");
               const emailForm = document.getElementById("leadEmailForm");
               const fullForm = document.getElementById("leadFullForm");
               const emailInput = document.getElementById("leadEmail");
-              const emailHidden = document.getElementById("leadEmailHidden");
+              const emailFullInput = document.getElementById("leadFullEmail");
               const firstNameEl = document.getElementById("nombre");
               const lastNameEl = document.getElementById("apellido");
               const cityEl = document.getElementById("city");
               const phoneEl = document.getElementById("phone");
               const continueBtn = document.getElementById("leadContinueBtn");
               const changeEmailBtn = document.getElementById("leadChangeEmail");
+              const firstBtn = document.getElementById("leadFirstBtn");
+              const returningBtn = document.getElementById("leadReturningBtn");
               const msgEl = document.getElementById("leadGateMsg");
               if (!gateEl || !emailForm || !fullForm || !msgEl) {
                 return;
@@ -1873,6 +1887,9 @@ a.card.trustTile .pdrBoard{
               const showState = (state) => {
                 if (welcomeEl) {
                   welcomeEl.style.display = state === "welcome" ? "block" : "none";
+                }
+                if (selectorEl) {
+                  selectorEl.style.display = state === "selector" ? "block" : "none";
                 }
                 emailForm.style.display = state === "email" ? "block" : "none";
                 fullForm.style.display = state === "full" ? "block" : "none";
@@ -1953,13 +1970,15 @@ a.card.trustTile .pdrBoard{
                   if (data.exists) {
                     saveAuth(email, { email });
                     showState("welcome");
-                    setMsg("✅ Email validado. Puedes continuar.", false);
+                    setMsg("✅ Email confirmado. Bajando al test…", false);
                     scrollToTest();
                     return;
                   }
-                  emailHidden.value = email;
+                  if (emailFullInput) {
+                    emailFullInput.value = email;
+                  }
                   showState("full");
-                  setMsg("Completa tus datos para continuar.", false);
+                  setMsg("No encontramos ese email. Completa tus datos para continuar.", true);
                 } catch (_) {
                   setMsg("No pudimos conectar. Intenta de nuevo.", true);
                 } finally {
@@ -1968,7 +1987,7 @@ a.card.trustTile .pdrBoard{
               };
 
               const handleFullSave = async () => {
-                const email = sanitize(emailHidden?.value, 160).toLowerCase();
+                const email = sanitize(emailFullInput?.value, 160).toLowerCase();
                 const firstName = sanitize(firstNameEl?.value, 80);
                 const lastName = sanitize(lastNameEl?.value, 80);
                 const city = sanitize(cityEl?.value, 120);
@@ -2028,7 +2047,7 @@ a.card.trustTile .pdrBoard{
               if (auth.ok && auth.email) {
                 showState("welcome");
               } else {
-                showState("email");
+                showState("selector");
               }
 
               emailForm.addEventListener("submit", (e) => {
@@ -2040,6 +2059,28 @@ a.card.trustTile .pdrBoard{
                 e.preventDefault();
                 handleFullSave();
               });
+
+              if (firstBtn) {
+                firstBtn.addEventListener("click", (e) => {
+                  e.preventDefault();
+                  showState("full");
+                  setMsg("", false);
+                  if (emailFullInput) {
+                    emailFullInput.value = "";
+                  }
+                });
+              }
+
+              if (returningBtn) {
+                returningBtn.addEventListener("click", (e) => {
+                  e.preventDefault();
+                  showState("email");
+                  setMsg("", false);
+                  if (emailInput) {
+                    emailInput.value = "";
+                  }
+                });
+              }
 
               if (continueBtn) {
                 continueBtn.addEventListener("click", (e) => {
@@ -2055,7 +2096,10 @@ a.card.trustTile .pdrBoard{
                   if (emailInput) {
                     emailInput.value = "";
                   }
-                  showState("email");
+                  if (emailFullInput) {
+                    emailFullInput.value = "";
+                  }
+                  showState("selector");
                   setMsg("", false);
                 });
               }

@@ -1,0 +1,58 @@
+name: Deploy Bariátrica Natural (MX)
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-bn-main
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install rsync
+        run: sudo apt-get update && sudo apt-get install -y rsync
+
+      - name: Setup SSH
+        env:
+          HOST: ${{ secrets.BN_DEPLOY_HOST }}
+          PORT: ${{ secrets.BN_DEPLOY_PORT }}
+          KEY:  ${{ secrets.BN_DEPLOY_SSH_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          echo "$KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -p "$PORT" -H "$HOST" >> ~/.ssh/known_hosts
+
+      - name: Deploy (rsync) — NO tocar leads
+        env:
+          HOST: ${{ secrets.BN_DEPLOY_HOST }}
+          PORT: ${{ secrets.BN_DEPLOY_PORT }}
+          USER: ${{ secrets.BN_DEPLOY_USER }}
+          DEST: ${{ secrets.BN_DEPLOY_PATH }}
+        run: |
+          rsync -az \
+            --exclude ".git/" \
+            --exclude ".github/" \
+            --exclude "docs/" \
+            --exclude "data/" \
+            --exclude "*.tar.gz" \
+            --exclude "*.zip" \
+            -e "ssh -p ${PORT}" \
+            ./ "${USER}@${HOST}:${DEST}/"
+
+      - name: Version marker
+        env:
+          HOST: ${{ secrets.BN_DEPLOY_HOST }}
+          PORT: ${{ secrets.BN_DEPLOY_PORT }}
+          USER: ${{ secrets.BN_DEPLOY_USER }}
+          DEST: ${{ secrets.BN_DEPLOY_PATH }}
+        run: |
+          ssh -p "${PORT}" "${USER}@${HOST}" "echo '${GITHUB_SHA}' > '${DEST}/__version.txt'"

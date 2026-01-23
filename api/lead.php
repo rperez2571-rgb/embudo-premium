@@ -1,6 +1,8 @@
 <?php
 // Simple lead capture endpoint for Bariátrica Natural landing
 header('Content-Type: application/json; charset=utf-8');
+ini_set('display_errors', '0');
+error_reporting(0);
 
 $CONFIG = [
   'webhook_url' => '', // opcional: ej. n8n/zapier
@@ -25,6 +27,10 @@ function respond_json($payload, $code = 200){
   exit;
 }
 
+function respond_error($code, $error, $message){
+  respond_json(['ok' => false, 'error' => $error, 'message' => $message], $code);
+}
+
 function log_error_msg($msg){
   $dirLogs = __DIR__ . '/../data/logs';
   if(!is_dir($dirLogs)){
@@ -41,20 +47,21 @@ function log_error_msg($msg){
   }
 }
 
-if($_SERVER['REQUEST_METHOD'] !== 'POST'){
-  respond_json(['ok' => false, 'message' => 'Método no permitido'], 405);
-}
-
-$raw = file_get_contents('php://input');
-$contentType = $_SERVER['CONTENT_TYPE'] ?? '';
+$method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 $payload = [];
 
-if(stripos($contentType, 'application/json') !== false){
-  $payload = json_decode($raw, true) ?? [];
+if($method === 'GET'){
+  $payload = $_GET;
 }else{
-  $payload = $_POST;
-  if(empty($payload) && $raw){
-    parse_str($raw, $payload);
+  $raw = file_get_contents('php://input');
+  $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
+  if(stripos($contentType, 'application/json') !== false){
+    $payload = json_decode($raw, true) ?? [];
+  }else{
+    $payload = $_POST;
+    if(empty($payload) && $raw){
+      parse_str($raw, $payload);
+    }
   }
 }
 
@@ -182,7 +189,7 @@ $segment = $segment ?: 'consumo';
 $honeypot = clean_str($payload['website'] ?? ($payload['hp'] ?? ''), 40);
 
 if($honeypot !== ''){
-  respond_json(['ok' => false, 'message' => 'Error de validación'], 400);
+  respond_error(400, 'VALIDATION_FAIL', 'Error de validación');
 }
 
 $action = strtolower(clean_str($payload['action'] ?? '', 20));
@@ -190,48 +197,77 @@ if($action === ''){
   $action = 'upsert';
 }
 
+if($action === 'ping'){
+  respond_json(['ok' => true, 'pong' => true]);
+}
+
+if($method !== 'POST'){
+  respond_error(405, 'METHOD_NOT_ALLOWED', 'Método no permitido');
+}
+
 $emailNormalized = normalize_email($fields['email']);
 
 if($action === 'check'){
   if($emailNormalized === '' || !filter_var($emailNormalized, FILTER_VALIDATE_EMAIL)){
-    respond_json(['ok' => false, 'message' => 'Email inválido'], 422);
+    respond_error(422, 'VALIDATION_FAIL', 'Email inválido');
   }
 
   $dir = __DIR__ . '/../data';
   $file = $dir . '/leads.csv';
+  if(!is_dir($dir) && !mkdir($dir, 0755, true)){
+    respond_error(500, 'WRITE_FAIL', 'No se pudo preparar almacenamiento');
+  }
   if(!file_exists($file)){
+    $header = ['timestamp', 'name', 'city', 'email', 'phone', 'segment'];
+    $fpInit = @fopen($file, 'c+');
+    if(!$fpInit){
+      respond_error(500, 'WRITE_FAIL', 'No se pudo preparar almacenamiento');
+    }
+    if(!flock($fpInit, LOCK_EX)){
+      fclose($fpInit);
+      respond_error(500, 'WRITE_FAIL', 'No se pudo preparar almacenamiento');
+    }
+    $current = fgetcsv($fpInit);
+    if($current === false){
+      rewind($fpInit);
+      fputcsv($fpInit, $header);
+    }
+    flock($fpInit, LOCK_UN);
+    fclose($fpInit);
     respond_json(['ok' => true, 'exists' => false]);
   }
   $fp = @fopen($file, 'r');
   if(!$fp){
-    respond_json(['ok' => false, 'message' => 'No se pudo leer'], 500);
+    respond_error(500, 'READ_FAIL', 'No se pudo leer');
   }
   $exists = false;
-  if(flock($fp, LOCK_SH)){
-    $header = fgetcsv($fp);
-    $emailIndex = 3;
-    if(is_array($header)){
-      foreach($header as $idx => $col){
-        if(strtolower(trim($col)) === 'email'){
-          $emailIndex = $idx;
-          break;
-        }
-      }
-    }
-    while(($row = fgetcsv($fp)) !== false){
-      if(isset($row[$emailIndex]) && normalize_email($row[$emailIndex]) === $emailNormalized){
-        $exists = true;
+  if(!flock($fp, LOCK_SH)){
+    fclose($fp);
+    respond_error(500, 'READ_FAIL', 'No se pudo leer');
+  }
+  $header = fgetcsv($fp);
+  $emailIndex = 3;
+  if(is_array($header)){
+    foreach($header as $idx => $col){
+      if(strtolower(trim($col)) === 'email'){
+        $emailIndex = $idx;
         break;
       }
     }
-    flock($fp, LOCK_UN);
   }
+  while(($row = fgetcsv($fp)) !== false){
+    if(isset($row[$emailIndex]) && normalize_email($row[$emailIndex]) === $emailNormalized){
+      $exists = true;
+      break;
+    }
+  }
+  flock($fp, LOCK_UN);
   fclose($fp);
   respond_json(['ok' => true, 'exists' => $exists]);
 }
 
 if($action !== 'upsert'){
-  respond_json(['ok' => false, 'message' => 'Acción inválida'], 400);
+  respond_error(400, 'VALIDATION_FAIL', 'Acción inválida');
 }
 
 if($fields['name'] === ''){
@@ -242,17 +278,17 @@ if($fields['name'] === ''){
 
 foreach($fields as $key => $value){
   if($value === ''){
-    respond_json(['ok' => false, 'message' => 'Completa todos los campos'], 422);
+    respond_error(422, 'VALIDATION_FAIL', 'Completa todos los campos');
   }
 }
 
 if(!filter_var($emailNormalized, FILTER_VALIDATE_EMAIL)){
-  respond_json(['ok' => false, 'message' => 'Email inválido'], 422);
+  respond_error(422, 'VALIDATION_FAIL', 'Email inválido');
 }
 
 $digits = preg_replace('/\D+/', '', $fields['phone']);
 if(strlen($digits) < 7 || strlen($digits) > 20){
-  respond_json(['ok' => false, 'message' => 'Teléfono inválido'], 422);
+  respond_error(422, 'VALIDATION_FAIL', 'Teléfono inválido');
 }
 
 $fields['email'] = $emailNormalized;
@@ -260,18 +296,18 @@ $fieldsSafe = array_map('csv_safe', $fields);
 
 $dir = __DIR__ . '/../data';
 if(!is_dir($dir) && !mkdir($dir, 0755, true)){
-  respond_json(['ok' => false, 'message' => 'No se pudo preparar almacenamiento'], 500);
+  respond_error(500, 'WRITE_FAIL', 'No se pudo preparar almacenamiento');
 }
 
 $file = $dir . '/leads.csv';
 $fp = @fopen($file, 'c+');
 if(!$fp){
-  respond_json(['ok' => false, 'message' => 'No se pudo guardar'], 500);
+  respond_error(500, 'WRITE_FAIL', 'No se pudo guardar');
 }
 
 if(!flock($fp, LOCK_EX)){
   fclose($fp);
-  respond_json(['ok' => false, 'message' => 'No se pudo guardar'], 500);
+  respond_error(500, 'WRITE_FAIL', 'No se pudo guardar');
 }
 
 rewind($fp);

@@ -1768,6 +1768,14 @@ a.card.trustTile .pdrBoard{
                   <input id="website" name="website" tabindex="-1" autocomplete="off" />
                 </div>
 
+                <div id="leadChoice" style="margin-top:14px">
+                  <div style="font-weight:700;margin-bottom:10px">¿Cómo quieres continuar?</div>
+                  <div class="formActions">
+                    <button class="btn btnGhost" type="button" id="leadNewBtn">Soy nuevo</button>
+                    <button class="btn btnSecondary" type="button" id="leadExistingBtn">Ya estoy inscrito</button>
+                  </div>
+                </div>
+
                 <div id="leadWelcome" style="display:none;margin-top:14px">
                   <div style="font-weight:700;margin-bottom:10px">✅ Bienvenido de vuelta. Tu email ya está registrado.</div>
                   <div class="formActions">
@@ -1776,7 +1784,7 @@ a.card.trustTile .pdrBoard{
                   </div>
                 </div>
 
-                <form id="leadEmailForm" autocomplete="on" style="margin-top:14px">
+                <form id="leadEmailForm" autocomplete="on" style="display:none;margin-top:14px">
                   <div class="formGrid">
                     <div>
                       <label for="leadEmail">Email</label>
@@ -1799,6 +1807,10 @@ a.card.trustTile .pdrBoard{
                       <input id="apellido" name="apellido" placeholder="Tu apellido" required />
                     </div>
                     <div>
+                      <label for="leadEmailFull">Email</label>
+                      <input id="leadEmailFull" name="email" type="email" placeholder="tucorreo@email.com" required />
+                    </div>
+                    <div>
                       <label for="phone">Teléfono (WhatsApp)</label>
                       <input id="phone" name="phone" inputmode="tel" placeholder="+52 81… / +1 787…" required />
                     </div>
@@ -1807,7 +1819,6 @@ a.card.trustTile .pdrBoard{
                       <input id="city" name="city" placeholder="Monterrey / San Nicolás / Guadalupe…" required />
                     </div>
                   </div>
-                  <input id="leadEmailHidden" name="email" type="hidden" />
                   <div class="formActions">
                     <button class="btn btnSecondary" type="submit" id="leadFullBtn"><span>Guardar y seguir</span></button>
                   </div>
@@ -1820,17 +1831,20 @@ a.card.trustTile .pdrBoard{
           <script id="save-continue-handler-v1">
             (() => {
               const gateEl = document.getElementById("leadGate");
+              const choiceEl = document.getElementById("leadChoice");
               const welcomeEl = document.getElementById("leadWelcome");
               const emailForm = document.getElementById("leadEmailForm");
               const fullForm = document.getElementById("leadFullForm");
               const emailInput = document.getElementById("leadEmail");
-              const emailHidden = document.getElementById("leadEmailHidden");
+              const emailFullInput = document.getElementById("leadEmailFull");
               const firstNameEl = document.getElementById("nombre");
               const lastNameEl = document.getElementById("apellido");
               const cityEl = document.getElementById("city");
               const phoneEl = document.getElementById("phone");
               const continueBtn = document.getElementById("leadContinueBtn");
               const changeEmailBtn = document.getElementById("leadChangeEmail");
+              const newBtn = document.getElementById("leadNewBtn");
+              const existingBtn = document.getElementById("leadExistingBtn");
               const msgEl = document.getElementById("leadGateMsg");
               if (!gateEl || !emailForm || !fullForm || !msgEl) {
                 return;
@@ -1871,6 +1885,9 @@ a.card.trustTile .pdrBoard{
               const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
               const showState = (state) => {
+                if (choiceEl) {
+                  choiceEl.style.display = state === "choice" ? "block" : "none";
+                }
                 if (welcomeEl) {
                   welcomeEl.style.display = state === "welcome" ? "block" : "none";
                 }
@@ -1927,6 +1944,37 @@ a.card.trustTile .pdrBoard{
                 btnEl.disabled = !!loading;
               };
 
+              const postLead = async (payload) => {
+                const body = new URLSearchParams();
+                Object.entries(payload || {}).forEach(([key, value]) => {
+                  body.append(key, value == null ? "" : String(value));
+                });
+                const resp = await fetch("api/lead.php", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+                  body
+                });
+                const raw = await resp.text();
+                let data = null;
+                try {
+                  data = JSON.parse(raw);
+                } catch (_) {
+                  data = null;
+                }
+                if (!resp.ok) {
+                  return {
+                    ok: false,
+                    status: resp.status,
+                    data,
+                    message: (data && data.message) || "No pudimos conectar. Intenta de nuevo."
+                  };
+                }
+                if (!data) {
+                  return { ok: false, status: resp.status, data: null, message: "Respuesta inválida del servidor." };
+                }
+                return { ok: true, status: resp.status, data };
+              };
+
               const handleEmailCheck = async () => {
                 const email = sanitize(emailInput?.value, 160).toLowerCase();
                 if (!emailRegex.test(email)) {
@@ -1936,39 +1984,36 @@ a.card.trustTile .pdrBoard{
                 setMsg("", false);
                 setLoading(document.getElementById("leadEmailBtn"), true);
                 try {
-                  const resp = await fetch("api/lead.php", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                      action: "check",
-                      email,
-                      hp: document.getElementById("website")?.value || ""
-                    })
+                  const result = await postLead({
+                    action: "check",
+                    email,
+                    hp: document.getElementById("website")?.value || ""
                   });
-                  const data = await resp.json();
-                  if (!data || !data.ok) {
-                    setMsg("No pudimos validar el email. Intenta de nuevo.", true);
+                  if (!result.ok || !result.data || !result.data.ok) {
+                    setMsg(result.message || "No pudimos validar el email. Intenta de nuevo.", true);
                     return;
                   }
-                  if (data.exists) {
+                  if (result.data.exists) {
                     saveAuth(email, { email });
                     showState("welcome");
                     setMsg("✅ Email validado. Puedes continuar.", false);
                     scrollToTest();
                     return;
                   }
-                  emailHidden.value = email;
+                  if (emailFullInput) {
+                    emailFullInput.value = email;
+                  }
                   showState("full");
-                  setMsg("Completa tus datos para continuar.", false);
-                } catch (_) {
-                  setMsg("No pudimos conectar. Intenta de nuevo.", true);
+                  setMsg("No encontramos ese email. Completa tus datos para registrarte.", true);
+                } catch (err) {
+                  setMsg(err?.message || "No pudimos conectar. Intenta de nuevo.", true);
                 } finally {
                   setLoading(document.getElementById("leadEmailBtn"), false);
                 }
               };
 
               const handleFullSave = async () => {
-                const email = sanitize(emailHidden?.value, 160).toLowerCase();
+                const email = sanitize(emailFullInput?.value, 160).toLowerCase();
                 const firstName = sanitize(firstNameEl?.value, 80);
                 const lastName = sanitize(lastNameEl?.value, 80);
                 const city = sanitize(cityEl?.value, 120);
@@ -1996,14 +2041,9 @@ a.card.trustTile .pdrBoard{
                     phone,
                     hp: document.getElementById("website")?.value || ""
                   };
-                  const resp = await fetch("api/lead.php", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload)
-                  });
-                  const data = await resp.json();
-                  if (!data || !data.ok) {
-                    setMsg("No pudimos guardar tus datos. Intenta de nuevo.", true);
+                  const result = await postLead(payload);
+                  if (!result.ok || !result.data || !result.data.ok) {
+                    setMsg(result.message || "No pudimos guardar tus datos. Intenta de nuevo.", true);
                     return;
                   }
                   saveAuth(email, {
@@ -2015,10 +2055,14 @@ a.card.trustTile .pdrBoard{
                     phone
                   });
                   showState("welcome");
-                  setMsg("✅ Guardado. Bajando al test…", false);
+                  if (result.data.status === "exists") {
+                    setMsg("✅ Tu email ya estaba registrado. Puedes continuar.", false);
+                  } else {
+                    setMsg("✅ Guardado. Bajando al test…", false);
+                  }
                   scrollToTest();
-                } catch (_) {
-                  setMsg("No pudimos conectar. Intenta de nuevo.", true);
+                } catch (err) {
+                  setMsg(err?.message || "No pudimos conectar. Intenta de nuevo.", true);
                 } finally {
                   setLoading(document.getElementById("leadFullBtn"), false);
                 }
@@ -2028,7 +2072,7 @@ a.card.trustTile .pdrBoard{
               if (auth.ok && auth.email) {
                 showState("welcome");
               } else {
-                showState("email");
+                showState("choice");
               }
 
               emailForm.addEventListener("submit", (e) => {
@@ -2055,6 +2099,25 @@ a.card.trustTile .pdrBoard{
                   if (emailInput) {
                     emailInput.value = "";
                   }
+                  if (emailFullInput) {
+                    emailFullInput.value = "";
+                  }
+                  showState("choice");
+                  setMsg("", false);
+                });
+              }
+
+              if (newBtn) {
+                newBtn.addEventListener("click", (e) => {
+                  e.preventDefault();
+                  showState("full");
+                  setMsg("", false);
+                });
+              }
+
+              if (existingBtn) {
+                existingBtn.addEventListener("click", (e) => {
+                  e.preventDefault();
                   showState("email");
                   setMsg("", false);
                 });

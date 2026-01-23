@@ -1953,7 +1953,7 @@ a.card.trustTile .pdrBoard{
                 setMsg("", false);
                 setLoading(document.getElementById("leadEmailBtn"), true);
                 try {
-                  const resp = await fetch("api/lead.php", {
+                  const resp = await fetch("/api/lead.php", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
@@ -1964,7 +1964,7 @@ a.card.trustTile .pdrBoard{
                   });
                   const data = await resp.json();
                   if (!data || !data.ok) {
-                    setMsg("No pudimos validar el email. Intenta de nuevo.", true);
+                    setMsg("No pudimos conectar. Intenta de nuevo en 10 segundos.", true);
                     return;
                   }
                   if (data.exists) {
@@ -1978,9 +1978,9 @@ a.card.trustTile .pdrBoard{
                     emailFullInput.value = email;
                   }
                   showState("full");
-                  setMsg("No encontramos ese email. Completa tus datos para continuar.", true);
+                  setMsg("No encontramos ese email. Regístrate para continuar.", true);
                 } catch (_) {
-                  setMsg("No pudimos conectar. Intenta de nuevo.", true);
+                  setMsg("No pudimos conectar. Intenta de nuevo en 10 segundos.", true);
                 } finally {
                   setLoading(document.getElementById("leadEmailBtn"), false);
                 }
@@ -2015,14 +2015,14 @@ a.card.trustTile .pdrBoard{
                     phone,
                     hp: document.getElementById("website")?.value || ""
                   };
-                  const resp = await fetch("api/lead.php", {
+                  const resp = await fetch("/api/lead.php", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(payload)
                   });
                   const data = await resp.json();
                   if (!data || !data.ok) {
-                    setMsg("No pudimos guardar tus datos. Intenta de nuevo.", true);
+                    setMsg("No pudimos conectar. Intenta de nuevo en 10 segundos.", true);
                     return;
                   }
                   saveAuth(email, {
@@ -2037,7 +2037,7 @@ a.card.trustTile .pdrBoard{
                   setMsg("✅ Guardado. Bajando al test…", false);
                   scrollToTest();
                 } catch (_) {
-                  setMsg("No pudimos conectar. Intenta de nuevo.", true);
+                  setMsg("No pudimos conectar. Intenta de nuevo en 10 segundos.", true);
                 } finally {
                   setLoading(document.getElementById("leadFullBtn"), false);
                 }
@@ -2792,7 +2792,7 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
     async function postLead(data){
       const body = { ...data, hp: document.getElementById("website")?.value || "" };
       if(UTM_QUERY){ body.utm = UTM_QUERY; }
-      const resp = await fetch("api/lead.php", {
+      const resp = await fetch("/api/lead.php", {
         method: "POST",
         headers: {"Content-Type":"application/json"},
         body: JSON.stringify(body)
@@ -2849,7 +2849,7 @@ Si quieres emprender con una <strong>compañía global</strong> y construir una 
       try{
         result = await postLead(data);
       }catch(_){
-        result = {ok:false, message:"No se pudo guardar"};
+        result = {ok:false, message:"No pudimos conectar. Intenta de nuevo en 10 segundos."};
       }
 
       if(!result || !result.ok){

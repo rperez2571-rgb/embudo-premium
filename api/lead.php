@@ -19,9 +19,9 @@ $CONFIG = [
   ]
 ];
 
-function respond($ok, $message, $code = 200){
+function respond_json($payload, $code = 200){
   http_response_code($code);
-  echo json_encode(['ok' => $ok, 'message' => $message]);
+  echo json_encode($payload);
   exit;
 }
 
@@ -42,7 +42,7 @@ function log_error_msg($msg){
 }
 
 if($_SERVER['REQUEST_METHOD'] !== 'POST'){
-  respond(false, 'Método no permitido', 405);
+  respond_json(['ok' => false, 'message' => 'Método no permitido'], 405);
 }
 
 $raw = file_get_contents('php://input');
@@ -70,6 +70,10 @@ function clean_str($value, $limit = 160){
     }
   }
   return $value;
+}
+
+function normalize_email($value){
+  return strtolower(trim((string)$value));
 }
 
 function csv_safe($value){
@@ -178,47 +182,133 @@ $segment = $segment ?: 'consumo';
 $honeypot = clean_str($payload['website'] ?? ($payload['hp'] ?? ''), 40);
 
 if($honeypot !== ''){
-  respond(false, 'Error de validación', 400);
+  respond_json(['ok' => false, 'message' => 'Error de validación'], 400);
+}
+
+$action = strtolower(clean_str($payload['action'] ?? '', 20));
+if($action === ''){
+  $action = 'upsert';
+}
+
+$emailNormalized = normalize_email($fields['email']);
+
+if($action === 'check'){
+  if($emailNormalized === '' || !filter_var($emailNormalized, FILTER_VALIDATE_EMAIL)){
+    respond_json(['ok' => false, 'message' => 'Email inválido'], 422);
+  }
+
+  $dir = __DIR__ . '/../data';
+  $file = $dir . '/leads.csv';
+  if(!file_exists($file)){
+    respond_json(['ok' => true, 'exists' => false]);
+  }
+  $fp = @fopen($file, 'r');
+  if(!$fp){
+    respond_json(['ok' => false, 'message' => 'No se pudo leer'], 500);
+  }
+  $exists = false;
+  if(flock($fp, LOCK_SH)){
+    $header = fgetcsv($fp);
+    $emailIndex = 3;
+    if(is_array($header)){
+      foreach($header as $idx => $col){
+        if(strtolower(trim($col)) === 'email'){
+          $emailIndex = $idx;
+          break;
+        }
+      }
+    }
+    while(($row = fgetcsv($fp)) !== false){
+      if(isset($row[$emailIndex]) && normalize_email($row[$emailIndex]) === $emailNormalized){
+        $exists = true;
+        break;
+      }
+    }
+    flock($fp, LOCK_UN);
+  }
+  fclose($fp);
+  respond_json(['ok' => true, 'exists' => $exists]);
+}
+
+if($action !== 'upsert'){
+  respond_json(['ok' => false, 'message' => 'Acción inválida'], 400);
+}
+
+if($fields['name'] === ''){
+  $firstName = clean_str($payload['first_name'] ?? '', 80);
+  $lastName = clean_str($payload['last_name'] ?? '', 80);
+  $fields['name'] = trim($firstName . ' ' . $lastName);
 }
 
 foreach($fields as $key => $value){
   if($value === ''){
-    respond(false, 'Completa todos los campos', 422);
+    respond_json(['ok' => false, 'message' => 'Completa todos los campos'], 422);
   }
 }
 
-if(!filter_var($fields['email'], FILTER_VALIDATE_EMAIL)){
-  respond(false, 'Email inválido', 422);
+if(!filter_var($emailNormalized, FILTER_VALIDATE_EMAIL)){
+  respond_json(['ok' => false, 'message' => 'Email inválido'], 422);
 }
 
 $digits = preg_replace('/\D+/', '', $fields['phone']);
 if(strlen($digits) < 7 || strlen($digits) > 20){
-  respond(false, 'Teléfono inválido', 422);
+  respond_json(['ok' => false, 'message' => 'Teléfono inválido'], 422);
 }
 
+$fields['email'] = $emailNormalized;
 $fieldsSafe = array_map('csv_safe', $fields);
 
 $dir = __DIR__ . '/../data';
 if(!is_dir($dir) && !mkdir($dir, 0755, true)){
-  respond(false, 'No se pudo preparar almacenamiento', 500);
+  respond_json(['ok' => false, 'message' => 'No se pudo preparar almacenamiento'], 500);
 }
 
 $file = $dir . '/leads.csv';
-$fileExisted = file_exists($file);
-$fp = @fopen($file, 'a');
+$fp = @fopen($file, 'c+');
 if(!$fp){
-  respond(false, 'No se pudo guardar', 500);
+  respond_json(['ok' => false, 'message' => 'No se pudo guardar'], 500);
 }
 
 if(!flock($fp, LOCK_EX)){
   fclose($fp);
-  respond(false, 'No se pudo guardar', 500);
+  respond_json(['ok' => false, 'message' => 'No se pudo guardar'], 500);
 }
 
-if(!$fileExisted){
-  fputcsv($fp, ['timestamp', 'name', 'city', 'email', 'phone', 'segment']);
+rewind($fp);
+$header = fgetcsv($fp);
+$emailIndex = 3;
+$hasHeader = is_array($header) && count($header) >= 4;
+if($hasHeader){
+  foreach($header as $idx => $col){
+    if(strtolower(trim($col)) === 'email'){
+      $emailIndex = $idx;
+      break;
+    }
+  }
+} else {
+  $header = ['timestamp', 'name', 'city', 'email', 'phone', 'segment'];
 }
 
+$exists = false;
+while(($row = fgetcsv($fp)) !== false){
+  if(isset($row[$emailIndex]) && normalize_email($row[$emailIndex]) === $emailNormalized){
+    $exists = true;
+    break;
+  }
+}
+
+if(!$hasHeader){
+  rewind($fp);
+  fputcsv($fp, $header);
+}
+
+if($exists){
+  flock($fp, LOCK_UN);
+  fclose($fp);
+  respond_json(['ok' => true, 'status' => 'exists']);
+}
+
+fseek($fp, 0, SEEK_END);
 fputcsv($fp, [date('c'), $fieldsSafe['name'], $fieldsSafe['city'], $fieldsSafe['email'], $fieldsSafe['phone'], $segment]);
 flock($fp, LOCK_UN);
 fclose($fp);
@@ -242,4 +332,4 @@ if(!send_welcome_email_placeholder($CONFIG, $leadPayload, $segment)){
   log_error_msg('Welcome email failed for ' . $fieldsSafe['email']);
 }
 
-respond(true, 'Gracias, recibido');
+respond_json(['ok' => true, 'status' => 'created']);

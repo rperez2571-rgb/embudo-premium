@@ -1762,51 +1762,80 @@ a.card.trustTile .pdrBoard{
               </div>
                   
 
-              <form id="leadForm" autocomplete="on">
+              <div id="leadGate">
                 <div style="position:absolute;left:-9999px;opacity:0;pointer-events:none" aria-hidden="true">
                   <label for="website">Sitio web</label>
                   <input id="website" name="website" tabindex="-1" autocomplete="off" />
                 </div>
-                <div class="formGrid" style="margin-top:14px">
-                  <div>
-                    <label for="name">Nombre</label>
-                    <input id="name" name="name" placeholder="Tu nombre" required />
-                  </div>
-                  <div>
-                    <label for="city">Ciudad</label>
-                    <input id="city" name="city" placeholder="Monterrey / San Nicolás / Guadalupe…" required />
-                  </div>
-                  <div>
-                    <label for="email">Email</label>
-                    <input id="email" name="email" type="email" placeholder="tucorreo@email.com" required />
-                  </div>
-                  <div>
-                    <label for="phone">Teléfono (WhatsApp)</label>
-                    <input id="phone" name="phone" inputmode="tel" placeholder="+52 81… / +1 787…" required />
+
+                <div id="leadWelcome" style="display:none;margin-top:14px">
+                  <div style="font-weight:700;margin-bottom:10px">✅ Bienvenido de vuelta. Tu email ya está registrado.</div>
+                  <div class="formActions">
+                    <button class="btn btnSecondary" type="button" id="leadContinueBtn"><span>Continuar al test</span></button>
+                    <a class="btn btnGhost" href="#" id="leadChangeEmail">Cambiar email</a>
                   </div>
                 </div>
 
-                <div class="formActions">
-                  <button class="btn btnSecondary" type="button" id="saveContinueBtn"><span>Guardar y seguir</span></button>
-                </div>
+                <form id="leadEmailForm" autocomplete="on" style="margin-top:14px">
+                  <div class="formGrid">
+                    <div>
+                      <label for="leadEmail">Email</label>
+                      <input id="leadEmail" name="email" type="email" placeholder="tucorreo@email.com" required />
+                    </div>
+                  </div>
+                  <div class="formActions">
+                    <button class="btn btnSecondary" type="submit" id="leadEmailBtn"><span>Continuar</span></button>
+                  </div>
+                </form>
 
-                <div class="consent" id="saveContinueMsg" role="status" aria-live="polite" style="display:none"></div>
-              </form>
+                <form id="leadFullForm" autocomplete="on" style="display:none;margin-top:14px">
+                  <div class="formGrid">
+                    <div>
+                      <label for="nombre">Nombre</label>
+                      <input id="nombre" name="nombre" placeholder="Tu nombre" required />
+                    </div>
+                    <div>
+                      <label for="apellido">Apellido</label>
+                      <input id="apellido" name="apellido" placeholder="Tu apellido" required />
+                    </div>
+                    <div>
+                      <label for="phone">Teléfono (WhatsApp)</label>
+                      <input id="phone" name="phone" inputmode="tel" placeholder="+52 81… / +1 787…" required />
+                    </div>
+                    <div>
+                      <label for="city">Ciudad/Estado</label>
+                      <input id="city" name="city" placeholder="Monterrey / San Nicolás / Guadalupe…" required />
+                    </div>
+                  </div>
+                  <input id="leadEmailHidden" name="email" type="hidden" />
+                  <div class="formActions">
+                    <button class="btn btnSecondary" type="submit" id="leadFullBtn"><span>Guardar y seguir</span></button>
+                  </div>
+                </form>
+
+                <div class="consent" id="leadGateMsg" role="status" aria-live="polite" style="display:none"></div>
+              </div>
             </div>
           </div>
           <script id="save-continue-handler-v1">
             (() => {
-              const formEl = document.getElementById("leadForm");
-              const btn = document.getElementById("saveContinueBtn");
-              const msgEl = document.getElementById("saveContinueMsg");
-              if (!formEl || !btn || !msgEl) {
+              const gateEl = document.getElementById("leadGate");
+              const welcomeEl = document.getElementById("leadWelcome");
+              const emailForm = document.getElementById("leadEmailForm");
+              const fullForm = document.getElementById("leadFullForm");
+              const emailInput = document.getElementById("leadEmail");
+              const emailHidden = document.getElementById("leadEmailHidden");
+              const firstNameEl = document.getElementById("nombre");
+              const lastNameEl = document.getElementById("apellido");
+              const cityEl = document.getElementById("city");
+              const phoneEl = document.getElementById("phone");
+              const continueBtn = document.getElementById("leadContinueBtn");
+              const changeEmailBtn = document.getElementById("leadChangeEmail");
+              const msgEl = document.getElementById("leadGateMsg");
+              if (!gateEl || !emailForm || !fullForm || !msgEl) {
                 return;
               }
 
-              const nameEl = document.getElementById("name");
-              const cityEl = document.getElementById("city");
-              const emailEl = document.getElementById("email");
-              const phoneEl = document.getElementById("phone");
               const findTestTarget = () => {
                 const headings = Array.from(document.querySelectorAll("h1,h2,h3,h4,h5,h6"));
                 const metabHeading = headings.find((heading) =>
@@ -1841,98 +1870,195 @@ a.card.trustTile .pdrBoard{
 
               const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-              const getMissingFields = (data) => {
-                const missing = [];
-                const nameParts = data.name.split(/\s+/).filter(Boolean);
-                if (nameParts.length < 2) {
-                  missing.push("Nombre y apellido");
+              const showState = (state) => {
+                if (welcomeEl) {
+                  welcomeEl.style.display = state === "welcome" ? "block" : "none";
                 }
-                if (!emailRegex.test(data.email)) {
-                  missing.push("Email");
-                }
-                const phoneDigits = data.phone.replace(/\D+/g, "");
-                if (phoneDigits.length < 10) {
-                  missing.push("Teléfono");
-                }
-                return missing;
+                emailForm.style.display = state === "email" ? "block" : "none";
+                fullForm.style.display = state === "full" ? "block" : "none";
               };
 
-              const handleSave = async () => {
-                const data = {
-                  name: sanitize(nameEl?.value, 120),
-                  city: sanitize(cityEl?.value, 120),
-                  email: sanitize(emailEl?.value, 160),
-                  phone: sanitize(phoneEl?.value, 40),
-                  ts: new Date().toISOString()
-                };
-
-                const missing = getMissingFields(data);
-                if (missing.length) {
-                  setMsg(`Falta: ${missing.join(" / ")}`, true);
-                  return;
-                }
-
-                try {
-                  localStorage.setItem(
-                    "bn_lead",
-                    JSON.stringify({
-                      fullName: data.name,
-                      name: data.name,
-                      city: data.city,
-                      email: data.email,
-                      phone: data.phone,
-                      ts: data.ts
-                    })
-                  );
-                } catch (_) {}
-
-                let storedLead = "";
-                try {
-                  storedLead = localStorage.getItem("bn_lead") || "";
-                } catch (_) {}
-
-                if (storedLead) {
-                  setMsg("✅ Guardado. Bajando al test…", false);
-                }
-
-                try {
-                  const body = {
-                    name: data.name,
-                    city: data.city,
-                    email: data.email,
-                    phone: data.phone,
-                    ts: data.ts,
-                    hp: document.getElementById("website")?.value || ""
-                  };
-                  const resp = await fetch("api/lead.php", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(body)
-                  });
-                  await resp.json().catch(() => null);
-                } catch (_) {}
-
+              const scrollToTest = () => {
                 const testTarget = findTestTarget();
                 if (testTarget) {
                   testTarget.scrollIntoView({ behavior: "smooth", block: "start" });
                   return;
                 }
-
                 const fallbackScroll = Math.round(document.documentElement.scrollHeight * 0.4);
                 window.scrollTo({ top: fallbackScroll, behavior: "smooth" });
-                setMsg("✅ Guardado. Baja un poco para ver el test.", false);
               };
 
-              btn.addEventListener("click", (e) => {
+              const saveAuth = (email, leadData = {}) => {
+                try {
+                  localStorage.setItem("bn_ok", "1");
+                  localStorage.setItem("bn_email", email);
+                  localStorage.setItem(
+                    "bn_lead",
+                    JSON.stringify({
+                      ...leadData,
+                      email,
+                      ts: new Date().toISOString()
+                    })
+                  );
+                } catch (_) {}
+              };
+
+              const clearAuth = () => {
+                try {
+                  localStorage.removeItem("bn_ok");
+                  localStorage.removeItem("bn_email");
+                } catch (_) {}
+              };
+
+              const getStoredAuth = () => {
+                try {
+                  return {
+                    ok: localStorage.getItem("bn_ok") === "1",
+                    email: localStorage.getItem("bn_email") || ""
+                  };
+                } catch (_) {
+                  return { ok: false, email: "" };
+                }
+              };
+
+              const setLoading = (btnEl, loading) => {
+                if (!btnEl) return;
+                btnEl.setAttribute("aria-busy", loading ? "true" : "false");
+                btnEl.disabled = !!loading;
+              };
+
+              const handleEmailCheck = async () => {
+                const email = sanitize(emailInput?.value, 160).toLowerCase();
+                if (!emailRegex.test(email)) {
+                  setMsg("Ingresa un email válido.", true);
+                  return;
+                }
+                setMsg("", false);
+                setLoading(document.getElementById("leadEmailBtn"), true);
+                try {
+                  const resp = await fetch("api/lead.php", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      action: "check",
+                      email,
+                      hp: document.getElementById("website")?.value || ""
+                    })
+                  });
+                  const data = await resp.json();
+                  if (!data || !data.ok) {
+                    setMsg("No pudimos validar el email. Intenta de nuevo.", true);
+                    return;
+                  }
+                  if (data.exists) {
+                    saveAuth(email, { email });
+                    showState("welcome");
+                    setMsg("✅ Email validado. Puedes continuar.", false);
+                    scrollToTest();
+                    return;
+                  }
+                  emailHidden.value = email;
+                  showState("full");
+                  setMsg("Completa tus datos para continuar.", false);
+                } catch (_) {
+                  setMsg("No pudimos conectar. Intenta de nuevo.", true);
+                } finally {
+                  setLoading(document.getElementById("leadEmailBtn"), false);
+                }
+              };
+
+              const handleFullSave = async () => {
+                const email = sanitize(emailHidden?.value, 160).toLowerCase();
+                const firstName = sanitize(firstNameEl?.value, 80);
+                const lastName = sanitize(lastNameEl?.value, 80);
+                const city = sanitize(cityEl?.value, 120);
+                const phone = sanitize(phoneEl?.value, 40);
+                const missing = [];
+                if (!firstName) missing.push("Nombre");
+                if (!lastName) missing.push("Apellido");
+                if (!emailRegex.test(email)) missing.push("Email");
+                const phoneDigits = phone.replace(/\D+/g, "");
+                if (phoneDigits.length < 10) missing.push("Teléfono");
+                if (!city) missing.push("Ciudad/Estado");
+                if (missing.length) {
+                  setMsg(`Falta: ${missing.join(" / ")}`, true);
+                  return;
+                }
+                setLoading(document.getElementById("leadFullBtn"), true);
+                try {
+                  const payload = {
+                    action: "upsert",
+                    name: `${firstName} ${lastName}`.trim(),
+                    first_name: firstName,
+                    last_name: lastName,
+                    city,
+                    email,
+                    phone,
+                    hp: document.getElementById("website")?.value || ""
+                  };
+                  const resp = await fetch("api/lead.php", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                  });
+                  const data = await resp.json();
+                  if (!data || !data.ok) {
+                    setMsg("No pudimos guardar tus datos. Intenta de nuevo.", true);
+                    return;
+                  }
+                  saveAuth(email, {
+                    fullName: `${firstName} ${lastName}`.trim(),
+                    nombre: firstName,
+                    apellido: lastName,
+                    name: `${firstName} ${lastName}`.trim(),
+                    city,
+                    phone
+                  });
+                  showState("welcome");
+                  setMsg("✅ Guardado. Bajando al test…", false);
+                  scrollToTest();
+                } catch (_) {
+                  setMsg("No pudimos conectar. Intenta de nuevo.", true);
+                } finally {
+                  setLoading(document.getElementById("leadFullBtn"), false);
+                }
+              };
+
+              const auth = getStoredAuth();
+              if (auth.ok && auth.email) {
+                showState("welcome");
+              } else {
+                showState("email");
+              }
+
+              emailForm.addEventListener("submit", (e) => {
                 e.preventDefault();
-                handleSave();
+                handleEmailCheck();
               });
 
-              formEl.addEventListener("submit", (e) => {
+              fullForm.addEventListener("submit", (e) => {
                 e.preventDefault();
-                e.stopImmediatePropagation();
-                handleSave();
+                handleFullSave();
               });
+
+              if (continueBtn) {
+                continueBtn.addEventListener("click", (e) => {
+                  e.preventDefault();
+                  scrollToTest();
+                });
+              }
+
+              if (changeEmailBtn) {
+                changeEmailBtn.addEventListener("click", (e) => {
+                  e.preventDefault();
+                  clearAuth();
+                  if (emailInput) {
+                    emailInput.value = "";
+                  }
+                  showState("email");
+                  setMsg("", false);
+                });
+              }
             })();
           </script>
 
